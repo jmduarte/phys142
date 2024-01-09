@@ -167,3 +167,14 @@ dmypy.json
 
 # Yi's modifications
 .vscode/
+_build
+
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.dvi
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.run.xml

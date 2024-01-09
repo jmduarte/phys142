@@ -2,7 +2,9 @@ name: phys142
 channels:
     - conda-forge
 dependencies:
-    - python=3.9
+    - python=3.10.10
+    - jupyter_contrib_nbextensions==0.7.0
+    - jupyter-book==0.15.1
     - numpy
     - ffmpeg
     - imagemagick
@@ -13,8 +15,6 @@ dependencies:
     - cupy
     - pip
     - pip:
-      - jupyter-book
       - requests
       - ipywidgets
       - widgetsnbextension
-      - jupyter_contrib_nbextensions

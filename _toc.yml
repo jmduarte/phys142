@@ -5,6 +5,8 @@ parts:
     chapters:
     - url: https://jduarte.physics.ucsd.edu/phys142/lectures/01_Introduction.pdf
       title: "Lecture 01: Introduction"
+    - url: https://jduarte.physics.ucsd.edu/phys142/labs/lab1/01_DataHub.pdf
+      title: "Lab 01: DataHub"
     - file: labs/lab1/Lab1.ipynb
     - file: labs/lab2/Lab2_Numba.ipynb
     - file: labs/lab2/Lab2_ffmpeg.ipynb

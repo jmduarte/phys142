@@ -19,7 +19,7 @@ There will be 2 individual homework assignments and an individual midterm projec
 There will also be a final project in which students will work in groups.
 
 ## Student learning outcomes
-Upon successful completion of Physics 141/241, students will be able to:
+Upon successful completion of Physics 142/242, students will be able to:
 -  Design computer programs to numerically solve physics problems, like the harmonic oscillator using the Feynman path integral approach.
 - Consider multiple approaches and compare their computational performance, accuracy, and fidelity to physical laws.
 - Find and choose the best tool or programming language for the task.

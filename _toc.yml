@@ -6,3 +6,5 @@ parts:
     - url: https://jduarte.physics.ucsd.edu/phys142/lectures/01_Introduction.pdf
       title: "Lecture 01: Introduction"
     - file: labs/lab1/Lab1.ipynb
+    - file: labs/lab2/Lab2_Numba.ipynb
+    - file: labs/lab2/Lab2_ffmpeg.ipynb

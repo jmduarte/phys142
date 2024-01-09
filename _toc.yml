@@ -1,0 +1,8 @@
+format: jb-book
+root: README.md
+parts:
+  - caption: Week 1
+    chapters:
+    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/01_Introduction.pdf
+      title: "Lecture 01: Introduction"
+    - file: labs/lab1/Lab1.ipynb

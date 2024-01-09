@@ -1,0 +1,337 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in,letterpaper]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{palatino}
+\usepackage{mathpazo}
+\usepackage{color}
+\usepackage{hyperref}
+\usepackage{multirow}
+\usepackage{braket}
+\usepackage{relsize}
+\usepackage{color, colortbl}
+\usepackage{booktabs}
+\usepackage[dvipsnames]{xcolor}
+\definecolor{darkblue}{RGB}{46,48,147}
+\hypersetup{colorlinks=true,
+            linkcolor=darkblue,
+            urlcolor=darkblue,
+            citecolor=darkblue}
+\definecolor{Gray}{gray}{0.9}
+\definecolor{LightCyan}{rgb}{0.88,1,1}
+\definecolor{LightRed}{rgb}{1,0.92,0.92}
+\newcommand{\solColor}{blue}
+\newcommand{\sol}{\color{\solColor}}
+\newcommand*\publistbasestyle{phys}
+\usepackage[style=publist,
+biblabel=brackets,
+sorting=dt,
+plauthorhandling=highlight,
+nameorder=given-family,
+]{biblatex}
+\DeclareSourcemap{
+ \maps[datatype=bibtex,overwrite=true]{
+  \map{
+    \step[fieldsource=Collaboration, final=true]
+    \step[fieldset=usera, origfieldval, final=true]
+  }
+ }
+}
+\renewbibmacro*{author}{
+  \iffieldundef{usera}{
+    \printnames{author}
+  }{
+    \printfield{usera} Collaboration
+  }
+}
+\addbibresource{syllabus.bib}
+\begin{document}
+
+\begin{center}
+  \textbf{
+    University of California San Diego\\
+    Department of Physics\\
+    Physics 142/242, Winter 2024\\
+    Computational Physics II: PDE and Matrix Models (4 units)
+  }
+\end{center}
+
+\noindent\textbf{Instructor}: Javier Duarte, \href{mailto:jduarte@ucsd.edu}{jduarte@ucsd.edu}, OH MW 3-4pm, MYR-A 5513, \href{https://ucsd.zoom.us/j/93760926244}{Zoom: 93760926244}\\
+\noindent \textbf{Teaching assistant}: Xiaoyi Wu, \href{mailto:xiw135@ucsd.edu}{xiw135@ucsd.edu}, OH During Lab, \href{https://ucsd.zoom.us/j/99978654854}{Zoom: 99978654854}\\
+
+\noindent\textbf{Course webpage}:\\
+\hspace*{1cm}Login through \href{http://canvas.ucsd.edu}{http://canvas.ucsd.edu}.
+All assignments will be due through Gradescope.\\
+
+\noindent\textbf{Schedule}:
+\begin{center}
+  \begin{tabular}{|l|c|l|m{90mm}|}
+    \hline
+    Lecture & MWF  & 2:00--2:50p    & PODEM 1A23, \href{https://ucsd.zoom.us/j/96411788065}{Zoom: 96411788065} \\\hline
+    Lab     & TuTh & 11:00a--12:20p & WLH 2113, \href{https://ucsd.zoom.us/j/99978654854}{Zoom: 99978654854}   \\\hline\end{tabular}
+\end{center}
+
+\noindent\textbf{First lecture}: Monday, January 8, 2024.\\
+\textbf{First lab}: Tuesday, January 9, 2024.
+
+\begin{center}
+  \rule{\textwidth}{0.5pt}
+\end{center}
+
+\noindent\textbf{Textbook}: There is no required textbook for this course.
+At the end of the syllabus, we list a bibliography of textbooks and online resources we will draw from.
+
+\begin{center}
+  \rule{\textwidth}{0.5pt}
+\end{center}
+
+\noindent\textbf{Course information}: This course is an upper-division undergraduate course and introductory graduate course on computational physics, focusing on solving select physics problems in quantum mechanics using Feynman's path integral approach, combined with Markov chain Monte Carlo methods.
+The course will explore both the theoretical foundations and computer implementations.
+Students will develop their own code to solve the physics applications.
+Basic knowledge of calculus, quantum mechanics, Linux, and programming in some language is expected.
+
+The course structure will consist of weekly lectures on conceptual topics, e.g, quantum mechanics, and lab sections on computational tools, e.g., programming in Python and C/C++.
+Students will learn how to apply physical reasoning to programming, optimize and debug code, create simulations of physical systems.
+We will focus primarily on numerically solving quantum mechanics problems using Feynman's path integral approach, combined with Markov chain Monte Carlo methods.
+Students will also learn how to use modern tools to efficiently solve scientific computing problems interpreted (Python) vs. compiled (C/C++) languages and how to link the two.
+There will be 2 individual homework assignments and an individual midterm project.
+There will also be a final project in which students will work in groups.
+
+\begin{center}
+  \rule{\textwidth}{0.5pt}
+\end{center}
+
+\noindent\textbf{Student learning outcomes}: Upon successful completion of Physics 141/241, students will be able to:
+\begin{itemize}
+  \item Design computer programs to numerically solve physics problems, like the harmonic oscillator using the Feynman path integral approach.
+  \item Consider multiple approaches and compare their computational performance, accuracy, and fidelity to physical laws.
+  \item Find and choose the best tool or programming language for the task.
+  \item Visualize the solutions.
+  \item Collaborate with peers to tackle complex, realistic problems.
+  \item Present findings.
+\end{itemize}
+
+\begin{center}
+  \rule{\textwidth}{0.5pt}
+\end{center}
+
+\noindent\textbf{Grading policy}: Your final course grade will be determined according to the following:
+\begin{itemize}
+  \item 30\% Homework.
+  \item 15\% Quizzes.
+  \item 5\% Participation in class, via Slack, and completion of exit tickets.
+  \item 20\% Midterm project.
+  \item 30\% Final project.
+\end{itemize}
+
+\begin{center}
+  \rule{\textwidth}{0.5pt}
+\end{center}
+
+\noindent\textbf{Drop policy}: The lowest homework score is dropped automatically.
+This drop policy is designed to account for any and all illnesses, family, medical, mental, or other emergencies.
+
+If you have an extended emergency (e.g., a long hospital stay) that hinders your ability to turn complete assignments beyond the emergency policy allowance, contact the professor directly as soon as the situation arises.
+
+\begin{center}
+  \rule{\textwidth}{0.5pt}
+\end{center}
+
+\noindent\textbf{Discussion board}: We will use Slack: \href{https://join.slack.com/t/ucsdphys142/shared_invite/zt-2a4j1kt2r-e0y1zPOaDqgqjfRnrKfeVA}{ucsdphys142.slack.com}
+
+\begin{center}
+  \rule{\textwidth}{0.5pt}
+\end{center}
+
+
+\noindent\textbf{Homework}: Homework assignments will be submitted as code and a report on Gradescope.
+
+There will be a first deadline to submit a ``draft'' version of the homework, which will be graded based on effort and completeness.
+
+There will be a second deadline to submit a ``corrected'' version of the homework, which will be graded based on effort and correctness.
+
+\begin{center}
+  \rule{\textwidth}{0.5pt}
+\end{center}
+
+\noindent\textbf{Final project}:
+For the final project, students will work in groups of $\sim$4.
+The project deliverables are: (1) code provided as a public GitHub repository, (2) a 20-minute presentation by all members of the group, and (3) self and peer evaluations for group contributions.
+
+\begin{center}
+  \rule{\textwidth}{0.5pt}
+\end{center}
+
+\noindent\textbf{Attendance (lectures and labs)}: In-person lecture attendance is not required, but strongly recommended.
+Lecture will be mostly conceptual while labs will include hands-on portions, with interactive problem-solving and pair programming throughout.
+These sessions will be recorded.
+
+\emph{Exit tickets}: At the end of each class, you will be invited to fill out an \href{https://forms.gle/b7ZDZRm1czrnHaGBA}{exit ticket}.
+
+\begin{center}
+  \rule{\textwidth}{0.5pt}
+\end{center}
+
+\noindent\textbf{Academic integrity}: Please read the College Policies section of the \href{http://senate.ucsd.edu/Operating-Procedures/Senate-Manual/Appendices/2}{UCSD's Policy on Integrity of Scholarship}.
+These rules will be enforced.
+Cheating includes, but is not limited to: submitting another person's work as your own, copying from any person/source, and using any unauthorized materials or aids during exams.
+
+For homework assignments, copying from an online solution, a peer's solution, a Chegg solution, or shared work (on Discord, for example) is considered cheating.
+Collaboration is encouraged, but by the time you start writing your own solution to turn in, you should not be looking at any other source.
+You should know the rough outline of the solution well enough that you do not need to reference something line-by-line.
+Plagiarizing a solution but changing variable names is considered cheating.
+Soliciting help online via Chegg, Quora, etc. is considered cheating.
+If suspected, you might be asked to rework similar problems in a Zoom one-on-one meeting with the instructor and/or TA.
+
+Any questions on what constitutes an academic integrity violation should be addressed to the instructor; any violation of academic integrity will result in immediate reporting to the UCSD Office of Academic Integrity, and can result in an automatic ``F'' for the course at the discretion of the instructor.
+
+\begin{center}
+  \rule{\textwidth}{0.5pt}
+\end{center}
+
+\noindent\textbf{Counseling and Psychological Services (CAPS):} The mission of CAPS is to promote the personal, social, and emotional growth of students.
+Many services are available to UCSD students including individual, couples, and family counseling, groups, workshops, and forums, consultations and outreach, psychiatry, and peer education.
+To make an appointment, call (858) 534-755.
+For more information, visit \href{https://wellness.ucsd.edu/caps/}{https://wellness.ucsd.edu/caps/}.
+
+\begin{center}
+  \rule{\textwidth}{0.5pt}
+\end{center}
+
+\noindent\textbf{\emph{Schedule}} (Subject to change):\\
+
+\noindent\textbf{Week 1}
+
+\emph{Monday 1/8}: \underline{Lecture 01}: Course overview, preview of double-slit experiments
+
+\emph{Tuesday 1/9}: \underline{Lab 01}: Python, Jupyter, and DataHub
+
+\emph{Wednesday 1/10}: \underline{Lecture 02}: Lagrangian mechanics, principle of least action
+
+\emph{Thursday 1/11}: \underline{Lab 02}: NumPy, SciPy, Numba, and Matplotlib
+
+\emph{Friday 1/12}: \underline{Lecture 03}: Feynman path integral
+
+\noindent\textbf{Week 2}
+
+\emph{Monday 1/15}: \textbf{Martin Luther King Jr. Day: No class}
+
+\emph{Tuesday 1/16}: \underline{Lab 03}: Git/GitHub tutorial
+
+\emph{Wednesday 1/17}: \underline{Lecture 04}: Feynman path integral (continued)
+
+\emph{Thursday 1/18}: \underline{Lab 04}: Introduction to Julia
+
+\emph{Friday 1/19}: \underline{Lecture 05}: Free particle
+
+\noindent\textbf{Week 3}
+
+\emph{Monday 1/22}: \underline{Lecture 06}: Harmonic oscillator
+
+\emph{Tuesday 1/23}: \underline{Lab 05}: Assignment 1 tutorial
+
+\emph{Wednesday 1/24}: \underline{Lecture 07}: Harmonic oscillator (continued)
+
+\emph{Thursday 1/5}: \underline{Lab 06}: Assignment 1 tutorial (continued)
+
+\emph{Friday 1/26}: \underline{Lecture 08}: Schr\"{o}dinger equation; \textbf{Assignment 1 Due}
+
+\noindent\textbf{Week 4}
+
+\emph{Monday 1/29}: \underline{Lecture 09}: Schr\"{o}dinger equation (continued)
+
+\emph{Tuesday 1/30}: \underline{Lab 07}: TBD
+
+\emph{Wednesday 1/31}: \underline{Lecture 10}: Schr\"{o}dinger equation (continued) \textbf{Assignment 1 Corrections Due}
+
+\emph{Thursday 2/1}: \underline{Lab 08}: TBD
+
+\emph{Friday 2/2}: \underline{Lecture 11}: Double well potential
+
+\noindent\textbf{Week 5}
+
+\emph{Monday 2/5}: \underline{Lecture 12}: Statistical mechanics recap
+
+\emph{Tuesday 2/6}: \underline{Lab 09}: TBD
+
+\emph{Wednesday 2/7}: \underline{Lecture 13}: Markov chain Monte Carlo, Metropolis algorithm
+
+\emph{Thursday 2/8}: \underline{Lab 10}: TBD
+
+\emph{Friday 2/9}: \underline{Lecture 14}: Markov chain Monte Carlo, Metropolis algorithm (continued); \textbf{Assignment 2 Due}
+
+\noindent\textbf{Week 6}
+
+\emph{Monday 2/12}: \underline{Lecture 15}: 2D Ising model
+
+\emph{Tuesday 2/13}: \underline{Lab 11}: TBD
+
+\emph{Wednesday 2/14}: \underline{Lecture 16}: 2D Ising model (continued); \textbf{Assignment 2 Corrections Due}
+
+\emph{Thursday 2/15}: \underline{Lab 12}: TBD
+
+\emph{Friday 2/16}: \underline{Lecture 17}: MCMC for Feynman path integral
+
+\noindent\textbf{Week 7}
+
+\emph{Monday 2/19}: \textbf{Presidents' Day: No class}
+
+\emph{Tuesday 2/20}: \underline{Lab 13}: TBD
+
+\emph{Wednesday 2/21}: \underline{Lecture 18}: MCMC for Feynman path integral (continued)
+
+\emph{Thursday 2/22}: \underline{Lab 14}: TBD
+
+\emph{Friday 2/23}: \underline{Lecture 19}: MCMC for Feynman path integral (continued); \textbf{Midterm due}
+
+\noindent\textbf{Week 8}
+
+\emph{Monday 2/26}: \underline{Lecture 20}: VEGAS algorithm
+
+\emph{Tuesday 2/27}: \underline{Lab 15}: TBD
+
+\emph{Wednesday 2/28}: \underline{Lecture 21}: VEGAS algorithm (continued); \textbf{Midterm corrections due}
+
+\emph{Thursday 2/29}: \underline{Lab 16}: TBD
+
+\emph{Friday 3/1}: \underline{Lecture 22}: MC in particle physics; Compton scattering
+
+\noindent\textbf{Week 9}
+
+\emph{Monday 3/4}: \underline{Lecture 23}: MC in particle physics; Compton scattering (continued)
+
+\emph{Tuesday 3/5}: \underline{Lab 17}: Final project help
+
+\emph{Wednesday 3/6}: \underline{Lecture 24}: Final project discussion
+
+\emph{Thursday 3/7}: \underline{Lab 18}: Final project help
+
+\emph{Friday 3/8}: \underline{Lecture 25}: Final project discussion
+
+\noindent\textbf{Week 10}
+
+\emph{Monday 3/11}: \underline{Lecture 26}: Final presentations
+
+\emph{Tuesday 3/12}: \underline{Lab 19}: Final presentations
+
+\emph{Wednesday 3/13}: \underline{Lecture 27}: Final presentations
+
+\emph{Thursday 3/14}: \underline{Lab 20}: Final presentations
+
+\emph{Friday 3/15}: \underline{Lecture 28}: Final presentations
+
+\noindent\textbf{Finals Week}
+
+\emph{Friday 3/22}: \textbf{Final paper and code due}
+
+\begin{center}
+  \rule{\textwidth}{0.5pt}
+\end{center}
+\nocite{*}
+
+\noindent\textbf{\emph{Bibliography}}:\\
+\printbibliography[heading=none]
+\end{document}

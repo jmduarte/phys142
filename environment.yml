@@ -1,0 +1,20 @@
+name: phys142
+channels:
+    - conda-forge
+dependencies:
+    - python=3.9
+    - numpy
+    - ffmpeg
+    - imagemagick
+    - scikit-learn
+    - matplotlib
+    - tqdm
+    - numba
+    - cupy
+    - pip
+    - pip:
+      - jupyter-book
+      - requests
+      - ipywidgets
+      - widgetsnbextension
+      - jupyter_contrib_nbextensions

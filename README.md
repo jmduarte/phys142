@@ -2,8 +2,8 @@
 
 Author: Javier Duarte <a href="https://orcid.org/0000-0002-5076-7096"><img src="https://orcid.org/assets/vectors/orcid.logo.icon.svg" width=15/></a>
 
-[![Jupyter Book Badge](https://jupyterbook.org/badge.svg)](https:jduarte.physics.ucsd.edu/phys141)
-![deploy-book](https://github.com/jmduarte/phys141/actions/workflows/deploy.yml/badge.svg)
+[![Jupyter Book Badge](https://jupyterbook.org/badge.svg)](https:jduarte.physics.ucsd.edu/phys142)
+![deploy-book](https://github.com/jmduarte/phys142/actions/workflows/deploy.yml/badge.svg)
 
 ## Course information
 This course is an upper-division undergraduate course and introductory graduate course on computational physics, focusing on solving select physics problems in quantum mechanics using Feynman's path integral approach, combined with Markov chain Monte Carlo methods.

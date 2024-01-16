@@ -15,7 +15,9 @@ parts:
     - url: https://jduarte.physics.ucsd.edu/phys142/lectures/03_FeynmanPathIntegralContinued.pdf
       title: "Lecture 02: Feynman Path Integral (Continued)"
   - caption: Week 2
+    chapters:
     - file: labs/lab3/Lab3.ipynb
   - caption: Week 3
+    chapters:
     - url: https://jduarte.physics.ucsd.edu/phys142/assignments/assignment1/assignment1.pdf
       title: "Assignment 01"

@@ -41,7 +41,7 @@ jobs:
           version: "1.6.1"
 
       - name: Add IJulia
-        run: julia -e 'add IJulia'
+        run: julia -e 'using Pkg\nPkg.add("IJulia")'
 
       - name: Build the book
         shell: bash -l {0}

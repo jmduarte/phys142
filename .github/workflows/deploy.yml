@@ -13,6 +13,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Setup Julia
+        uses: julia-actions/setup-julia@v1
+        with:
+          version: "1.6.1"
+
+      - name: Check Julia
+        run: julia -e 'println("Hello, World!")'
+
       # Install dependencies
       - name: Setup Miniconda
         uses: conda-incubator/setup-miniconda@v3

@@ -10,13 +10,15 @@ parts:
     - file: labs/lab1/Lab1.ipynb
     - url: https://jduarte.physics.ucsd.edu/phys142/lectures/02_FeynmanPathIntegral.pdf
       title: "Lecture 02: Feynman Path Integral"
-    - file: labs/lab2/Lab2_Numba.ipynb
-    - file: labs/lab2/Lab2_ffmpeg.ipynb
+    - file: labs/lab2/Lab2.md
     - url: https://jduarte.physics.ucsd.edu/phys142/lectures/03_FeynmanPathIntegralContinued.pdf
-      title: "Lecture 02: Feynman Path Integral (Continued)"
+      title: "Lecture 03: Feynman Path Integral (Continued)"
   - caption: Week 2
     chapters:
     - file: labs/lab3/Lab3.ipynb
+    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/04_FreeParticle.pdf
+      title: "Lecture 04: Free Particle"
+    - file: labs/lab4/Lab4.ipynb
   - caption: Week 3
     chapters:
     - url: https://jduarte.physics.ucsd.edu/phys142/assignments/assignment1/assignment1.pdf

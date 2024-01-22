@@ -35,6 +35,14 @@ jobs:
           conda config --show
           printenv | sort
 
+      - name: Setup Julia
+        uses: julia-actions/setup-julia@v1
+        with:
+          version: "1.6.1"
+
+      - name: Add IJulia
+        run: julia -e 'using Pkg; Pkg.add("IJulia")'
+
       - name: Build the book
         shell: bash -l {0}
         run: |

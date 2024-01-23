@@ -27,7 +27,7 @@ parts:
     chapters:
     - url: https://jduarte.physics.ucsd.edu/phys142/lectures/06_SchrodingerEquation.pdf
       title: "Lecture 06: Schrodinger Equation"
-    - file: labs/lab5/git.md
+    - file: labs/lab5/lab05.ipynb
     - url: https://jduarte.physics.ucsd.edu/phys142/assignments/quiz2/quiz2.pdf
       title: "Quiz 02"
     - url: https://jduarte.physics.ucsd.edu/phys142/assignments/assignment1/assignment1.pdf

@@ -1,0 +1,65 @@
+\newif\ifshowsolutions
+\showsolutionsfalse
+\input{../common/preamble}
+
+\chead{
+  {\vbox{
+      \vspace{2mm}
+      \large
+      Computational Physics II \hfill
+      UCSD PHYS 142/242 \hfill \\[1pt]
+      Quiz 2\hfill
+      Due: Monday, January 22, 2024, 8:00pm\\
+    }
+  }
+}
+
+\begin{document}
+\pagestyle{fancy}
+
+
+\section*{Policies}
+Please work on the quiz individually.
+
+\section*{Submission Instructions}
+Please submit your quiz as a single .pdf file to Gradescope under ``Quiz 2".
+
+\section{Propagator and Schr\"{o}dinger Equation [20 Points]}
+\materials{Week 2 lectures}
+
+\begin{problem}[10]
+Prove that the free particle propagator
+\begin{equation}
+  \mathcal K(x_B, t_B; x_A, t_A) = \left (\frac{m}{2\pi i \hbar (t_B -t_A)}  \right )^{1/2}\exp\left [\frac{im(x_B - x_A)^2}{2\hbar(t_B-t_A)}\right ]
+\end{equation}
+satisfies the Schr\"{o}dinger equation
+\begin{equation}
+  -\frac{\hbar}{i}\frac{\partial \mathcal K(x_B, t_B; x_A, t_A)}{\partial t_B} = -\frac{\hbar^2}{2m} \frac{\partial^2 \mathcal K(x_B, t_B; x_A, t_A)}{\partial x_B^2}
+\end{equation}
+by direct substitution.
+
+\begin{hint}
+  Without loss of generality, you can set $x_A = t_A = 0$.
+\end{hint}
+\end{problem}
+
+\begin{solution}
+
+\end{solution}
+
+\begin{problem}[10]
+Using the above, show that any wave function $\psi(x,t)$ of a free particle also satisfies the Schr\"{o}dinger equation
+\begin{equation}
+  -\frac{\hbar}{i}\frac{\partial \psi(x, t)}{\partial t} = -\frac{\hbar^2}{2m} \frac{\partial^2 \psi(x, t)}{\partial x^2}.
+\end{equation}
+
+\begin{hint}
+  Use the fact that $\psi(x,t) = \int_{-\infty}^{\infty} \mathcal K(x, t; x', t') \psi(x', t') dx'$.
+\end{hint}
+\end{problem}
+
+\begin{solution}
+
+\end{solution}
+
+\end{document}

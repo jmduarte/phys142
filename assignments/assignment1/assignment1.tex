@@ -110,10 +110,12 @@ Make one graph showing all three with a legend labeling them.
     \langle V\rangle = \int \frac{1}{2}x^2 P_t(x) dx.
   \end{equation}
   For the mean value of $K$, there are a few different ways to calculate it.
-  We will give one way here, but you are free to use another method.
-  \begin{equation}
-    \langle K\rangle = \int \int \frac{1}{2} \left(\frac{x' - x}{\epsilon}\right)^2 |K(x', t+\epsilon, x, t)|^2 P_t(x) dx' dx
-  \end{equation}
+  \textcolor{red}{
+    Edit: As discussed in lecture, we will use another form of $\langle K\rangle$, which is simpler, assuming we know some quantum mechanics
+    \begin{equation}
+      \langle K\rangle = \int \Psi_t^\ast(x) \left(- \frac{\hbar^2}{2} \frac{\partial^2}{\partial x^2}\right) \Psi_t(x) dx = \frac{\hbar^2}{2} \int \left|\frac{\partial\Psi_t}{\partial x}\right|^2  dx
+    \end{equation}
+  }
 \end{hint}
 \end{problem}
 

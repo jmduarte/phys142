@@ -40,7 +40,7 @@ parts:
       title: "Lecture 08: Unitarity and Propagator Trace (Continued)"
     - url: https://jduarte.physics.ucsd.edu/phys142/lectures/09_DoubleWellTunneling.pdf
       title: "Lecture 09: Double Well and Tunneling"
-    - file: labs/lab8/Lab08.ipynb
+    - file: labs/lab8/Lab8.ipynb
   - caption: Week 5
     chapters:
     - url: https://jduarte.physics.ucsd.edu/phys142/assignments/assignment2/assignment2.pdf

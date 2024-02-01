@@ -35,11 +35,13 @@ parts:
     - url: https://jduarte.physics.ucsd.edu/phys142/assignments/assignment1/assignment1.pdf
       title: "Assignment 01"
   - caption: Week 4
+    chapters:
     - url: https://jduarte.physics.ucsd.edu/phys142/lectures/08_UnitarityPropagatorTraceContinued.pdf
       title: "Lecture 08: Unitarity and Propagator Trace (Continued)"
     - url: https://jduarte.physics.ucsd.edu/phys142/lectures/09_DoubleWellTunneling.pdf
       title: "Lecture 09: Double Well and Tunneling"
     - file: labs/lab8/Lab08.ipynb
   - caption: Week 5
+    chapters:
     - url: https://jduarte.physics.ucsd.edu/phys142/assignments/assignment2/assignment2.pdf
       title: "Assignment 02"

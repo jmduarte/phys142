@@ -43,7 +43,7 @@ parts:
     - file: labs/lab8/Lab8.ipynb
     - url: https://jduarte.physics.ucsd.edu/phys142/lectures/10_EigenvalueProblem.pdf
       title: "Lecture 10: Eigenvalue Problem"
-    - file: lectures/10_EigenValueProblemDemo.ipynb
+    - file: lectures/10_EigenvalueProblemDemo.ipynb
   - caption: Week 5
     chapters:
     - url: https://jduarte.physics.ucsd.edu/phys142/assignments/assignment2/assignment2.pdf

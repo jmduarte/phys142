@@ -46,5 +46,8 @@ parts:
     - file: lectures/10_EigenvalueProblemDemo.ipynb
   - caption: Week 5
     chapters:
+    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/11_StatMechRecap.pdf
+      title: "Lecture 11: Statistical Mechanics Recap"
+    - file: labs/lab9/Lab9.ipynb
     - url: https://jduarte.physics.ucsd.edu/phys142/assignments/assignment2/assignment2.pdf
       title: "Assignment 02"

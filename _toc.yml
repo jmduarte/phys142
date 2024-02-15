@@ -49,5 +49,14 @@ parts:
     - url: https://jduarte.physics.ucsd.edu/phys142/lectures/11_StatMechRecap.pdf
       title: "Lecture 11: Statistical Mechanics Recap"
     - file: labs/lab9/Lab9.ipynb
+    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/13_MCMC.pdf
+      title: "Lecture 13: Markov chain Monte Carlo"
     - url: https://jduarte.physics.ucsd.edu/phys142/assignments/assignment2/assignment2.pdf
       title: "Assignment 02"
+  - caption: Week 6
+    chapters:
+    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/14_MCMC_Continued.pdf
+      title: "Lecture 14: Markov chain Monte Carlo (Continued)"
+    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/15_Ising_Model.pdf
+      title: "Lecture 15: Ising Model"
+    - file: labs/lab12/Lab12.ipynb

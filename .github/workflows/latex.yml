@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - main
+      - AnthonyAportela-patch-1
   pull_request:
     branches:
       - main
+      - AnthonyAportela-patch-1
 
 jobs:
   build:

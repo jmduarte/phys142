@@ -18,8 +18,8 @@ jobs:
       uses: actions/checkout@v3
 
     # Step 2: Install LaTeX
-    - name: Install LaTeX
-      run: sudo apt-get update && sudo apt-get install -y texlive-full
+    - name: Set up LaTeX environment
+      uses: dante-ev/latex-action@latest
 
     # Step 3: Find and compile all .tex files
     - name: Compile all LaTeX files

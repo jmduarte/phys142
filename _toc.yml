@@ -3,6 +3,8 @@ root: README.md
 parts:
   - caption: Week 1
     chapters:
+    - url : https://jduarte.physics.ucsd.edu/phys142/syllabus.pdf
+      title: "Syllabus"
     - url: https://jduarte.physics.ucsd.edu/phys142/lectures/01_Introduction.pdf
       title: "Lecture 01: Introduction"
     - url: https://jduarte.physics.ucsd.edu/phys142/labs/lab1/01_DataHub.pdf
@@ -13,7 +15,7 @@ parts:
     - file: labs/lab2/Lab2.md
     - url: https://jduarte.physics.ucsd.edu/phys142/lectures/03_FeynmanPathIntegralContinued.pdf
       title: "Lecture 03: Feynman Path Integral (Continued)"
-    - url: https://jduarte.physics.ucsd.edu/phys142/assignments/quiz1/quiz1.pdf
+    - url: https://jduarte.physics.ucsd.edu/phys142/quiz1.pdf
       title: "Quiz 01"
   - caption: Week 2
     chapters:
@@ -28,11 +30,11 @@ parts:
     - url: https://jduarte.physics.ucsd.edu/phys142/lectures/06_SchrodingerEquation.pdf
       title: "Lecture 06: Schrodinger Equation"
     - file: labs/lab5/lab05.ipynb
-    - url: https://jduarte.physics.ucsd.edu/phys142/assignments/quiz2/quiz2.pdf
+    - url: https://jduarte.physics.ucsd.edu/phys142/quiz2.pdf
       title: "Quiz 02"
     - url: https://jduarte.physics.ucsd.edu/phys142/lectures/07_UnitarityPropagatorTraceContinued.pdf
       title: "Lecture 07: Unitarity and Propagator Trace"
-    - url: https://jduarte.physics.ucsd.edu/phys142/assignments/assignment1/assignment1.pdf
+    - url: https://jduarte.physics.ucsd.edu/phys142/assignment1.pdf
       title: "Assignment 01"
   - caption: Week 4
     chapters:
@@ -51,7 +53,7 @@ parts:
     - file: labs/lab9/Lab9.ipynb
     - url: https://jduarte.physics.ucsd.edu/phys142/lectures/13_MCMC.pdf
       title: "Lecture 13: Markov chain Monte Carlo"
-    - url: https://jduarte.physics.ucsd.edu/phys142/assignments/assignment2/assignment2.pdf
+    - url: https://jduarte.physics.ucsd.edu/phys142/assignment2.pdf
       title: "Assignment 02"
   - caption: Week 6
     chapters:
@@ -67,7 +69,7 @@ parts:
     - url: https://jduarte.physics.ucsd.edu/phys142/lectures/17_Path_Integral_MCMC_Continued.pdf
       title: "Lecture 17: Path Integral and MCMC (Continued)"
     - file: labs/lab15/Lab15.ipynb
-    - url: https://jduarte.physics.ucsd.edu/phys142/assignments/assignment3/assignment3.pdf
+    - url: https://jduarte.physics.ucsd.edu/phys142/assignment3.pdf
       title: "Assignment 03"
   - caption: Week 8
     chapters:
@@ -86,7 +88,7 @@ parts:
       title: "Lecture 23: Preview of PHYS 139/239"
   - caption: Week 10
     chapters:
-    - url: https://jduarte.physics.ucsd.edu/phys142/assignments/final_projects/final_projects.pdf
+    - url: https://jduarte.physics.ucsd.edu/phys142/final_projects.pdf
       title: "Final Projects"
 
 

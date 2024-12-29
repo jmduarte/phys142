@@ -10,6 +10,7 @@ on:
       - main
       - AnthonyAportela-patch-1
 
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -19,33 +20,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Step 2: Compile LaTeX files with dante-ev/latex-action
-      - name: Compile syllabus
-        uses: dante-ev/latex-action@latest
+      # Step 2: Compile LaTeX files
+      - name: Compile LaTeX
+        uses: docker://xucheng/texlive-full:latest
         with:
-          root_file: syllabus/syllabus.tex
-
-      - name: Compile assignment1
-        uses: dante-ev/latex-action@latest
-        with:
-          root_file: assignments/assignment1/assignment1.tex
-
-      - name: Compile assignment2
-        uses: dante-ev/latex-action@latest
-        with:
-          root_file: assignments/assignment2/assignment2.tex
-
-      - name: Compile assignment3
-        uses: dante-ev/latex-action@latest
-        with:
-          root_file: assignments/assignment3/assignment3.tex
-
-      - name: Compile quiz1
-        uses: dante-ev/latex-action@latest
-        with:
-          root_file: quiz1/quiz1.tex
-
-      - name: Compile quiz2
-        uses: dante-ev/latex-action@latest
-        with:
-          root_file: quiz2/quiz2.tex
+          entrypoint: /bin/sh
+          args: |
+            -c "\
+            cd syllabus && \
+            latexmk syllabus.tex && \
+            cd ../assignments/assignment1 && \
+            pdflatex assignment1.tex && \
+            cd ../assignment2 && \
+            pdflatex assignment2.tex && \
+            cd ../assignment3 && \
+            pdflatex assignment3.tex && \
+            cd ../../quiz1 && \
+            pdflatex quiz1.tex && \
+            cd ../quiz2 && \
+            pdflatex quiz2.tex"

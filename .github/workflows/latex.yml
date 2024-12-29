@@ -1,34 +1,49 @@
-name: Build LaTeX Documents
+name: Compile LaTeX Files
 
 on:
   push:
     branches:
-      - main  # Trigger on pushes to the main branch
+      - main
   pull_request:
     branches:
-      - main  # Trigger on pull requests to the main branch
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    # Step 1: Checkout the repository
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      # Step 1: Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    # Step 2: Install LaTeX
-    - name: Set up LaTeX environment
-      uses: dante-ev/latex-action@latest
+      # Step 2: Compile LaTeX files with dante-ev/latex-action
+      - name: Compile syllabus
+        uses: dante-ev/latex-action@latest
+        with:
+          root_file: syllabus/syllabus.tex
 
-    # Step 3: Compile all .tex files
-    - name: Compile all LaTeX files
-      run: |
-        find . -name "*.tex" | while read texfile; do
-          # Extract directory and filename
-          dir=$(dirname "$texfile")
-          filename=$(basename "$texfile" .tex)
+      - name: Compile assignment1
+        uses: dante-ev/latex-action@latest
+        with:
+          root_file: assignments/assignment1/assignment1.tex
 
-          # Compile the LaTeX file with latexmk
-          latexmk -pdf -output-directory="$dir" "$texfile"
-        done
+      - name: Compile assignment2
+        uses: dante-ev/latex-action@latest
+        with:
+          root_file: assignments/assignment2/assignment2.tex
+
+      - name: Compile assignment3
+        uses: dante-ev/latex-action@latest
+        with:
+          root_file: assignments/assignment3/assignment3.tex
+
+      - name: Compile quiz1
+        uses: dante-ev/latex-action@latest
+        with:
+          root_file: quiz1/quiz1.tex
+
+      - name: Compile quiz2
+        uses: dante-ev/latex-action@latest
+        with:
+          root_file: quiz2/quiz2.tex

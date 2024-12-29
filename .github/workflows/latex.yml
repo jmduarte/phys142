@@ -21,14 +21,14 @@ jobs:
     - name: Set up LaTeX environment
       uses: dante-ev/latex-action@latest
 
-    # Step 3: Find and compile all .tex files
+    # Step 3: Compile all .tex files
     - name: Compile all LaTeX files
       run: |
         find . -name "*.tex" | while read texfile; do
-          # Extract directory and filename without extension
+          # Extract directory and filename
           dir=$(dirname "$texfile")
           filename=$(basename "$texfile" .tex)
-          
-          # Compile the LaTeX file and save PDF in the same directory
+
+          # Compile the LaTeX file with latexmk
           latexmk -pdf -output-directory="$dir" "$texfile"
         done

@@ -5,6 +5,10 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
 
 # This job installs dependencies, build the book, and pushes it to `gh-pages`
 jobs:
@@ -57,13 +61,32 @@ jobs:
           args: |
             -c "\
             cd syllabus && \
+            latexmk && \
+            cd ../assignments/assignment1 && \
+            latexmk && \
+            cd ../assignment2 && \
+            latexmk && \
+            cd ../assignment3 && \
+            latexmk \
+            cd ../final_projects && \
+            latexmk \
+            cd ../quiz1 && \
+            latexmk \
+            cd ../quiz2 && \
             latexmk"
 
       - name: Copy syllabus and homework for deployment
         run: |
-          cp syllabus/syllabus.pdf _build/html/syllabus.pdf
+          cp syllabus/syllabus.pdf _build/html/syllabus.pdf && \
+          cp assignments/assignment1/assignment1.pdf _build/html/assignment1.pdf && \
+          cp assignments/assignment2/assignment2.pdf _build/html/assignment2.pdf && \
+          cp assignments/assignment3/assignment3.pdf _build/html/assignment3.pdf && \
+          cp assignments/final_projects/final_projects.pdf _build/html/final_projects.pdf && \
+          cp assignments/quiz1/quiz1.pdf _build/html/quiz1.pdf && \
+          cp assignments/quiz2/quiz2.pdf _build/html/quiz2.pdf
 
       - name: GitHub Pages action
+        if: github.event_name == 'push'
         uses: peaceiris/actions-gh-pages@v3.9.3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}

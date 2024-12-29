@@ -84,5 +84,9 @@ parts:
       title: "Lecture 22: Final Projects"
     - url: https://jduarte.physics.ucsd.edu/phys142/lectures/23_Preview_139.pdf
       title: "Lecture 23: Preview of PHYS 139/239"
+  - caption: Week 10
+    chapters:
+    - url: https://jduarte.physics.ucsd.edu/phys142/assignments/final_projects/final_projects.pdf
+      title: "Final Projects"
 
 

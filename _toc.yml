@@ -58,5 +58,31 @@ parts:
     - url: https://jduarte.physics.ucsd.edu/phys142/lectures/14_MCMC_Continued.pdf
       title: "Lecture 14: Markov chain Monte Carlo (Continued)"
     - url: https://jduarte.physics.ucsd.edu/phys142/lectures/15_Ising_Model.pdf
-      title: "Lecture 15: Ising Model"
+      title: "Lecture 15: Ising Model and MCMC"
     - file: labs/lab12/Lab12.ipynb
+    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/16_Path_Integral_MCMC.pdf
+      title: "Lecture 16: Path Integral and MCMC"
+  - caption: Week 7
+    chapters:
+    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/17_Path_Integral_MCMC_Continued.pdf
+      title: "Lecture 17: Path Integral and MCMC (Continued)"
+    - file: labs/lab15/Lab15.ipynb
+    - url: https://jduarte.physics.ucsd.edu/phys142/assignments/assignment3/assignment3.pdf
+      title: "Assignment 03"
+  - caption: Week 8
+    chapters:
+    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/18_Particle_Physics_VEGAS.pdf
+      title: "Lecture 18: Particle Physics and VEGAS"
+    - file: labs/lab17/lab17.ipynb
+    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/19_Particle_Physics_VEGAS_Continued.pdf
+      title: "Lecture 19: Particle Physics and VEGAS (Continued)"
+  - caption: Week 9
+    chapters:
+    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/21_Particle_Physics_VEGAS_Part3.pdf
+      title: "Lecture 21: Particle Physics and VEGAS (Part 3)"
+    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/22_Final_Projects.pdf
+      title: "Lecture 22: Final Projects"
+    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/23_Preview_139.pdf
+      title: "Lecture 23: Preview of PHYS 139/239"
+
+

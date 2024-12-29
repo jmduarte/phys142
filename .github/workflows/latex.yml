@@ -19,7 +19,7 @@ jobs:
 
     # Step 2: Install LaTeX
     - name: Set up LaTeX environment
-      uses: dante-ev/latex-action@v1
+      uses: dante-ev/latex-action
 
     # Step 3: Find and compile all .tex files
     - name: Compile all LaTeX files

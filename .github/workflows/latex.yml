@@ -1,0 +1,34 @@
+name: Build LaTeX Documents
+
+on:
+  push:
+    branches:
+      - main  # Trigger on pushes to the main branch
+  pull_request:
+    branches:
+      - main  # Trigger on pull requests to the main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Checkout the repository
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # Step 2: Install LaTeX
+    - name: Set up LaTeX environment
+      uses: dante-ev/latex-action@v2
+
+    # Step 3: Find and compile all .tex files
+    - name: Compile all LaTeX files
+      run: |
+        find . -name "*.tex" | while read texfile; do
+          # Extract directory and filename without extension
+          dir=$(dirname "$texfile")
+          filename=$(basename "$texfile" .tex)
+          
+          # Compile the LaTeX file and save PDF in the same directory
+          latexmk -pdf -output-directory="$dir" "$texfile"
+        done

@@ -61,19 +61,19 @@ jobs:
           args: |
             -c "\
             cd syllabus && \
-            latexmk && \
+            latexmk -pdf && \
             cd ../assignments/assignment1 && \
-            latexmk && \
+            latexmk -pdf && \
             cd ../assignment2 && \
-            latexmk && \
+            latexmk -pdf && \
             cd ../assignment3 && \
-            latexmk \
+            latexmk -pdf \
             cd ../final_projects && \
-            latexmk \
+            latexmk -pdf \
             cd ../quiz1 && \
-            latexmk \
+            latexmk -pdf \
             cd ../quiz2 && \
-            latexmk"
+            latexmk -pdf"
 
       - name: Copy syllabus and homework for deployment
         run: |

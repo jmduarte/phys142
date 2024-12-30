@@ -67,11 +67,11 @@ jobs:
             cd ../assignment2 && \
             latexmk -pdf && \
             cd ../assignment3 && \
-            latexmk -pdf \
+            latexmk -pdf && \
             cd ../final_projects && \
-            latexmk -pdf \
+            latexmk -pdf && \
             cd ../quiz1 && \
-            latexmk -pdf \
+            latexmk -pdf && \
             cd ../quiz2 && \
             latexmk -pdf"
 

@@ -85,6 +85,11 @@ jobs:
           cp assignments/quiz1/quiz1.pdf _build/html/quiz1.pdf && \
           cp assignments/quiz2/quiz2.pdf _build/html/quiz2.pdf
 
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          path: _build/html
+
       - name: GitHub Pages action
         if: github.event_name == 'push'
         uses: peaceiris/actions-gh-pages@v3.9.3

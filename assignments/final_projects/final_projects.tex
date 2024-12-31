@@ -28,9 +28,9 @@ biblabel=brackets,
       Computational Physics II \hfill
       UCSD PHYS 142/242 \hfill \\[1pt]
       Final Projects\hfill
-      Presentations due: Monday, March 11 - Friday, March 15, 2024\\
+      Presentations: Monday, March 10 - Friday, March 14, 2025\\
 	  \hfill
-	  Report and code due: Friday, March 22, 2024, 8:00pm\\
+	  Report and code due: Friday, March 21, 2025, 8:00pm\\
     }
   }
 }
@@ -126,16 +126,16 @@ See Refs.~\cite{Eastman:2014,Krauss:2018} for relevant discussions.
 \end{problem}
 
 \newpage
-\section{Drell-Yan Event Generator with VEGAS}
+\section{Drell--Yan Event Generator with VEGAS}
 
-Consider the Drell-Yan production process at an electron-positron collider, in which an electron and positron collide to produce a virtual photon or a $Z$ boson that then decays into a muon-antimuon pair, $e^+e^-\to Z/\gamma \to \mu^+\mu^-$.
+Consider the Drell--Yan production process at an electron-positron collider, in which an electron and positron collide to produce a virtual photon or a $Z$ boson that then decays into a muon-antimuon pair, $e^+e^-\to Z/\gamma \to \mu^+\mu^-$.
 
 \begin{center}
   \includegraphics[width=0.45\textwidth]{eemumu.pdf}
   \includegraphics[width=0.45\textwidth]{eemumukin.pdf}
 \end{center}
 
-As described in lecture and in Ref.~\cite{Papaefstathiou:2014mya}, the differential cross section for center-of-mass energy $E_{CM} = \sqrt{\hat s}$ and scattering angle $\theta$ is given by
+As described in lecture and in Ref.~\cite{Papaefstathiou:2014mya}, the differential cross section for center-of-mass energy $E_\text{CM} = \sqrt{\hat s}$ and scattering angle $\theta$ is given by
 \begin{equation}
   \label{eq:partonicxs}
   \frac{ d\sigma } { d \Omega }(\hat s, \cos\theta) = \frac{\alpha^2}{4 \hat{s} } \left[ A_0 (\hat s) ( 1  + \cos ^2 \theta ) + A_1(\hat s) \cos \theta \right] \;,
@@ -177,12 +177,12 @@ Useful constants are given in the tables below.
 \end{center}
 
 \begin{problem}
-Use standard acceptance-rejection Monte Carlo to generate events $(E_{CM}, \cos\theta)$ for the Drell-Yan process in a range $E_{CM} \in [10, 200]\,\text{GeV}$ and $\cos\theta \in [-1, 1]$.
-Note, usually $E_{CM}$ is fixed in an electron-positron collider, but we will consider a range of energies, which is similar to the situation at a hadron collider where the partonic center-of-mass energy is not known exactly.
+Use standard acceptance-rejection Monte Carlo to generate events $(E_\text{CM}, \cos\theta)$ for the Drell--Yan process in a range $E_\text{CM} \in [10, 200]\,\text{GeV}$ and $\cos\theta \in [-1, 1]$.
+Note, usually $E_\text{CM}$ is fixed in an electron-positron collider, but we will consider a range of energies, which is similar to the situation at a hadron collider where the partonic center-of-mass energy is not known exactly.
 \end{problem}
 
 \begin{problem}
-Use the VEGAS Monte Carlo method~\cite{Lepage:1977sw,Lepage:2020tgj} to generate events $(E_{CM}, \cos\theta)$ for the Drell-Yan process in a range $E_{CM} \in [10, 200]\,\text{GeV}$ and $\cos\theta \in [-1, 1]$.
+Use the VEGAS Monte Carlo method~\cite{Lepage:1977sw,Lepage:2020tgj} to generate events $(E_\text{CM}, \cos\theta)$ for the Drell--Yan process in a range $E_\text{CM} \in [10, 200]\,\text{GeV}$ and $\cos\theta \in [-1, 1]$.
 Compare how many function evaluations are needed to arrive at the same number of samples, e.g. 10,000.
 Discuss the settings you use for the VEGAS algorithm, i.e. how many iterations, what kind of damping factor, and how many bins, etc.
 \end{problem}

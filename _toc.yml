@@ -13,25 +13,25 @@ parts:
     - url: https://jduarte.physics.ucsd.edu/phys142/lectures/02_FeynmanPathIntegral.pdf
       title: "Lecture 02: Feynman Path Integral"
     - file: labs/lab2/Lab2.md
-    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/03_FeynmanPathIntegralContinued.pdf
-      title: "Lecture 03: Feynman Path Integral (Continued)"
     - url: https://jduarte.physics.ucsd.edu/phys142/quiz1.pdf
       title: "Quiz 01"
   - caption: Week 2
-    chapters:
+    chapters: 
+    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/03_FeynmanPathIntegralContinued.pdf
+      title: "Lecture 03: Feynman Path Integral (Continued)"
     - file: labs/lab3/Lab3.ipynb
     - url: https://jduarte.physics.ucsd.edu/phys142/lectures/04_FreeParticle.pdf
       title: "Lecture 04: Free Particle"
     - file: labs/lab4/Lab4.ipynb
     - url: https://jduarte.physics.ucsd.edu/phys142/lectures/05_HarmonicOscillator.pdf
       title: "Lecture 05: Harmonic Oscillator"
+    - url: https://jduarte.physics.ucsd.edu/phys142/quiz2.pdf
+      title: "Quiz 02"
   - caption: Week 3
     chapters:
     - url: https://jduarte.physics.ucsd.edu/phys142/lectures/06_SchrodingerEquation.pdf
       title: "Lecture 06: Schrodinger Equation"
     - file: labs/lab5/lab05.ipynb
-    - url: https://jduarte.physics.ucsd.edu/phys142/quiz2.pdf
-      title: "Quiz 02"
     - url: https://jduarte.physics.ucsd.edu/phys142/lectures/07_UnitarityPropagatorTraceContinued.pdf
       title: "Lecture 07: Unitarity and Propagator Trace"
     - url: https://jduarte.physics.ucsd.edu/phys142/assignment1.pdf
@@ -85,7 +85,7 @@ parts:
     - url: https://jduarte.physics.ucsd.edu/phys142/lectures/22_Final_Projects.pdf
       title: "Lecture 22: Final Projects"
     - url: https://jduarte.physics.ucsd.edu/phys142/lectures/23_Preview_139.pdf
-      title: "Lecture 23: Preview of PHYS 139/239"
+      title: "Lecture 23: Preview of PHYS 141/142"
   - caption: Week 10
     chapters:
     - url: https://jduarte.physics.ucsd.edu/phys142/final_projects.pdf

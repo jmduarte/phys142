@@ -1,4 +1,4 @@
- # UCSD PHYS 142/242: Computational Physics II
+ # UCSD PHYS 142/242: Computational Physics II (Winter 2025)
 
 Author: Javier Duarte <a href="https://orcid.org/0000-0002-5076-7096"><img src="https://orcid.org/assets/vectors/orcid.logo.icon.svg" width=15/></a>
 
@@ -29,7 +29,7 @@ Upon successful completion of Physics 142/242, students will be able to:
 
 ## Links
 - <a href="https://jduarte.physics.ucsd.edu/phys142/syllabus.pdf">Syllabus</a>
-- <a href="https://canvas.ucsd.edu/courses/52905">Canvas</a>
+- <a href="https://canvas.ucsd.edu/courses/62113">Canvas</a>
 
 ## Schedule
 ```{tableofcontents}

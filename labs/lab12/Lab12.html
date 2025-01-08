@@ -1,0 +1,1370 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Lab 12: MCMC Tutorial &#8212; UCSD PHYS 142/242</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'labs/lab12/Lab12';</script>
+    <link rel="canonical" href="https://jduarte.physics.ucsd.edu/phys142/labs/lab12/Lab12.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Lab 15: MCMC for Feynman Path Integral Tutorial" href="../lab15/Lab15.html" />
+    <link rel="prev" title="Lab 9: Eigenvalue Problem Demo" href="../lab9/Lab9.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/Interference_electrons_double-slit_at_10cm.png" class="logo__image only-light" alt="UCSD PHYS 142/242 - Home"/>
+    <script>document.write(`<img src="../../_static/Interference_electrons_double-slit_at_10cm.png" class="logo__image only-dark" alt="UCSD PHYS 142/242 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../README.html">
+                    UCSD PHYS 142/242: Computational Physics II (Winter 2025)
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/syllabus.pdf">Syllabus</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/01_Introduction.pdf">Lecture 01: Introduction</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/labs/lab1/01_DataHub.pdf">Lab 01: DataHub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab1/Lab1.html">Lab 1: Introduction</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/02_FeynmanPathIntegral.pdf">Lecture 02: Feynman Path Integral</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab2/Lab2.html">Lab 2: Numba and ffmpeg</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/quiz1.pdf">Quiz 01</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/03_FeynmanPathIntegralContinued.pdf">Lecture 03: Feynman Path Integral (Continued)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab3/Lab3.html">Lab 3: Introduction to Julia</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/04_FreeParticle.pdf">Lecture 04: Free Particle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab4/Lab4.html">Lab 4: Free Particle Propagator (Assignment 1 Tutorial)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/05_HarmonicOscillator.pdf">Lecture 05: Harmonic Oscillator</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/quiz2.pdf">Quiz 02</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 3</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/06_SchrodingerEquation.pdf">Lecture 06: Schrodinger Equation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab5/lab05.html">Lab 5: Git/GitHub Tutorial</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/07_UnitarityPropagatorTraceContinued.pdf">Lecture 07: Unitarity and Propagator Trace</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/assignment1.pdf">Assignment 01</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 4</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/08_UnitarityPropagatorTraceContinued.pdf">Lecture 08: Unitarity and Propagator Trace (Continued)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/09_DoubleWellTunneling.pdf">Lecture 09: Double Well and Tunneling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab8/Lab8.html">Lab 8: Assignment 2 Tutorial</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/10_EigenvalueProblem.pdf">Lecture 10: Eigenvalue Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../lectures/10_EigenvalueProblemDemo.html">Lecture 10: Eigenvalue Problem Demo</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 5</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/11_StatMechRecap.pdf">Lecture 11: Statistical Mechanics Recap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab9/Lab9.html">Lab 9: Eigenvalue Problem Demo</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/13_MCMC.pdf">Lecture 13: Markov chain Monte Carlo</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/assignment2.pdf">Assignment 02</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 6</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/14_MCMC_Continued.pdf">Lecture 14: Markov chain Monte Carlo (Continued)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/15_Ising_Model.pdf">Lecture 15: Ising Model and MCMC</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Lab 12: MCMC Tutorial</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/16_Path_Integral_MCMC.pdf">Lecture 16: Path Integral and MCMC</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 7</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/17_Path_Integral_MCMC_Continued.pdf">Lecture 17: Path Integral and MCMC (Continued)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab15/Lab15.html">Lab 15: MCMC for Feynman Path Integral Tutorial</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/assignment3.pdf">Assignment 03</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 8</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/18_Particle_Physics_VEGAS.pdf">Lecture 18: Particle Physics and VEGAS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab17/lab17.html">Lab 17: VEGAS Tutorial</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/19_Particle_Physics_VEGAS_Continued.pdf">Lecture 19: Particle Physics and VEGAS (Continued)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 9</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/21_Particle_Physics_VEGAS_Part3.pdf">Lecture 21: Particle Physics and VEGAS (Part 3)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/22_Final_Projects.pdf">Lecture 22: Final Projects</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/23_Preview_139.pdf">Lecture 23: Preview of PHYS 141/142</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 10</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/final_projects.pdf">Final Projects</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/jmduarte/phys142/main?urlpath=tree/labs/lab12/Lab12.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://datahub.ucsd.edu/hub/user-redirect/git-pull?repo=https%3A//github.com/jmduarte/phys142&urlpath=tree/phys142/labs/lab12/Lab12.ipynb&branch=main" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onJupyterHub"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="btn__text-container">JupyterHub</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/jmduarte/phys142/blob/main/labs/lab12/Lab12.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jmduarte/phys142" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jmduarte/phys142/issues/new?title=Issue%20on%20page%20%2Flabs/lab12/Lab12.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/labs/lab12/Lab12.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Lab 12: MCMC Tutorial</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#d-ising-model">2D Ising Model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#energy-of-a-spin-configuration">Energy of a spin configuration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mcmc-sampling">MCMC Sampling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#magnetization">Magnetization</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="lab-12-mcmc-tutorial">
+<h1>Lab 12: MCMC Tutorial<a class="headerlink" href="#lab-12-mcmc-tutorial" title="Permalink to this heading">#</a></h1>
+<p>In this lab, we will study the 2D Ising model using Markov chain Monte Carlo.
+We demonstrate how to implement the Metropolis-Hastings algorithm to sample the Ising model at different temperatures and study the phase transition.</p>
+<section id="d-ising-model">
+<h2>2D Ising Model<a class="headerlink" href="#d-ising-model" title="Permalink to this heading">#</a></h2>
+<p>The set of lattice sites is <span class="math notranslate nohighlight">\(\Lambda\)</span>, usually a square grid.
+At each site, where <span class="math notranslate nohighlight">\(\sigma_k \in \{ -1, +1\}\)</span>￼is the spin at each site <span class="math notranslate nohighlight">\(k\)</span>.
+For any two adjacent sites <span class="math notranslate nohighlight">\(\langle i j \rangle\)</span> (with no double counting) there is a spin interaction <span class="math notranslate nohighlight">\(J\)</span>.
+The energy of the system is given by</p>
+<div class="math notranslate nohighlight">
+\[E(\sigma) = -J\sum_{\langle ij\rangle} \sigma_i\sigma_j\]</div>
+<p>The probability of a given configuration <span class="math notranslate nohighlight">\(\sigma\)</span> is given by the Boltzmann distribution</p>
+<div class="math notranslate nohighlight">
+\[p(\sigma) = \frac{1}{Z}\exp \left(-\frac{E(\sigma)}{k_\mathrm{B}T}\right),\]</div>
+<p>where <span class="math notranslate nohighlight">\(Z = \sum_{\sigma} \exp \left(-\frac{E(\sigma)}{k_\mathrm{B}T}\right)\)</span> is the partition function, <span class="math notranslate nohighlight">\(T\)</span> is the temperature, and <span class="math notranslate nohighlight">\(k_\mathrm{B}\)</span> is the Boltzmann constant.
+We assume periodic boundary conditions.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">tqdm</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="energy-of-a-spin-configuration">
+<h2>Energy of a spin configuration<a class="headerlink" href="#energy-of-a-spin-configuration" title="Permalink to this heading">#</a></h2>
+<p>We will do a warmup problem by computing the energy of the Ising model spin configuration shown in lecture.
+Blue squares represent spins pointing up, and red squares represent spins pointing down.
+First, we initialize the lattice with the following spin configuration:</p>
+<img src="ising2d.png" width=300/><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">J</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">lattice_spins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="n">lattice_spins</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">lattice_spins</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">lattice_spins</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">lattice_spins</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdYlBu&quot;</span><span class="p">)</span>
+<span class="c1"># show gridlines</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">energy</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="p">[(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)]:</span> <span class="c1">#steps to take when navigating through the map, to obtain the sites of neighbors</span>
+            <span class="n">i_neigh</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="n">k</span> <span class="k">if</span> <span class="n">i</span> <span class="o">+</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">N</span> <span class="k">else</span> <span class="mi">0</span>
+            <span class="n">j_neigh</span> <span class="o">=</span> <span class="n">j</span> <span class="o">+</span> <span class="n">l</span> <span class="k">if</span> <span class="n">j</span> <span class="o">+</span> <span class="n">l</span> <span class="o">&lt;</span> <span class="n">N</span> <span class="k">else</span> <span class="mi">0</span>
+            <span class="n">energy</span> <span class="o">+=</span> <span class="o">-</span><span class="n">J</span> <span class="o">*</span> <span class="n">lattice_spins</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">*</span> <span class="n">lattice_spins</span><span class="p">[</span><span class="n">i_neigh</span><span class="p">,</span> <span class="n">j_neigh</span><span class="p">]</span>
+<span class="n">energy</span> <span class="o">=</span> <span class="n">energy</span> <span class="o">/</span> <span class="mi">2</span> <span class="c1">#to avoid double counting</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">energy</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/9988127c908812489fa81db6d9ec31fb5654f73c768f4e7b0011c2af59892544.png" src="../../_images/9988127c908812489fa81db6d9ec31fb5654f73c768f4e7b0011c2af59892544.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>energy=np.float64(-152.0)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="mcmc-sampling">
+<h2>MCMC Sampling<a class="headerlink" href="#mcmc-sampling" title="Permalink to this heading">#</a></h2>
+<p>As discussed in lecture, we will use the Metropolis-Hastings algorithm to sample the Ising model at a given temperature.</p>
+<p>As discussed in class the critical temperature for the 2D Ising model is <span class="math notranslate nohighlight">\(T_\mathrm{c}=\frac{2}{\ln(1+\sqrt{2})}\approx 2.269\)</span> in units where <span class="math notranslate nohighlight">\(J=k_\mathrm{B}=1\)</span>.
+For <span class="math notranslate nohighlight">\(T&lt;T_\mathrm{c}\)</span>, the system is in the ordered phase (spins tend to align), and for <span class="math notranslate nohighlight">\(T&gt;T_\mathrm{c}\)</span>, the system is in the disordered phase. (The order parameter of this phase transition is M)</p>
+<p>Let’s start with <span class="math notranslate nohighlight">\(T=2\)</span>, a <span class="math notranslate nohighlight">\(100\times100\)</span> lattice, and 1 million MCMC steps.</p>
+<p>To apply the MCMC method to the Ising model, we design a Markov process using the Metropolis algorithm as follows</p>
+<ol class="arabic simple">
+<li><p>On step <span class="math notranslate nohighlight">\(k\)</span>, randomly choose one of the spins <span class="math notranslate nohighlight">\(\sigma_k\)</span>￼ and consider flipping it <span class="math notranslate nohighlight">\(\sigma_k \to -\sigma_k\)</span>.</p></li>
+<li><p>Calculate the change in energy that would result from flipping spin <span class="math notranslate nohighlight">\(k\)</span>, i.e. the quantity:
+$<span class="math notranslate nohighlight">\(\Delta E = - \left[J \sum_{\langle ij\rangle} \sigma_j\right] \Delta \sigma_i,\)</span><span class="math notranslate nohighlight">\(
+where \)</span>\Delta \sigma_i = -2\sigma_i$ is the change due to the spin flip</p>
+<ul class="simple">
+<li><p>If <span class="math notranslate nohighlight">\(\Delta E \leq 0\)</span>, accept the spin flip.</p></li>
+<li><p>If <span class="math notranslate nohighlight">\(\Delta E &gt; 0\)</span>, accept the spin flip with probability <span class="math notranslate nohighlight">\(\exp(-\Delta E/k_\mathrm{B}T)\)</span>.</p></li>
+</ul>
+</li>
+<li><p>Update the moving average of whatever quantity we are interested in.</p></li>
+<li><p>Repeat.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">STEPS</span> <span class="o">=</span> <span class="mi">1_000_000</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">J</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">KB</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">T</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="c1"># initialize random lattice</span>
+<span class="c1"># lattice_spins = 2 * (np.random.randint(2, size=(N, N)) - 0.5)</span>
+<span class="c1"># initialize ordered lattice with all spins up</span>
+<span class="n">lattice_spins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
+
+<span class="n">num_accept</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">m_values</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="o">.</span><span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">STEPS</span><span class="p">)):</span>
+    <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">N</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+    <span class="c1"># we only need to consider the neighbors of </span>
+    <span class="c1"># (i, j) to calculate the change in energy</span>
+    <span class="n">delta_energy</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="p">[(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)]:</span>
+        <span class="n">i_neigh</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="n">k</span> <span class="k">if</span> <span class="n">i</span> <span class="o">+</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">N</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="n">j_neigh</span> <span class="o">=</span> <span class="n">j</span> <span class="o">+</span> <span class="n">l</span> <span class="k">if</span> <span class="n">j</span> <span class="o">+</span> <span class="n">l</span> <span class="o">&lt;</span> <span class="n">N</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="n">delta_energy</span> <span class="o">+=</span> <span class="o">-</span><span class="n">J</span> <span class="o">*</span> <span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">lattice_spins</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">*</span> <span class="n">lattice_spins</span><span class="p">[</span><span class="n">i_neigh</span><span class="p">,</span> <span class="n">j_neigh</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">delta_energy</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">lattice_spins</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="n">num_accept</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">elif</span> <span class="n">delta_energy</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">prob</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">delta_energy</span> <span class="o">/</span> <span class="p">(</span><span class="n">KB</span> <span class="o">*</span> <span class="n">T</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">prob</span><span class="p">:</span>
+            <span class="n">lattice_spins</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="n">num_accept</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">m_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">lattice_spins</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;acceptance_rate = </span><span class="si">{</span><span class="n">num_accept</span><span class="o">/</span><span class="n">STEPS</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|          | 0/1000000 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  1%|          | 5743/1000000 [00:00&lt;00:17, 57418.83it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  1%|          | 11487/1000000 [00:00&lt;00:17, 57426.56it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  2%|▏         | 17533/1000000 [00:00&lt;00:16, 58810.57it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  2%|▏         | 23539/1000000 [00:00&lt;00:16, 59300.70it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  3%|▎         | 29487/1000000 [00:00&lt;00:16, 59364.45it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  4%|▎         | 35424/1000000 [00:00&lt;00:16, 59249.56it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  4%|▍         | 41414/1000000 [00:00&lt;00:16, 59445.74it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  5%|▍         | 47359/1000000 [00:00&lt;00:16, 56752.62it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  5%|▌         | 53058/1000000 [00:00&lt;00:17, 53903.86it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  6%|▌         | 58487/1000000 [00:01&lt;00:18, 52166.42it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  6%|▋         | 63734/1000000 [00:01&lt;00:19, 48735.63it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  7%|▋         | 68658/1000000 [00:01&lt;00:19, 48237.53it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  7%|▋         | 73988/1000000 [00:01&lt;00:18, 49650.73it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  8%|▊         | 78987/1000000 [00:01&lt;00:18, 49216.01it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  9%|▊         | 85050/1000000 [00:01&lt;00:17, 52498.04it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  9%|▉         | 91154/1000000 [00:01&lt;00:16, 54983.92it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 10%|▉         | 96958/1000000 [00:01&lt;00:16, 55881.04it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 10%|█         | 102808/1000000 [00:01&lt;00:15, 56654.44it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 11%|█         | 108890/1000000 [00:01&lt;00:15, 57889.70it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 11%|█▏        | 114843/1000000 [00:02&lt;00:15, 58377.41it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 12%|█▏        | 120837/1000000 [00:02&lt;00:14, 58841.42it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 13%|█▎        | 126826/1000000 [00:02&lt;00:14, 59153.79it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 13%|█▎        | 132750/1000000 [00:02&lt;00:14, 59177.88it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 14%|█▍        | 138672/1000000 [00:02&lt;00:14, 59154.78it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 14%|█▍        | 144724/1000000 [00:02&lt;00:14, 59562.11it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 15%|█▌        | 150683/1000000 [00:02&lt;00:14, 59460.93it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 16%|█▌        | 156631/1000000 [00:02&lt;00:14, 59421.40it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 16%|█▋        | 162585/1000000 [00:02&lt;00:14, 59455.06it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 17%|█▋        | 168542/1000000 [00:02&lt;00:13, 59486.66it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 17%|█▋        | 174492/1000000 [00:03&lt;00:14, 58779.43it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 18%|█▊        | 180466/1000000 [00:03&lt;00:13, 59063.15it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 19%|█▊        | 186548/1000000 [00:03&lt;00:13, 59582.68it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 19%|█▉        | 192508/1000000 [00:03&lt;00:13, 59313.41it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 20%|█▉        | 198547/1000000 [00:03&lt;00:13, 59629.04it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 20%|██        | 204511/1000000 [00:03&lt;00:13, 59588.37it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 21%|██        | 210471/1000000 [00:03&lt;00:13, 59186.22it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 22%|██▏       | 216391/1000000 [00:03&lt;00:13, 58664.62it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 22%|██▏       | 222259/1000000 [00:03&lt;00:13, 57719.97it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 23%|██▎       | 228240/1000000 [00:03&lt;00:13, 58332.96it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 23%|██▎       | 234133/1000000 [00:04&lt;00:13, 58507.33it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 24%|██▍       | 239987/1000000 [00:04&lt;00:13, 57749.36it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 25%|██▍       | 245766/1000000 [00:04&lt;00:13, 57015.89it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 25%|██▌       | 251533/1000000 [00:04&lt;00:13, 57207.33it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 26%|██▌       | 257257/1000000 [00:04&lt;00:13, 56855.39it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 26%|██▋       | 263090/1000000 [00:04&lt;00:12, 57286.56it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 27%|██▋       | 269151/1000000 [00:04&lt;00:12, 58270.39it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 27%|██▋       | 274981/1000000 [00:04&lt;00:12, 58212.42it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 28%|██▊       | 281039/1000000 [00:04&lt;00:12, 58916.13it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 29%|██▊       | 286933/1000000 [00:05&lt;00:12, 58574.48it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 29%|██▉       | 292969/1000000 [00:05&lt;00:11, 59105.41it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 30%|██▉       | 298881/1000000 [00:05&lt;00:11, 58861.99it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 30%|███       | 304920/1000000 [00:05&lt;00:11, 59313.85it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 31%|███       | 310968/1000000 [00:05&lt;00:11, 59659.70it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 32%|███▏      | 316935/1000000 [00:05&lt;00:11, 58732.98it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 32%|███▏      | 322812/1000000 [00:05&lt;00:11, 57936.65it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 33%|███▎      | 328712/1000000 [00:05&lt;00:11, 58248.22it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 33%|███▎      | 334541/1000000 [00:05&lt;00:11, 57441.60it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 34%|███▍      | 340522/1000000 [00:05&lt;00:11, 58134.67it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 35%|███▍      | 346590/1000000 [00:06&lt;00:11, 58886.49it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 35%|███▌      | 352608/1000000 [00:06&lt;00:10, 59269.97it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 36%|███▌      | 358584/1000000 [00:06&lt;00:10, 59413.35it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 36%|███▋      | 364528/1000000 [00:06&lt;00:10, 58276.83it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 37%|███▋      | 370460/1000000 [00:06&lt;00:10, 58583.45it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 38%|███▊      | 376497/1000000 [00:06&lt;00:10, 59111.61it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 38%|███▊      | 382413/1000000 [00:06&lt;00:10, 58817.97it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 39%|███▉      | 388506/1000000 [00:06&lt;00:10, 59443.09it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 39%|███▉      | 394557/1000000 [00:06&lt;00:10, 59758.57it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 40%|████      | 400535/1000000 [00:06&lt;00:10, 58337.15it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 41%|████      | 406378/1000000 [00:07&lt;00:10, 58117.26it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 41%|████      | 412196/1000000 [00:07&lt;00:10, 57982.47it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 42%|████▏     | 418085/1000000 [00:07&lt;00:09, 58249.77it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 42%|████▏     | 423913/1000000 [00:07&lt;00:09, 57660.48it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 43%|████▎     | 429971/1000000 [00:07&lt;00:09, 58521.37it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 44%|████▎     | 435827/1000000 [00:07&lt;00:09, 57024.07it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 44%|████▍     | 441541/1000000 [00:07&lt;00:09, 57056.28it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 45%|████▍     | 447254/1000000 [00:07&lt;00:09, 55914.93it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 45%|████▌     | 453226/1000000 [00:07&lt;00:09, 57023.76it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 46%|████▌     | 459094/1000000 [00:07&lt;00:09, 57510.06it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 46%|████▋     | 464853/1000000 [00:08&lt;00:09, 57358.91it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 47%|████▋     | 470774/1000000 [00:08&lt;00:09, 57907.52it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 48%|████▊     | 476624/1000000 [00:08&lt;00:09, 58081.17it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 48%|████▊     | 482653/1000000 [00:08&lt;00:08, 58738.94it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 49%|████▉     | 488530/1000000 [00:08&lt;00:08, 58722.68it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 49%|████▉     | 494645/1000000 [00:08&lt;00:08, 59448.25it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 50%|█████     | 500592/1000000 [00:08&lt;00:08, 58234.12it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 51%|█████     | 506422/1000000 [00:08&lt;00:08, 56311.99it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 51%|█████     | 512383/1000000 [00:08&lt;00:08, 57266.57it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 52%|█████▏    | 518511/1000000 [00:08&lt;00:08, 58440.08it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 52%|█████▏    | 524581/1000000 [00:09&lt;00:08, 59105.56it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 53%|█████▎    | 530704/1000000 [00:09&lt;00:07, 59734.64it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 54%|█████▎    | 536835/1000000 [00:09&lt;00:07, 60201.42it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 54%|█████▍    | 542862/1000000 [00:09&lt;00:07, 60119.35it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 55%|█████▍    | 548879/1000000 [00:09&lt;00:07, 60056.77it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 56%|█████▌    | 555025/1000000 [00:09&lt;00:07, 60472.68it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 56%|█████▌    | 561075/1000000 [00:09&lt;00:07, 59673.96it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 57%|█████▋    | 567191/1000000 [00:09&lt;00:07, 60112.28it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 57%|█████▋    | 573206/1000000 [00:09&lt;00:07, 59727.67it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 58%|█████▊    | 579182/1000000 [00:09&lt;00:07, 59673.80it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 59%|█████▊    | 585281/1000000 [00:10&lt;00:06, 60065.17it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 59%|█████▉    | 591322/1000000 [00:10&lt;00:06, 60167.54it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 60%|█████▉    | 597340/1000000 [00:10&lt;00:06, 59927.03it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 60%|██████    | 603340/1000000 [00:10&lt;00:06, 59947.88it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 61%|██████    | 609446/1000000 [00:10&lt;00:06, 60279.70it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 62%|██████▏   | 615475/1000000 [00:10&lt;00:06, 59281.68it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 62%|██████▏   | 621408/1000000 [00:10&lt;00:06, 59082.74it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 63%|██████▎   | 627319/1000000 [00:10&lt;00:06, 58986.88it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 63%|██████▎   | 633220/1000000 [00:10&lt;00:06, 57971.25it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 64%|██████▍   | 639119/1000000 [00:11&lt;00:06, 58268.93it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 65%|██████▍   | 645105/1000000 [00:11&lt;00:06, 58738.18it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 65%|██████▌   | 650982/1000000 [00:11&lt;00:06, 57954.59it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 66%|██████▌   | 656789/1000000 [00:11&lt;00:05, 57986.67it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 66%|██████▋   | 662619/1000000 [00:11&lt;00:05, 58077.69it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 67%|██████▋   | 668429/1000000 [00:11&lt;00:05, 57979.15it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 67%|██████▋   | 674266/1000000 [00:11&lt;00:05, 58093.06it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 68%|██████▊   | 680198/1000000 [00:11&lt;00:05, 58458.13it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 69%|██████▊   | 686232/1000000 [00:11&lt;00:05, 59020.11it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 69%|██████▉   | 692135/1000000 [00:11&lt;00:05, 57743.63it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 70%|██████▉   | 698091/1000000 [00:12&lt;00:05, 58278.38it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 70%|███████   | 703950/1000000 [00:12&lt;00:05, 58369.57it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 71%|███████   | 709791/1000000 [00:12&lt;00:04, 58079.75it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 72%|███████▏  | 715915/1000000 [00:12&lt;00:04, 59016.07it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 72%|███████▏  | 722063/1000000 [00:12&lt;00:04, 59747.81it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 73%|███████▎  | 728041/1000000 [00:12&lt;00:04, 59133.12it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 73%|███████▎  | 733958/1000000 [00:12&lt;00:04, 58901.38it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 74%|███████▍  | 739947/1000000 [00:12&lt;00:04, 59191.69it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 75%|███████▍  | 746057/1000000 [00:12&lt;00:04, 59757.65it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 75%|███████▌  | 752114/1000000 [00:12&lt;00:04, 59999.39it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 76%|███████▌  | 758290/1000000 [00:13&lt;00:03, 60521.41it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 76%|███████▋  | 764344/1000000 [00:13&lt;00:03, 60205.71it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 77%|███████▋  | 770366/1000000 [00:13&lt;00:03, 59097.09it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 78%|███████▊  | 776346/1000000 [00:13&lt;00:03, 59302.13it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 78%|███████▊  | 782297/1000000 [00:13&lt;00:03, 59362.85it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 79%|███████▉  | 788236/1000000 [00:13&lt;00:03, 58871.12it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 79%|███████▉  | 794262/1000000 [00:13&lt;00:03, 59280.60it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 80%|████████  | 800256/1000000 [00:13&lt;00:03, 59474.82it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 81%|████████  | 806206/1000000 [00:13&lt;00:03, 58944.25it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 81%|████████  | 812103/1000000 [00:13&lt;00:03, 57955.92it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 82%|████████▏ | 818128/1000000 [00:14&lt;00:03, 58629.37it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 82%|████████▏ | 823996/1000000 [00:14&lt;00:03, 58471.79it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 83%|████████▎ | 829897/1000000 [00:14&lt;00:02, 58630.91it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 84%|████████▎ | 835960/1000000 [00:14&lt;00:02, 59222.80it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 84%|████████▍ | 842037/1000000 [00:14&lt;00:02, 59682.20it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 85%|████████▍ | 848007/1000000 [00:14&lt;00:02, 59560.42it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 85%|████████▌ | 853965/1000000 [00:14&lt;00:02, 59195.26it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 86%|████████▌ | 860045/1000000 [00:14&lt;00:02, 59670.09it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 87%|████████▋ | 866145/1000000 [00:14&lt;00:02, 60064.35it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 87%|████████▋ | 872264/1000000 [00:14&lt;00:02, 60398.71it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 88%|████████▊ | 878317/1000000 [00:15&lt;00:02, 60435.94it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 88%|████████▊ | 884362/1000000 [00:15&lt;00:01, 60399.76it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 89%|████████▉ | 890403/1000000 [00:15&lt;00:01, 59530.99it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 90%|████████▉ | 896478/1000000 [00:15&lt;00:01, 59890.18it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 90%|█████████ | 902470/1000000 [00:15&lt;00:01, 59320.14it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 91%|█████████ | 908532/1000000 [00:15&lt;00:01, 59703.34it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 91%|█████████▏| 914505/1000000 [00:15&lt;00:01, 59582.86it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 92%|█████████▏| 920608/1000000 [00:15&lt;00:01, 60010.98it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 93%|█████████▎| 926654/1000000 [00:15&lt;00:01, 60144.08it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 93%|█████████▎| 932670/1000000 [00:15&lt;00:01, 59366.20it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 94%|█████████▍| 938751/1000000 [00:16&lt;00:01, 59792.14it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 94%|█████████▍| 944733/1000000 [00:16&lt;00:00, 59484.79it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 95%|█████████▌| 950684/1000000 [00:16&lt;00:00, 58383.19it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 96%|█████████▌| 956665/1000000 [00:16&lt;00:00, 58802.13it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 96%|█████████▋| 962779/1000000 [00:16&lt;00:00, 59491.28it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 97%|█████████▋| 968733/1000000 [00:16&lt;00:00, 59136.74it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 97%|█████████▋| 974650/1000000 [00:16&lt;00:00, 58949.80it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 98%|█████████▊| 980547/1000000 [00:16&lt;00:00, 58446.62it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 99%|█████████▊| 986394/1000000 [00:16&lt;00:00, 58421.19it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 99%|█████████▉| 992238/1000000 [00:16&lt;00:00, 58327.96it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|█████████▉| 998072/1000000 [00:17&lt;00:00, 56493.60it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 1000000/1000000 [00:17&lt;00:00, 58397.48it/s]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>acceptance_rate = 0.076772
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The final distribution of spins looks like this</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">lattice_spins</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdYlBu&quot;</span><span class="p">)</span>
+<span class="c1"># show gridlines</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/12226b2fbb6ec2ae59bcb44d963bee7c1050644ef8f994034797b12e8fad1103.png" src="../../_images/12226b2fbb6ec2ae59bcb44d963bee7c1050644ef8f994034797b12e8fad1103.png" />
+</div>
+</div>
+</section>
+<section id="magnetization">
+<h2>Magnetization<a class="headerlink" href="#magnetization" title="Permalink to this heading">#</a></h2>
+<p>We can measure the magnetization, defined as the average spin over the lattice</p>
+<div class="math notranslate nohighlight">
+\[M = \frac{1}{N}\sum_{i=1}^N \sigma_i,\]</div>
+<p>where <span class="math notranslate nohighlight">\(N\)</span> is the number of spins.</p>
+<p>Note we use a burn-in period of 100,000 steps to allow the system to reach equilibrium.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">BURNIN</span> <span class="o">=</span> <span class="mi">100_000</span>
+
+<span class="n">m_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">m_values</span><span class="p">[</span><span class="n">BURNIN</span><span class="p">:])</span>
+<span class="n">m_std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">m_values</span><span class="p">[</span><span class="n">BURNIN</span><span class="p">:])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">STEPS</span><span class="p">)[:</span><span class="n">BURNIN</span><span class="p">],</span> <span class="n">m_values</span><span class="p">[:</span><span class="n">BURNIN</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Burn in&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">STEPS</span><span class="p">)[</span><span class="n">BURNIN</span><span class="p">:],</span> <span class="n">m_values</span><span class="p">[</span><span class="n">BURNIN</span><span class="p">:],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Sampling&quot;</span><span class="p">)</span>
+<span class="c1"># show mean as dashed line</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">STEPS</span><span class="p">),</span> <span class="n">m_mean</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">STEPS</span><span class="p">)),</span> <span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+<span class="c1"># show variance as filled box</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">STEPS</span><span class="p">),</span> <span class="n">m_mean</span> <span class="o">-</span> <span class="n">m_std</span><span class="p">,</span> <span class="n">m_mean</span> <span class="o">+</span> <span class="n">m_std</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Steps&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Magnetization&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;T=</span><span class="si">{</span><span class="n">T</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;magnetization mean = </span><span class="si">{</span><span class="n">m_mean</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;magnetization std = </span><span class="si">{</span><span class="n">m_std</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/c478d874910a7ab9b6ac6f980eeb3e9fede8cea7dbfaeb25ded9f50484b027be.png" src="../../_images/c478d874910a7ab9b6ac6f980eeb3e9fede8cea7dbfaeb25ded9f50484b027be.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>magnetization mean = 0.9137976262222224
+magnetization std = 0.008425037920696798
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9246256650687227
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./labs/lab12"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../lab9/Lab9.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Lab 9: Eigenvalue Problem Demo</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../lab15/Lab15.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Lab 15: MCMC for Feynman Path Integral Tutorial</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#d-ising-model">2D Ising Model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#energy-of-a-spin-configuration">Energy of a spin configuration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mcmc-sampling">MCMC Sampling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#magnetization">Magnetization</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Javier Duarte
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

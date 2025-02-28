@@ -75,17 +75,17 @@ parts:
     chapters:
     - url: https://jduarte.physics.ucsd.edu/phys142/lectures/18_Particle_Physics_VEGAS.pdf
       title: "Lecture 18: Particle Physics and VEGAS"
-    - file: labs/lab17/lab17.ipynb
     - url: https://jduarte.physics.ucsd.edu/phys142/lectures/19_Particle_Physics_VEGAS_Continued.pdf
       title: "Lecture 19: Particle Physics and VEGAS (Continued)"
+    - file: labs/lab17/lab17.ipynb
+    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/20_Particle_Physics_VEGAS_Part3.pdf
+      title: "Lecture 20: Particle Physics and VEGAS (Part 3)"
   - caption: Week 9
     chapters:
-    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/21_Particle_Physics_VEGAS_Part3.pdf
-      title: "Lecture 21: Particle Physics and VEGAS (Part 3)"
     - url: https://jduarte.physics.ucsd.edu/phys142/lectures/22_Final_Projects.pdf
       title: "Lecture 22: Final Projects"
     - url: https://jduarte.physics.ucsd.edu/phys142/lectures/23_Preview_139.pdf
-      title: "Lecture 23: Preview of PHYS 141/142"
+      title: "Lecture 23: Preview of PHYS 139"
   - caption: Week 10
     chapters:
     - url: https://jduarte.physics.ucsd.edu/phys142/final_projects.pdf

@@ -1,0 +1,879 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Lab 5: Git/GitHub Tutorial &#8212; UCSD PHYS 142/242</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'labs/lab5/lab05';</script>
+    <link rel="canonical" href="https://jduarte.physics.ucsd.edu/phys142/labs/lab5/lab05.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Lab 8: Assignment 2 Tutorial" href="../lab8/Lab8.html" />
+    <link rel="prev" title="Lab 4: Free Particle Propagator (Assignment 1 Tutorial)" href="../lab4/Lab4.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/Interference_electrons_double-slit_at_10cm.png" class="logo__image only-light" alt="UCSD PHYS 142/242 - Home"/>
+    <script>document.write(`<img src="../../_static/Interference_electrons_double-slit_at_10cm.png" class="logo__image only-dark" alt="UCSD PHYS 142/242 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../README.html">
+                    UCSD PHYS 142/242: Computational Physics II (Winter 2025)
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/syllabus.pdf">Syllabus</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/01_Introduction.pdf">Lecture 01: Introduction</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/labs/lab1/01_DataHub.pdf">Lab 01: DataHub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab1/Lab1.html">Lab 1: Introduction</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/02_FeynmanPathIntegral.pdf">Lecture 02: Feynman Path Integral</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab2/Lab2.html">Lab 2: Numba and ffmpeg</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/quiz1.pdf">Quiz 01</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/03_FeynmanPathIntegralContinued.pdf">Lecture 03: Feynman Path Integral (Continued)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab3/Lab3.html">Lab 3: Introduction to Julia</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/04_FreeParticle.pdf">Lecture 04: Free Particle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab4/Lab4.html">Lab 4: Free Particle Propagator (Assignment 1 Tutorial)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/05_HarmonicOscillator.pdf">Lecture 05: Harmonic Oscillator</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/quiz2.pdf">Quiz 02</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 3</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/06_SchrodingerEquation.pdf">Lecture 06: Schrodinger Equation</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Lab 5: Git/GitHub Tutorial</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/07_UnitarityPropagatorTraceContinued.pdf">Lecture 07: Unitarity and Propagator Trace</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/assignment1.pdf">Assignment 01</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 4</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/08_UnitarityPropagatorTraceContinued.pdf">Lecture 08: Unitarity and Propagator Trace (Continued)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/09_DoubleWellTunneling.pdf">Lecture 09: Double Well and Tunneling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab8/Lab8.html">Lab 8: Assignment 2 Tutorial</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/10_EigenvalueProblem.pdf">Lecture 10: Eigenvalue Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../lectures/10_EigenvalueProblemDemo.html">Lecture 10: Eigenvalue Problem Demo</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 5</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/11_StatMechRecap.pdf">Lecture 11: Statistical Mechanics Recap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab9/Lab9.html">Lab 9: Eigenvalue Problem Demo</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/13_MCMC.pdf">Lecture 13: Markov chain Monte Carlo</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/assignment2.pdf">Assignment 02</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 6</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/14_MCMC_Continued.pdf">Lecture 14: Markov chain Monte Carlo (Continued)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/15_Ising_Model.pdf">Lecture 15: Ising Model and MCMC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab12/Lab12.html">Lab 12: MCMC Tutorial</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/16_Path_Integral_MCMC.pdf">Lecture 16: Path Integral and MCMC</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 7</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/17_Path_Integral_MCMC_Continued.pdf">Lecture 17: Path Integral and MCMC (Continued)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab15/Lab15.html">Lab 15: MCMC for Feynman Path Integral Tutorial</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/assignment3.pdf">Assignment 03</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 8</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/18_Particle_Physics_VEGAS.pdf">Lecture 18: Particle Physics and VEGAS</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/19_Particle_Physics_VEGAS_Continued.pdf">Lecture 19: Particle Physics and VEGAS (Continued)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab17/lab17.html">Lab 17: VEGAS Tutorial</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/20_Particle_Physics_VEGAS_Part3.pdf">Lecture 20: Particle Physics and VEGAS (Part 3)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 9</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/22_Final_Projects.pdf">Lecture 22: Final Projects</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/23_Preview_139.pdf">Lecture 23: Preview of PHYS 139</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 10</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/final_projects.pdf">Final Projects</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/jmduarte/phys142/main?urlpath=tree/labs/lab5/lab05.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://datahub.ucsd.edu/hub/user-redirect/git-pull?repo=https%3A//github.com/jmduarte/phys142&urlpath=tree/phys142/labs/lab5/lab05.ipynb&branch=main" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onJupyterHub"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="btn__text-container">JupyterHub</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/jmduarte/phys142/blob/main/labs/lab5/lab05.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jmduarte/phys142" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jmduarte/phys142/issues/new?title=Issue%20on%20page%20%2Flabs/lab5/lab05.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/labs/lab5/lab05.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Lab 5: Git/GitHub Tutorial</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#github-essentials">GitHub essentials</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#repositories">Repositories</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#branches">Branches</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#commits">Commits</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pull-requests">Pull Requests</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#merging-your-pull-request">Merging your pull request</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#use-git-github-with-jupyter-notebook">Use Git/GitHub with Jupyter Notebook</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-a-notebook-to-the-github-repository">Add a notebook to the GitHub repository</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#integrate-the-remote-changes-to-your-local-directory">Integrate the remote changes to your local directory</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#three-options">Three options</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation-for-git">Motivation for git</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#brief-history-of-version-control">Brief history of version control</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#core-concepts-in-git">Core concepts in git</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="lab-5-git-github-tutorial">
+<h1>Lab 5: Git/GitHub Tutorial<a class="headerlink" href="#lab-5-git-github-tutorial" title="Permalink to this heading">#</a></h1>
+<p>GitHub is a code hosting platform for version control and collaboration. It lets you and others work together on projects from anywhere.</p>
+<section id="github-essentials">
+<h2>GitHub essentials<a class="headerlink" href="#github-essentials" title="Permalink to this heading">#</a></h2>
+<p>Before we head to the basics, create/log in your GitHub account.</p>
+<section id="repositories">
+<h3>Repositories<a class="headerlink" href="#repositories" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>A repository is usually used to organize a single project.</p></li>
+<li><p>Repositories can contain folders and files, images, videos, spreadsheets, and data sets – anything your project needs.</p></li>
+<li><p>Often, repositories include a README file, a file with information about your project written in the plain text Markdown language. A Markdown language cheat sheet: <a class="reference external" href="https://www.markdownguide.org/cheat-sheet/">https://www.markdownguide.org/cheat-sheet/</a></p></li>
+</ul>
+<p>Now let’s practice!</p>
+</section>
+<section id="branches">
+<h3>Branches<a class="headerlink" href="#branches" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Branching lets you have different versions of a repository at one time.</p></li>
+<li><p>Your repository has only one branch named <code class="docutils literal notranslate"><span class="pre">main</span></code> by default, but you can create additional branches off of <code class="docutils literal notranslate"><span class="pre">main</span></code> in your repository. You can use branches to have different versions of a project at one time. This is helpful when you want to add new features to a project without changing the main source of code.</p></li>
+<li><p>The work done on different branches will not show up on the <code class="docutils literal notranslate"><span class="pre">main</span></code> branch until you merge it. You can use branches to experiment and make edits before committing them to <code class="docutils literal notranslate"><span class="pre">main</span></code>.
+<img alt="alt text" src="../../_images/diagram.png" /></p></li>
+</ul>
+<p>Practice: Create <code class="docutils literal notranslate"><span class="pre">readme-edits</span></code> branch.</p>
+</section>
+<section id="commits">
+<h3>Commits<a class="headerlink" href="#commits" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>When you created a new branch in the previous step, GitHub brought you to the code page for your new <code class="docutils literal notranslate"><span class="pre">readme-edits</span></code> branch, which is a copy of <code class="docutils literal notranslate"><span class="pre">main</span></code>.</p></li>
+<li><p>You can make and save changes to the files in your repository. On GitHub, saved changes are called commits.</p></li>
+<li><p>Each commit has an associated commit message, which is a description tha captures the history of your changes so that other contributors can understand what you’ve done and why.</p></li>
+</ul>
+<p>Practice: Edit the <a class="reference external" href="http://README.md">README.md</a> file and commit changes. Now this branch should be containining content that’s different from <code class="docutils literal notranslate"><span class="pre">main</span></code>.</p>
+</section>
+<section id="pull-requests">
+<h3>Pull Requests<a class="headerlink" href="#pull-requests" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Now that you have changes in a branch off of <code class="docutils literal notranslate"><span class="pre">main</span></code>, you can open a pull request.</p></li>
+<li><p>Pull requests are the heart of collaboration on GitHub. When you open a pull request, you’re proposing your changes and requesting that someone review and pull in your contribution and merge them into their branch. Pull requests show diffs, or differences, of the content from both branches. The changes, additions, and subtractions are shown in different colors.</p></li>
+<li><p>As soon as you make a commit, you can open a pull request and start a discussion, even before the code is finished. By using GitHub’s <code class="docutils literal notranslate"><span class="pre">&#64;mention</span></code> feature in your pull request message, you can ask for feedback from specific people or teams.</p></li>
+</ul>
+<p>Practice: Create a pull request. Now your collaborators can review your edits and make suggestions.</p>
+</section>
+<section id="merging-your-pull-request">
+<h3>Merging your pull request<a class="headerlink" href="#merging-your-pull-request" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>In this final step, you will merge your <code class="docutils literal notranslate"><span class="pre">readme-edits</span></code> branch into the <code class="docutils literal notranslate"><span class="pre">main</span></code> branch. After you merge your pull request, the changes on your <code class="docutils literal notranslate"><span class="pre">readme-edits</span></code> branch will be incorporated into <code class="docutils literal notranslate"><span class="pre">main</span></code>.</p></li>
+</ul>
+</section>
+</section>
+<section id="use-git-github-with-jupyter-notebook">
+<h2>Use Git/GitHub with Jupyter Notebook<a class="headerlink" href="#use-git-github-with-jupyter-notebook" title="Permalink to this heading">#</a></h2>
+<section id="add-a-notebook-to-the-github-repository">
+<h3>Add a notebook to the GitHub repository<a class="headerlink" href="#add-a-notebook-to-the-github-repository" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Copy the highlighted HTTPS repository URL, and clone the GitHub repository on our machine by running following on the terminal: <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/usrname/repositoryname.git</span></code>. It will create lab05 directory on our machine which is linked to <code class="docutils literal notranslate"><span class="pre">lab05</span></code> repository on Github.</p></li>
+<li><p>Let’s push some notebooks to the repository. We copy two notebooks to the directory where we cloned projectA repository, <code class="docutils literal notranslate"><span class="pre">cp</span> <span class="pre">/some/path/analysis1.ipynb</span> <span class="pre">/path/of/lab05/</span></code>.</p></li>
+<li><p>To push <code class="docutils literal notranslate"><span class="pre">analysis1.ipynb</span></code> to GitHub, we first need to tell local git client to start tracking the file using <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span> <span class="pre">analysis1.ipynb</span></code> (If you want to upload more than one notebooks, instead you can update the repository by enter the folder of the github repositary that you want to update, then type <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span> <span class="pre">.</span></code>). You can check which files are being tracked with <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">status</span></code>.</p></li>
+<li><p>Now let’s commit the changes, <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span> <span class="pre">-m</span> <span class="pre">&quot;Adds</span> <span class="pre">customer</span> <span class="pre">data</span> <span class="pre">analysis</span> <span class="pre">notebook&quot;</span></code></p></li>
+<li><p>Let’s push this commit to GitHub:<code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span></code></p></li>
+</ul>
+</section>
+<section id="integrate-the-remote-changes-to-your-local-directory">
+<h3>Integrate the remote changes to your local directory<a class="headerlink" href="#integrate-the-remote-changes-to-your-local-directory" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">pull</span></code></p></li>
+<li><p>If you have made local changes to the directory, you need to commit your changes or stash them before you merge. You can’t merge with local modifications.</p></li>
+</ul>
+</section>
+<section id="three-options">
+<h3>Three options<a class="headerlink" href="#three-options" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Commit the change using: <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span> <span class="pre">-m</span> <span class="pre">&quot;My</span> <span class="pre">message&quot;</span></code></p></li>
+<li><p>Stash the change using <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">stash</span></code>, you can do the merge, and then pull the stash: <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">stash</span> <span class="pre">pop</span></code></p></li>
+<li><p>Discard the local changes using <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">reset</span> <span class="pre">--hard</span></code> for all changes or <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">filename</span></code> for a specific file.</p></li>
+</ul>
+</section>
+</section>
+<section id="motivation-for-git">
+<h2>Motivation for git<a class="headerlink" href="#motivation-for-git" title="Permalink to this heading">#</a></h2>
+<p>Good practice in programming project management requires a version control
+system.</p>
+<p>Old school techniques are usually bad.</p>
+<ul class="simple">
+<li><p>Version filenames is a disaster.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">mythesis_v1.tex</span></code>, <code class="docutils literal notranslate"><span class="pre">mythesis_v2.tex</span></code>, <code class="docutils literal notranslate"><span class="pre">mythesis_last_v3.tex</span></code></p></li>
+<li><p>creates clutter</p></li>
+<li><p>Filenames rarely contain information other than chronology</p></li>
+<li><p>Parallel independent changes super hard to keep track of</p></li>
+<li><p>Did you finally notice a problem in v119 that has been around for a while,
+but you have no idea where the error was introduced?</p></li>
+</ul>
+</li>
+<li><p>Sharing files with others is a disaster.</p>
+<ul>
+<li><p>Emailing files sucks — only magnifies the problems above</p></li>
+<li><p>Track changes feature Google Docs or Word — not so useful for anything
+complex</p></li>
+</ul>
+</li>
+<li><p>Disaster recover is a disaster.</p>
+<ul>
+<li><p>Oh F#&#64;K! Did I just overwrite all my work from last night??!!!?</p></li>
+</ul>
+</li>
+</ul>
+<p><img alt="title" src="../../_images/phd101212s.png" /></p>
+<p>Modern version control techniques are usually great.</p>
+<p>Modern tools to promote collective intelligence.</p>
+<ul class="simple">
+<li><p>Automated history of everything</p>
+<ul>
+<li><p>not just files, but whole projects with folders and subfolders</p></li>
+<li><p>who, what, when, and (most important) why</p></li>
+</ul>
+</li>
+<li><p>Automated sharing of everyone’s latest edits</p>
+<ul>
+<li><p>no more emailing files around</p></li>
+</ul>
+</li>
+<li><p>Easier disaster recovery with distributed VCSes like Git or Mercurial (see
+later)</p></li>
+<li><p>Support for automated testing (we’ll cover this in future lectures)</p></li>
+<li><p>Infinite sandboxes for clutter-free, fear-free experimentation</p>
+<ul>
+<li><p>this is where Git especially shines – main topic today</p></li>
+</ul>
+</li>
+<li><p>CAVEAT 1: All of this works best with plain text files</p></li>
+<li><p>CAVEAT 2: All of this works best with a highly modular file structure</p></li>
+<li><p>The git feedback effect:</p>
+<ul>
+<li><p>Using git encourages positive changes to your workflow.</p></li>
+<li><p>And making your workflow more git-friendly will make your work better
+overall.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="brief-history-of-version-control">
+<h2>Brief history of version control<a class="headerlink" href="#brief-history-of-version-control" title="Permalink to this heading">#</a></h2>
+<p><img alt="title" src="../../_images/CVCS-vs-DVCS.png" /></p>
+<ul class="simple">
+<li><p>Local Version Control</p>
+<ul>
+<li><p>Mainly just reduced clutter and automated tracking of chronology…</p></li>
+</ul>
+</li>
+<li><p>Centralized Version Control</p>
+<ul>
+<li><p>Allows group work on the same files…</p></li>
+<li><p>Single point of failure — there is only a single “real” repository</p></li>
+<li><p>Backing up is a separate process</p></li>
+<li><p>File locks — create “race conditions” for committing changes to that
+“real” repository</p></li>
+<li><p>What if you lose internet?</p></li>
+<li><p>Branching is cumbersome, so people don’t do it (and have trouble reconciling
+disparate histories when they do)</p></li>
+</ul>
+</li>
+<li><p>Distributed Version Control</p>
+<ul>
+<li><p>Resolve most of the above issues…</p></li>
+<li><p>Many separate and independent repos; all are “first-class” citizens</p></li>
+<li><p>Can make commits locally even without internet…</p></li>
+<li><p>…but can transfer history and information between repositories</p></li>
+<li><p>Branching is lightweight and easy (mainly in Git)</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="core-concepts-in-git">
+<h2>Core concepts in git<a class="headerlink" href="#core-concepts-in-git" title="Permalink to this heading">#</a></h2>
+<p>Branches and DAGs</p>
+<p>A DAG is a directed acyclic graph linking together a sequence of tasks.</p>
+<p>Let’s calibrate people’s intuitions about git terminology: how many branches are
+in this DAG?</p>
+<p><img alt="title" src="../../_images/DAG_example.png" /></p>
+<p>Best way to get comfortable conceptually with git branching is to see it in
+action.</p>
+<p>So let’s do an exercise…</p>
+<p>Things to keep in mind during our exercise</p>
+<ul class="simple">
+<li><p>Just a quick tour</p></li>
+<li><p>Some git operations are of a “send it out” variety, while others are of a
+“bring it in” variety</p>
+<ul>
+<li><p>important to keep straight which are of which flavor</p></li>
+</ul>
+</li>
+<li><p>Some git operations are repo-wise, while others are branch-wise</p></li>
+</ul>
+<p>Your git branching sandbox</p>
+<p>Open a browser to this URL: <a class="reference external" href="https://learngitbranching.js.org/?NODEMO">https://learngitbranching.js.org/?NODEMO</a></p>
+<p>Other resources for git:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://gitimmersion.com/">https://gitimmersion.com/</a></p></li>
+<li><p><a class="reference external" href="http://think-like-a-git.net/">http://think-like-a-git.net/</a></p></li>
+<li><p><a class="reference external" href="http://ndpsoftware.com/git-cheatsheet.html">http://ndpsoftware.com/git-cheatsheet.html</a></p></li>
+<li><p><a class="reference external" href="https://ohshitgit.com/">https://ohshitgit.com/</a></p></li>
+<li><p><a class="reference external" href="http://gitready.com/">http://gitready.com/</a></p></li>
+<li><p><a class="reference external" href="https://explainshell.com/">https://explainshell.com/</a></p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./labs/lab5"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../lab4/Lab4.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Lab 4: Free Particle Propagator (Assignment 1 Tutorial)</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../lab8/Lab8.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Lab 8: Assignment 2 Tutorial</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#github-essentials">GitHub essentials</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#repositories">Repositories</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#branches">Branches</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#commits">Commits</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pull-requests">Pull Requests</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#merging-your-pull-request">Merging your pull request</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#use-git-github-with-jupyter-notebook">Use Git/GitHub with Jupyter Notebook</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-a-notebook-to-the-github-repository">Add a notebook to the GitHub repository</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#integrate-the-remote-changes-to-your-local-directory">Integrate the remote changes to your local directory</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#three-options">Three options</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation-for-git">Motivation for git</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#brief-history-of-version-control">Brief history of version control</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#core-concepts-in-git">Core concepts in git</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Javier Duarte
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

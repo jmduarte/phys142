@@ -1,0 +1,935 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Lab 4: Free Particle Propagator (Assignment 1 Tutorial) &#8212; UCSD PHYS 142/242</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'labs/lab4/Lab4';</script>
+    <link rel="canonical" href="https://jduarte.physics.ucsd.edu/phys142/labs/lab4/Lab4.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Lab 5: Git/GitHub Tutorial" href="../lab5/lab05.html" />
+    <link rel="prev" title="Lab 3: Introduction to Julia" href="../lab3/Lab3.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/Interference_electrons_double-slit_at_10cm.png" class="logo__image only-light" alt="UCSD PHYS 142/242 - Home"/>
+    <script>document.write(`<img src="../../_static/Interference_electrons_double-slit_at_10cm.png" class="logo__image only-dark" alt="UCSD PHYS 142/242 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../README.html">
+                    UCSD PHYS 142/242: Computational Physics II (Winter 2025)
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/syllabus.pdf">Syllabus</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/01_Introduction.pdf">Lecture 01: Introduction</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/labs/lab1/01_DataHub.pdf">Lab 01: DataHub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab1/Lab1.html">Lab 1: Introduction</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/02_FeynmanPathIntegral.pdf">Lecture 02: Feynman Path Integral</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab2/Lab2.html">Lab 2: Numba and ffmpeg</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/quiz1.pdf">Quiz 01</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/03_FeynmanPathIntegralContinued.pdf">Lecture 03: Feynman Path Integral (Continued)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab3/Lab3.html">Lab 3: Introduction to Julia</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/04_FreeParticle.pdf">Lecture 04: Free Particle</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Lab 4: Free Particle Propagator (Assignment 1 Tutorial)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/05_HarmonicOscillator.pdf">Lecture 05: Harmonic Oscillator</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/quiz2.pdf">Quiz 02</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 3</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/06_SchrodingerEquation.pdf">Lecture 06: Schrodinger Equation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab5/lab05.html">Lab 5: Git/GitHub Tutorial</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/07_UnitarityPropagatorTraceContinued.pdf">Lecture 07: Unitarity and Propagator Trace</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/assignment1.pdf">Assignment 01</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 4</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/08_UnitarityPropagatorTraceContinued.pdf">Lecture 08: Unitarity and Propagator Trace (Continued)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/09_DoubleWellTunneling.pdf">Lecture 09: Double Well and Tunneling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab8/Lab8.html">Lab 8: Assignment 2 Tutorial</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/10_EigenvalueProblem.pdf">Lecture 10: Eigenvalue Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../lectures/10_EigenvalueProblemDemo.html">Lecture 10: Eigenvalue Problem Demo</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 5</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/11_StatMechRecap.pdf">Lecture 11: Statistical Mechanics Recap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab9/Lab9.html">Lab 9: Eigenvalue Problem Demo</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/13_MCMC.pdf">Lecture 13: Markov chain Monte Carlo</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/assignment2.pdf">Assignment 02</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 6</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/14_MCMC_Continued.pdf">Lecture 14: Markov chain Monte Carlo (Continued)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/15_Ising_Model.pdf">Lecture 15: Ising Model and MCMC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab12/Lab12.html">Lab 12: MCMC Tutorial</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/16_Path_Integral_MCMC.pdf">Lecture 16: Path Integral and MCMC</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 7</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/17_Path_Integral_MCMC_Continued.pdf">Lecture 17: Path Integral and MCMC (Continued)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab15/Lab15.html">Lab 15: MCMC for Feynman Path Integral Tutorial</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/assignment3.pdf">Assignment 03</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 8</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/18_Particle_Physics_VEGAS.pdf">Lecture 18: Particle Physics and VEGAS</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/19_Particle_Physics_VEGAS_Continued.pdf">Lecture 19: Particle Physics and VEGAS (Continued)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab17/lab17.html">Lab 17: VEGAS Tutorial</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/20_Particle_Physics_VEGAS_Part3.pdf">Lecture 20: Particle Physics and VEGAS (Part 3)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 9</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/22_Final_Projects.pdf">Lecture 22: Final Projects</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/23_Preview_139.pdf">Lecture 23: Preview of PHYS 139</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 10</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/final_projects.pdf">Final Projects</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/jmduarte/phys142/main?urlpath=tree/labs/lab4/Lab4.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://datahub.ucsd.edu/hub/user-redirect/git-pull?repo=https%3A//github.com/jmduarte/phys142&urlpath=tree/phys142/labs/lab4/Lab4.ipynb&branch=main" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onJupyterHub"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="btn__text-container">JupyterHub</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/jmduarte/phys142/blob/main/labs/lab4/Lab4.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jmduarte/phys142" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jmduarte/phys142/issues/new?title=Issue%20on%20page%20%2Flabs/lab4/Lab4.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/labs/lab4/Lab4.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Lab 4: Free Particle Propagator (Assignment 1 Tutorial)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initial-probability-amplitude">Initial probability amplitude</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1-plot-the-initial-probability-distribution">Exercise 1: Plot the initial probability distribution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#propagator-matrix">Propagator matrix</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evolve-the-probability-amplitude">Evolve the probability amplitude</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2-plot-the-evolution-of-the-probability-distribution">Exercise 2: Plot the evolution of the probability distribution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#changing-the-initial-wave-function">Changing the initial wave function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-3-plot-the-evolution-of-the-probability-distribution">Exercise 3: Plot the evolution of the probability distribution</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="lab-4-free-particle-propagator-assignment-1-tutorial">
+<h1>Lab 4: Free Particle Propagator (Assignment 1 Tutorial)<a class="headerlink" href="#lab-4-free-particle-propagator-assignment-1-tutorial" title="Permalink to this heading">#</a></h1>
+<p>In assignment 1, we will perform the path integral numerically for the harmonic oscillator.
+In today’s lab, we’ll start with a simpler problem: the free particle.</p>
+<div class="math notranslate nohighlight">
+\[L = K = \frac{1}{2}\dot{x}^2\]</div>
+<p>where <span class="math notranslate nohighlight">\(m = \hbar = 1\)</span> in these units.</p>
+<section id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this heading">#</a></h2>
+<p>We will use the discrete approximation to the path integral over a time period <span class="math notranslate nohighlight">\(T_0 = 2\pi\)</span>, where the time step is <span class="math notranslate nohighlight">\(\epsilon = \Delta t = T_0/128\)</span>.
+The electron position is also discretized into <span class="math notranslate nohighlight">\(N_D+1\)</span> possible points, <span class="math notranslate nohighlight">\(x_0 = -4, x_1, x_2, \ldots, x_{N_D} = +4\)</span>, where <span class="math notranslate nohighlight">\(N_D=600\)</span>.</p>
+<p>Let’s set these up as constants in our code.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">T0</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> 
+<span class="n">NT</span> <span class="o">=</span> <span class="mi">128</span> 
+<span class="n">DELTAT</span> <span class="o">=</span> <span class="n">T0</span> <span class="o">/</span> <span class="n">NT</span>
+<span class="n">BOXSIZE</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="n">ND</span> <span class="o">=</span> <span class="mi">600</span>
+<span class="n">DELTAX</span> <span class="o">=</span> <span class="n">BOXSIZE</span> <span class="o">/</span> <span class="n">ND</span>
+<span class="n">HBAR</span> <span class="o">=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="initial-probability-amplitude">
+<h2>Initial probability amplitude<a class="headerlink" href="#initial-probability-amplitude" title="Permalink to this heading">#</a></h2>
+<p>The initial probability amplitude (sometimes called the wavefunction) of the electron is a Gaussian centered at <span class="math notranslate nohighlight">\(x_\mathrm{start}\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\Psi_0(x) = \left(\frac{\alpha}{\pi}\right)^{1/4}\exp\left(-\frac{\alpha}{2}(x-x_\mathrm{start})^2\right),\]</div>
+<p>where <span class="math notranslate nohighlight">\(\alpha = 2\)</span> and <span class="math notranslate nohighlight">\(x_\mathrm{start} = 0\)</span>.
+The amplitude can be represented as a vector <span class="math notranslate nohighlight">\(\psi_0\)</span> with <span class="math notranslate nohighlight">\(N_D+1\)</span> components, <span class="math notranslate nohighlight">\(\psi_0 = (\Psi_0(x_0), \Psi_0(x_1), \ldots, \Psi_0(x_{N_D}))\)</span>.</p>
+<p>We will plot this initial amplitude and check it’s normalization.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">XSTART</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">T0</span><span class="p">,</span> <span class="n">NT</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">BOXSIZE</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">BOXSIZE</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">ND</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">func_psi_0</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x_start</span><span class="p">):</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">alpha</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">alpha</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x_start</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">psi_0</span> <span class="o">=</span> <span class="n">func_psi_0</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">XSTART</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Psi at every 10th point: </span><span class="si">{</span><span class="n">psi_0</span><span class="p">[::</span><span class="mi">10</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Normalization condition:  </span><span class="si">{</span><span class="n">DELTAX</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">sum</span><span class="p">(</span><span class="n">psi_0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">psi_0</span><span class="o">.</span><span class="n">conjugate</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Psi at every 10th point: [1.00521352e-07 2.86935958e-07 7.90442079e-07 2.10142331e-06
+ 5.39157259e-06 1.33498316e-05 3.19002830e-05 7.35650786e-05
+ 1.63722093e-04 3.51642446e-04 7.28876109e-04 1.45802361e-03
+ 2.81471103e-03 5.24398563e-03 9.42860819e-03 1.63603316e-02
+ 2.73964970e-02 4.42747775e-02 6.90519833e-02 1.03933211e-01
+ 1.50970103e-01 2.11634261e-01 2.86311914e-01 3.73810316e-01
+ 4.71000711e-01 5.72730433e-01 6.72105390e-01 7.61172192e-01
+ 8.31930157e-01 8.77504273e-01 8.93243842e-01 8.77504273e-01
+ 8.31930157e-01 7.61172192e-01 6.72105390e-01 5.72730433e-01
+ 4.71000711e-01 3.73810316e-01 2.86311914e-01 2.11634261e-01
+ 1.50970103e-01 1.03933211e-01 6.90519833e-02 4.42747775e-02
+ 2.73964970e-02 1.63603316e-02 9.42860819e-03 5.24398563e-03
+ 2.81471103e-03 1.45802361e-03 7.28876109e-04 3.51642446e-04
+ 1.63722093e-04 7.35650786e-05 3.19002830e-05 1.33498316e-05
+ 5.39157259e-06 2.10142331e-06 7.90442079e-07 2.86935958e-07
+ 1.00521352e-07]
+Normalization condition:  0.9999999999999982
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-1-plot-the-initial-probability-distribution">
+<h2>Exercise 1: Plot the initial probability distribution<a class="headerlink" href="#exercise-1-plot-the-initial-probability-distribution" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span> <span class="o">=</span> <span class="o">-</span><span class="n">BOXSIZE</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">BOXSIZE</span> <span class="o">/</span> <span class="mi">2</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="c1"># plot the initial probability distribution here</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">psi_0</span> <span class="o">*</span> <span class="n">psi_0</span><span class="o">.</span><span class="n">transpose</span><span class="p">(),</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$|\psi_0|^2$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$x$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$|\psi|^2$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/7c03b11a421fd486d9c3d7366beab9795073983348ce1e3a104b4d51234f2a2d.png" src="../../_images/7c03b11a421fd486d9c3d7366beab9795073983348ce1e3a104b4d51234f2a2d.png" />
+</div>
+</div>
+</section>
+<section id="propagator-matrix">
+<h2>Propagator matrix<a class="headerlink" href="#propagator-matrix" title="Permalink to this heading">#</a></h2>
+<p>From lecture, we have the free particle propagator,</p>
+<div class="math notranslate nohighlight">
+\[\mathcal K(x_b, t_b; x_a, t_a) = \left (\frac{m}{2\pi i \hbar (t_b -t_a)}  \right )^{1/2}\exp\left [\frac{im(x_b - x_a)^2}{2\hbar(t_b-t_a)}\right ].\]</div>
+<p>In this problem, we can reduce this to</p>
+<div class="math notranslate nohighlight">
+\[\mathcal K_\epsilon(x_j; x_i) = \mathcal K(x_j, \epsilon; x_i, 0) = \left (\frac{m}{2\pi i \hbar \epsilon} \right )^{1/2}\exp\left [\frac{im(x_j - x_i)^2}{2\hbar\epsilon}\right ].\]</div>
+<p>Here, we use <span class="math notranslate nohighlight">\(x_i\)</span> and <span class="math notranslate nohighlight">\(x_j\)</span> because <span class="math notranslate nohighlight">\(x\)</span> is discretized.</p>
+<p>Since <span class="math notranslate nohighlight">\(x\)</span> is discretized, we can write this as a matrix,</p>
+<div class="math notranslate nohighlight">
+\[(\mathcal K_\epsilon)_{i, j} = \mathcal K_\epsilon(x_j; x_i).\]</div>
+<p>Note, we can get matrix <span class="math notranslate nohighlight">\(\mathcal K_{t}\)</span> at any time <span class="math notranslate nohighlight">\(t\)</span></p>
+<div class="math notranslate nohighlight">
+\[\mathcal K_{t} = (\Delta x)^{N-1} {\mathcal K_\epsilon}^N,\]</div>
+<p>where <span class="math notranslate nohighlight">\(t = N \epsilon\)</span>.</p>
+<p>The assignment asks you to calculate the propagator matrix <span class="math notranslate nohighlight">\(\mathcal K_{8\epsilon}\)</span> for a time period <span class="math notranslate nohighlight">\(T_0/16 = 8\epsilon\)</span> (8 time steps) built from the elementary propagator matrix <span class="math notranslate nohighlight">\(\mathcal K_\epsilon\)</span> for a single <span class="math notranslate nohighlight">\(\epsilon=\Delta t=T_0/128\)</span> time step.
+You can do this with the formula above, setting <span class="math notranslate nohighlight">\(N=8\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">func_K</span><span class="p">(</span><span class="n">x_j</span><span class="p">,</span> <span class="n">x_i</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+    <span class="n">coefficient</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">HBAR</span> <span class="o">*</span> <span class="n">dt</span><span class="p">))</span>
+    <span class="n">exponent</span> <span class="o">=</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="p">(</span><span class="n">x_j</span> <span class="o">-</span> <span class="n">x_i</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">HBAR</span> <span class="o">*</span> <span class="n">dt</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">coefficient</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">exponent</span><span class="p">)</span>
+
+<span class="n">K_dt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">ND</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ND</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">complex64</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ND</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ND</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">K_dt</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">func_K</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">DELTAT</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="evolve-the-probability-amplitude">
+<h2>Evolve the probability amplitude<a class="headerlink" href="#evolve-the-probability-amplitude" title="Permalink to this heading">#</a></h2>
+<p>Next, we will evolve the probability amplitude (wave function) of the electron by one time step at a time.</p>
+<p>We will also compute the probability distribution <span class="math notranslate nohighlight">\(|\psi_t(x)|^2\)</span> at each time step.</p>
+<p>Note, given <span class="math notranslate nohighlight">\(\psi_t(x)\)</span> at a given time, we are able to find the mean position <span class="math notranslate nohighlight">\(\langle x \rangle\)</span> by</p>
+<div class="math notranslate nohighlight">
+\[\langle x\rangle = \int x |\psi_t(x)|^2\ dx,\]</div>
+<p>but we’ll skip that for now.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">psi</span> <span class="o">=</span> <span class="p">[</span><span class="n">psi_0</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">NT</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">psi_t</span> <span class="o">=</span> <span class="n">DELTAX</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">K_dt</span><span class="p">,</span> <span class="n">psi</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">psi</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">psi_t</span><span class="p">)</span>
+
+<span class="n">prob</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">NT</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">prob</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">psi</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">psi</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">conjugate</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-2-plot-the-evolution-of-the-probability-distribution">
+<h2>Exercise 2: Plot the evolution of the probability distribution<a class="headerlink" href="#exercise-2-plot-the-evolution-of-the-probability-distribution" title="Permalink to this heading">#</a></h2>
+<p>Let’s plot the evolution of the probability distribution every 2 time steps (i.e. <span class="math notranslate nohighlight">\(2\epsilon = T_0/64\)</span>) from <span class="math notranslate nohighlight">\(t=0\)</span> to <span class="math notranslate nohighlight">\(T_0/8 = \pi/4\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plot_interval</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">NT</span> <span class="o">//</span> <span class="mi">8</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">plot_interval</span><span class="p">):</span>
+    <span class="c1"># plot the probability distribution and label it with the time</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">prob</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;t = </span><span class="si">{</span><span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$x$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$|\psi|^2$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/190d24e643ee336c3a76c22976f3be8bee9a1c13b92f6e8b749bbdf8e9ed93df.png" src="../../_images/190d24e643ee336c3a76c22976f3be8bee9a1c13b92f6e8b749bbdf8e9ed93df.png" />
+</div>
+</div>
+</section>
+<section id="changing-the-initial-wave-function">
+<h2>Changing the initial wave function<a class="headerlink" href="#changing-the-initial-wave-function" title="Permalink to this heading">#</a></h2>
+<p>It seems like the mean position of the particle doesn’t move, but the probability does “disperse” away. Why is that? The initial wave function is a Gaussian centered at <span class="math notranslate nohighlight">\(x_\mathrm{start} = 0\)</span> basically representing a particle at rest.
+But this has contributions from all possible momenta, so the particle has some probability to be found away from the origin with amplitude given according to the free propagator.</p>
+<p>Let’s try a different wave function with some definite initial momentum <span class="math notranslate nohighlight">\(p=\hbar k_0\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\Psi_0(x) = \left(\frac{\alpha}{\pi}\right)^{1/4}\exp\left(-\frac{\alpha}{2}(x-x_\mathrm{start})^2 + i k_0 (x-x_\mathrm{start})\right),\]</div>
+<p>and again <span class="math notranslate nohighlight">\(\alpha = 2\)</span> and <span class="math notranslate nohighlight">\(x_\mathrm{start} = 0\)</span>, and now let’s set the wavenumber <span class="math notranslate nohighlight">\(k_0 = 1\)</span> .</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">K0</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">func_psi_0</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x_start</span><span class="p">):</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">alpha</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">alpha</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x_start</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">K0</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x_start</span><span class="p">))</span>
+
+<span class="n">psi_0</span> <span class="o">=</span> <span class="n">func_psi_0</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">XSTART</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Psi at every 10th point: </span><span class="si">{</span><span class="n">psi_0</span><span class="p">[::</span><span class="mi">10</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Normalization condition:  </span><span class="si">{</span><span class="n">DELTAX</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">sum</span><span class="p">(</span><span class="n">psi_0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">psi_0</span><span class="o">.</span><span class="n">conjugate</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Psi at every 10th point: [-6.57051404e-08+7.60748099e-08j -2.14757315e-07+1.90293299e-07j
+ -6.56043983e-07+4.40913794e-07j -1.88446904e-06+9.29922775e-07j
+ -5.10920025e-06+1.72195465e-06j -1.31051826e-05+2.54405021e-06j
+ -3.18458859e-05+1.86215170e-06j -7.33586815e-05-5.50678032e-06j
+ -1.60184435e-04-3.38507128e-05j -3.31325369e-04-1.17796053e-04j
+ -6.48208888e-04-3.33295093e-04j -1.19651826e-03-8.33172789e-04j
+ -2.07555022e-03-1.90123366e-03j -3.36167620e-03-4.02473830e-03j
+ -5.02859711e-03-7.97570457e-03j -6.80830026e-03-1.48764075e-02j
+ -7.98806465e-03-2.62060846e-02j -7.16464603e-03-4.36912322e-02j
+ -2.01628493e-03-6.90225398e-02j  1.08029825e-02-1.03370247e-01j
+  3.55138407e-02-1.46733565e-01j  7.66873157e-02-1.97251404e-01j
+  1.38301698e-01-2.50693343e-01j  2.22476424e-01-3.00397059e-01j
+  3.28149355e-01-3.37875229e-01j  4.50101551e-01-3.54159205e-01j
+  5.78761491e-01-3.41702783e-01j  7.01086016e-01-2.96414413e-01j
+  8.02525291e-01-2.19228065e-01j  8.69715784e-01-1.16654209e-01j
+  8.93243842e-01+0.00000000e+00j  8.69715784e-01+1.16654209e-01j
+  8.02525291e-01+2.19228065e-01j  7.01086016e-01+2.96414413e-01j
+  5.78761491e-01+3.41702783e-01j  4.50101551e-01+3.54159205e-01j
+  3.28149355e-01+3.37875229e-01j  2.22476424e-01+3.00397059e-01j
+  1.38301698e-01+2.50693343e-01j  7.66873157e-02+1.97251404e-01j
+  3.55138407e-02+1.46733565e-01j  1.08029825e-02+1.03370247e-01j
+ -2.01628493e-03+6.90225398e-02j -7.16464603e-03+4.36912322e-02j
+ -7.98806465e-03+2.62060846e-02j -6.80830026e-03+1.48764075e-02j
+ -5.02859711e-03+7.97570457e-03j -3.36167620e-03+4.02473830e-03j
+ -2.07555022e-03+1.90123366e-03j -1.19651826e-03+8.33172789e-04j
+ -6.48208888e-04+3.33295093e-04j -3.31325369e-04+1.17796053e-04j
+ -1.60184435e-04+3.38507128e-05j -7.33586815e-05+5.50678032e-06j
+ -3.18458859e-05-1.86215170e-06j -1.31051826e-05-2.54405021e-06j
+ -5.10920025e-06-1.72195465e-06j -1.88446904e-06-9.29922775e-07j
+ -6.56043983e-07-4.40913794e-07j -2.14757315e-07-1.90293299e-07j
+ -6.57051404e-08-7.60748099e-08j]
+Normalization condition:  (0.999999999999998+2.1223432016435976e-19j)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">psi</span> <span class="o">=</span> <span class="p">[</span><span class="n">psi_0</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">NT</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">psi_t</span> <span class="o">=</span> <span class="n">DELTAX</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">K_dt</span><span class="p">,</span> <span class="n">psi</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">psi</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">psi_t</span><span class="p">)</span>
+
+<span class="n">prob</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">NT</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">prob</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">psi</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">psi</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">conjugate</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-3-plot-the-evolution-of-the-probability-distribution">
+<h2>Exercise 3: Plot the evolution of the probability distribution<a class="headerlink" href="#exercise-3-plot-the-evolution-of-the-probability-distribution" title="Permalink to this heading">#</a></h2>
+<p>Again, let’s plot the evolution of the probability distribution every 2 time steps (i.e. <span class="math notranslate nohighlight">\(2\epsilon = T_0/64\)</span>) from <span class="math notranslate nohighlight">\(t=0\)</span> to <span class="math notranslate nohighlight">\(T_0/8 = \pi/4\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">NT</span> <span class="o">//</span> <span class="mi">8</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">plot_interval</span><span class="p">):</span>
+    <span class="c1"># plot the probability distribution and label it with the time</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">prob</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;t = </span><span class="si">{</span><span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$x$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$|\psi|^2$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/5c530e7cde98abe418d80a5f7f726dc7a11e22a67c41a853fac912805c7d49a3.png" src="../../_images/5c530e7cde98abe418d80a5f7f726dc7a11e22a67c41a853fac912805c7d49a3.png" />
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./labs/lab4"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../lab3/Lab3.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Lab 3: Introduction to Julia</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../lab5/lab05.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Lab 5: Git/GitHub Tutorial</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initial-probability-amplitude">Initial probability amplitude</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1-plot-the-initial-probability-distribution">Exercise 1: Plot the initial probability distribution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#propagator-matrix">Propagator matrix</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evolve-the-probability-amplitude">Evolve the probability amplitude</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2-plot-the-evolution-of-the-probability-distribution">Exercise 2: Plot the evolution of the probability distribution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#changing-the-initial-wave-function">Changing the initial wave function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-3-plot-the-evolution-of-the-probability-distribution">Exercise 3: Plot the evolution of the probability distribution</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Javier Duarte
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

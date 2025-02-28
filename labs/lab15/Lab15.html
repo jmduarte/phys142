@@ -1,0 +1,870 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Lab 15: MCMC for Feynman Path Integral Tutorial &#8212; UCSD PHYS 142/242</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'labs/lab15/Lab15';</script>
+    <link rel="canonical" href="https://jduarte.physics.ucsd.edu/phys142/labs/lab15/Lab15.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Lab 17: VEGAS Tutorial" href="../lab17/lab17.html" />
+    <link rel="prev" title="Lab 12: MCMC Tutorial" href="../lab12/Lab12.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/Interference_electrons_double-slit_at_10cm.png" class="logo__image only-light" alt="UCSD PHYS 142/242 - Home"/>
+    <script>document.write(`<img src="../../_static/Interference_electrons_double-slit_at_10cm.png" class="logo__image only-dark" alt="UCSD PHYS 142/242 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../README.html">
+                    UCSD PHYS 142/242: Computational Physics II (Winter 2025)
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/syllabus.pdf">Syllabus</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/01_Introduction.pdf">Lecture 01: Introduction</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/labs/lab1/01_DataHub.pdf">Lab 01: DataHub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab1/Lab1.html">Lab 1: Introduction</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/02_FeynmanPathIntegral.pdf">Lecture 02: Feynman Path Integral</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab2/Lab2.html">Lab 2: Numba and ffmpeg</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/quiz1.pdf">Quiz 01</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/03_FeynmanPathIntegralContinued.pdf">Lecture 03: Feynman Path Integral (Continued)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab3/Lab3.html">Lab 3: Introduction to Julia</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/04_FreeParticle.pdf">Lecture 04: Free Particle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab4/Lab4.html">Lab 4: Free Particle Propagator (Assignment 1 Tutorial)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/05_HarmonicOscillator.pdf">Lecture 05: Harmonic Oscillator</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/quiz2.pdf">Quiz 02</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 3</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/06_SchrodingerEquation.pdf">Lecture 06: Schrodinger Equation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab5/lab05.html">Lab 5: Git/GitHub Tutorial</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/07_UnitarityPropagatorTraceContinued.pdf">Lecture 07: Unitarity and Propagator Trace</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/assignment1.pdf">Assignment 01</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 4</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/08_UnitarityPropagatorTraceContinued.pdf">Lecture 08: Unitarity and Propagator Trace (Continued)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/09_DoubleWellTunneling.pdf">Lecture 09: Double Well and Tunneling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab8/Lab8.html">Lab 8: Assignment 2 Tutorial</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/10_EigenvalueProblem.pdf">Lecture 10: Eigenvalue Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../lectures/10_EigenvalueProblemDemo.html">Lecture 10: Eigenvalue Problem Demo</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 5</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/11_StatMechRecap.pdf">Lecture 11: Statistical Mechanics Recap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab9/Lab9.html">Lab 9: Eigenvalue Problem Demo</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/13_MCMC.pdf">Lecture 13: Markov chain Monte Carlo</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/assignment2.pdf">Assignment 02</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 6</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/14_MCMC_Continued.pdf">Lecture 14: Markov chain Monte Carlo (Continued)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/15_Ising_Model.pdf">Lecture 15: Ising Model and MCMC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab12/Lab12.html">Lab 12: MCMC Tutorial</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/16_Path_Integral_MCMC.pdf">Lecture 16: Path Integral and MCMC</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 7</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/17_Path_Integral_MCMC_Continued.pdf">Lecture 17: Path Integral and MCMC (Continued)</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Lab 15: MCMC for Feynman Path Integral Tutorial</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/assignment3.pdf">Assignment 03</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 8</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/18_Particle_Physics_VEGAS.pdf">Lecture 18: Particle Physics and VEGAS</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/19_Particle_Physics_VEGAS_Continued.pdf">Lecture 19: Particle Physics and VEGAS (Continued)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab17/lab17.html">Lab 17: VEGAS Tutorial</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/20_Particle_Physics_VEGAS_Part3.pdf">Lecture 20: Particle Physics and VEGAS (Part 3)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 9</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/22_Final_Projects.pdf">Lecture 22: Final Projects</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/23_Preview_139.pdf">Lecture 23: Preview of PHYS 139</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 10</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/final_projects.pdf">Final Projects</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/jmduarte/phys142/main?urlpath=tree/labs/lab15/Lab15.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://datahub.ucsd.edu/hub/user-redirect/git-pull?repo=https%3A//github.com/jmduarte/phys142&urlpath=tree/phys142/labs/lab15/Lab15.ipynb&branch=main" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onJupyterHub"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="btn__text-container">JupyterHub</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/jmduarte/phys142/blob/main/labs/lab15/Lab15.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jmduarte/phys142" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jmduarte/phys142/issues/new?title=Issue%20on%20page%20%2Flabs/lab15/Lab15.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/labs/lab15/Lab15.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Lab 15: MCMC for Feynman Path Integral Tutorial</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="lab-15-mcmc-for-feynman-path-integral-tutorial">
+<h1>Lab 15: MCMC for Feynman Path Integral Tutorial<a class="headerlink" href="#lab-15-mcmc-for-feynman-path-integral-tutorial" title="Permalink to this heading">#</a></h1>
+<p>In the lecture we saw some results from S.Mittal et al, and we will try to reproduce them in the lab today. The Markov chain Monte Carlo (MCMC) method can be used to evaluate the
+discrete imaginary-time path integral (an alternative formulation to the path integral) of a quantum harmonic oscillator system with “Euclidean Lagragian” <span class="math notranslate nohighlight">\(L_E(x(\tau))=\frac{m}{2}(\frac{dx}{d\tau})^2 +V(x(\tau))\)</span>, and we can obtain a histogram of the probability density by summing up the number of times a particle is in a bin.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">tqdm</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Analytic solution of the Schodinger equation to the ground state wavefunction of a quantum harmonic oscillator is given by: <span class="math notranslate nohighlight">\(\psi(x)=(\frac{m\omega}{\pi\hbar})^{1/4} \exp{(-\frac{m\omega}{2\hbar} x^2)}\)</span>.</p>
+<p>A different approach to solving the Schodinger equation is by evaluating the imaginary-time path integral for this system using the Markov chain Monte Carlo (MCMC) method.</p>
+<p>The path is assigned along a time lattice to <span class="math notranslate nohighlight">\(N_{xbins} =100\)</span> spatial bins ranging in <span class="math notranslate nohighlight">\([-4,4]\)</span> with width <span class="math notranslate nohighlight">\(\Delta x\)</span>. Choose time lattice with <span class="math notranslate nohighlight">\(N_{\tau} = 30\)</span> time increments <span class="math notranslate nohighlight">\(\delta\tau\)</span> with lattice points <span class="math notranslate nohighlight">\(x_n = n\delta \tau\)</span> for <span class="math notranslate nohighlight">\(n = 0,1,2,...,N_{\tau}\)</span>, over <span class="math notranslate nohighlight">\(n_{sweeps} = 20,000\)</span>, hitsize <span class="math notranslate nohighlight">\(h = 0.1\)</span>, and set <span class="math notranslate nohighlight">\(m=\hbar=1=\omega\)</span>. Periodic boundary condition is imposed on the lattice.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">SWEEPS</span> <span class="o">=</span> <span class="mi">20_000</span>
+<span class="n">H</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">OMEGA</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">M</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">TAU</span> <span class="o">=</span> <span class="mi">30</span>
+<span class="n">DELTATAU</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">NTAU</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">TAU</span><span class="o">/</span><span class="n">DELTATAU</span><span class="p">)</span>
+<span class="n">HITSIZE</span> <span class="o">=</span> <span class="mf">0.1</span>
+
+<span class="n">XLOW</span> <span class="o">=</span> <span class="o">-</span><span class="mi">4</span>
+<span class="n">XHIGH</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">NXBINS</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">DELTAX</span> <span class="o">=</span> <span class="p">(</span><span class="n">XHIGH</span> <span class="o">-</span> <span class="n">XLOW</span><span class="p">)</span> <span class="o">/</span> <span class="n">NXBINS</span>
+<span class="n">HITSIZE</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">prob_histogram</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">NXBINS</span><span class="p">)</span>
+<span class="n">x_bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">XLOW</span><span class="p">,</span> <span class="n">XHIGH</span><span class="p">,</span> <span class="n">NXBINS</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">x_path</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">NTAU</span><span class="p">)</span>
+<span class="c1">## analytical solution</span>
+<span class="n">psi_analytical</span> <span class="o">=</span> <span class="p">(</span><span class="n">M</span><span class="o">*</span><span class="n">OMEGA</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">H</span><span class="p">))</span><span class="o">**</span><span class="mf">0.25</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">M</span><span class="o">*</span><span class="n">OMEGA</span><span class="o">*</span><span class="n">x_bins</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mi">2</span><span class="o">/</span><span class="n">H</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We begin with an initial path <span class="math notranslate nohighlight">\(x_{path}\)</span>, which may be an array of random numbers (‘hot’ start) or zeros (‘cold’ start), and we use the ‘cold’ start for now. This path is updated by applying the Metropolis–Hastings algorithm to each element <span class="math notranslate nohighlight">\(x_i\)</span> of the path in random order, called a ‘sweep’. There are two steps in the updating process:</p>
+<ul class="simple">
+<li><p>Generate a uniform random number <span class="math notranslate nohighlight">\(u \in [-h, h]\)</span> (where h is called the hitsize)</p></li>
+<li><p>Propose the new value <span class="math notranslate nohighlight">\(x_i'=x_i +u\)</span> of the path element and calculate the resulting change <span class="math notranslate nohighlight">\(\Delta S\)</span> in the action.
+If <span class="math notranslate nohighlight">\(\Delta S \leq 0\)</span>, accept the new path element.
+If <span class="math notranslate nohighlight">\(\Delta S &gt; 0\)</span>, accept with probability <span class="math notranslate nohighlight">\(exp(-\Delta S/\hbar)\)</span>.</p></li>
+</ul>
+<p>For better performance, we can play with the parameters DELTATAU, HITSIZE, SWEEPS, etc, and we can also add “thinning” where only every Nth sweep is saved. For example:</p>
+<ul class="simple">
+<li><p>if we choose a smaller time step <span class="math notranslate nohighlight">\(\delta\tau = 0.1\)</span>, we end up with better energy approximation to the ground state;</p></li>
+<li><p>if the hitsize we choose is too large, few changes will be accepted; too small and the exploration of phase space will be slow. How should we choose the hit size wisely?</p></li>
+</ul>
+<p>The action <span class="math notranslate nohighlight">\(S(\{x_k\})=\delta\tau\sum_{i=1}^{N_{\tau}}[\frac{m}{2}(\frac{x_{i+1}-x_i}{\delta \tau})^2 +V(x_i)]\)</span>, where <span class="math notranslate nohighlight">\(V(x_i) = \sum_{i=1}^{N_{\tau}}[\frac{m\omega^2}{2}(\frac{x_{i+1}+x_i}{2})^2]\)</span>.
+Note that one sweep produces the next path. Each path is determined only by
+the immediately preceding path, so the complete sequence of paths forms a Markov chain,
+but the paths are correlated.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">vary_path</span><span class="p">(</span><span class="n">x_current</span><span class="p">):</span>
+    <span class="n">x_prime</span> <span class="o">=</span> <span class="n">x_current</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">HITSIZE</span> <span class="o">-</span> <span class="n">HITSIZE</span>
+    <span class="k">while</span> <span class="n">x_prime</span> <span class="o">&gt;</span> <span class="n">XHIGH</span> <span class="ow">or</span> <span class="n">x_prime</span> <span class="o">&lt;</span> <span class="n">XLOW</span><span class="p">:</span>
+        <span class="n">x_prime</span> <span class="o">=</span> <span class="n">x_current</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">HITSIZE</span> <span class="o">-</span> <span class="n">HITSIZE</span>
+    <span class="k">return</span> <span class="n">x_prime</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">action</span><span class="p">(</span><span class="n">x_left</span><span class="p">,</span> <span class="n">x_right</span><span class="p">):</span>
+    <span class="n">K</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">M</span> <span class="o">*</span> <span class="p">(((</span><span class="n">x_right</span> <span class="o">-</span> <span class="n">x_left</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">DELTATAU</span>
+    <span class="n">V</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">M</span> <span class="o">*</span> <span class="n">DELTATAU</span> <span class="o">*</span> <span class="p">(</span><span class="n">OMEGA</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(((</span><span class="n">x_left</span> <span class="o">+</span> <span class="n">x_right</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">K</span> <span class="o">+</span> <span class="n">V</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">total_action</span><span class="p">(</span><span class="n">x_path</span><span class="p">):</span>
+    <span class="n">path_action</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">NXBINS</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">path_action</span> <span class="o">+=</span> <span class="n">action</span><span class="p">(</span><span class="n">x_path</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">x_path</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">path_action</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">delta_action</span><span class="p">(</span><span class="n">x_path</span><span class="p">,</span> <span class="n">x_prime</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+    <span class="n">x_left</span> <span class="o">=</span> <span class="n">x_path</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">x_right</span> <span class="o">=</span> <span class="n">x_path</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">NTAU</span><span class="o">-</span><span class="mi">1</span> <span class="k">else</span> <span class="n">x_path</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1">#PBC.</span>
+    <span class="n">daction</span> <span class="o">=</span> <span class="n">action</span><span class="p">(</span><span class="n">x_left</span><span class="p">,</span> <span class="n">x_prime</span><span class="p">)</span> <span class="o">+</span> <span class="n">action</span><span class="p">(</span><span class="n">x_prime</span><span class="p">,</span> <span class="n">x_right</span><span class="p">)</span> 
+    <span class="n">daction</span> <span class="o">-=</span> <span class="n">action</span><span class="p">(</span><span class="n">x_left</span><span class="p">,</span> <span class="n">x_path</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">+</span> <span class="n">action</span><span class="p">(</span><span class="n">x_path</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">x_right</span><span class="p">)</span> <span class="c1">#compute the resulting change from u in delta S.</span>
+    <span class="k">return</span> <span class="n">daction</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">MCMC</span><span class="p">(</span><span class="n">x_path</span><span class="p">,</span> <span class="n">prob_histogram</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">NTAU</span><span class="p">):</span>
+        <span class="n">x_prime</span> <span class="o">=</span> <span class="n">vary_path</span><span class="p">(</span><span class="n">x_path</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">daction</span> <span class="o">=</span> <span class="n">delta_action</span><span class="p">(</span><span class="n">x_path</span><span class="p">,</span> <span class="n">x_prime</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">daction</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>            
+            <span class="n">x_path</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_prime</span>
+        <span class="k">else</span><span class="p">:</span>        
+            <span class="n">prob</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">daction</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">prob</span><span class="p">:</span>
+                <span class="n">x_path</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_prime</span>
+    <span class="n">hist</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">x_path</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">x_bins</span><span class="p">)</span>
+    <span class="n">prob_histogram</span> <span class="o">+=</span> <span class="n">hist</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="o">.</span><span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">SWEEPS</span><span class="p">)):</span>
+    <span class="n">MCMC</span><span class="p">(</span><span class="n">x_path</span><span class="p">,</span> <span class="n">prob_histogram</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|          | 0/20000 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  2%|▏         | 482/20000 [00:00&lt;00:04, 4810.65it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  5%|▍         | 987/20000 [00:00&lt;00:03, 4948.79it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  7%|▋         | 1494/20000 [00:00&lt;00:03, 5001.28it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 10%|▉         | 1995/20000 [00:00&lt;00:03, 4992.28it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 12%|█▏        | 2495/20000 [00:00&lt;00:03, 4988.62it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 15%|█▌        | 3005/20000 [00:00&lt;00:03, 5025.64it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 18%|█▊        | 3508/20000 [00:00&lt;00:03, 5009.62it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 20%|██        | 4021/20000 [00:00&lt;00:03, 5044.68it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 23%|██▎       | 4535/20000 [00:00&lt;00:03, 5074.27it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 25%|██▌       | 5043/20000 [00:01&lt;00:02, 5049.24it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 28%|██▊       | 5548/20000 [00:01&lt;00:02, 5033.66it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 30%|███       | 6052/20000 [00:01&lt;00:02, 5021.39it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 33%|███▎      | 6555/20000 [00:01&lt;00:02, 5021.46it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 35%|███▌      | 7069/20000 [00:01&lt;00:02, 5054.52it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 38%|███▊      | 7575/20000 [00:01&lt;00:02, 5034.80it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 40%|████      | 8079/20000 [00:01&lt;00:02, 5026.43it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 43%|████▎     | 8595/20000 [00:01&lt;00:02, 5063.82it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 46%|████▌     | 9105/20000 [00:01&lt;00:02, 5074.57it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 48%|████▊     | 9613/20000 [00:01&lt;00:02, 4996.40it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 51%|█████     | 10113/20000 [00:02&lt;00:02, 4850.90it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 53%|█████▎    | 10615/20000 [00:02&lt;00:01, 4897.00it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 56%|█████▌    | 11128/20000 [00:02&lt;00:01, 4964.49it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 58%|█████▊    | 11626/20000 [00:02&lt;00:01, 4841.54it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 61%|██████    | 12112/20000 [00:02&lt;00:01, 4788.40it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 63%|██████▎   | 12624/20000 [00:02&lt;00:01, 4882.89it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 66%|██████▌   | 13138/20000 [00:02&lt;00:01, 4956.86it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 68%|██████▊   | 13635/20000 [00:02&lt;00:01, 4959.15it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 71%|███████   | 14132/20000 [00:02&lt;00:01, 4913.56it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 73%|███████▎  | 14637/20000 [00:02&lt;00:01, 4951.73it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 76%|███████▌  | 15152/20000 [00:03&lt;00:00, 5009.99it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 78%|███████▊  | 15654/20000 [00:03&lt;00:00, 4888.94it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 81%|████████  | 16161/20000 [00:03&lt;00:00, 4939.03it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 83%|████████▎ | 16672/20000 [00:03&lt;00:00, 4987.57it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 86%|████████▌ | 17185/20000 [00:03&lt;00:00, 5029.33it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 88%|████████▊ | 17689/20000 [00:03&lt;00:00, 4960.10it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 91%|█████████ | 18203/20000 [00:03&lt;00:00, 5010.63it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 94%|█████████▎| 18717/20000 [00:03&lt;00:00, 5047.53it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 96%|█████████▌| 19223/20000 [00:03&lt;00:00, 4938.75it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 99%|█████████▊| 19718/20000 [00:03&lt;00:00, 4825.48it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 20000/20000 [00:04&lt;00:00, 4958.79it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally we get the histogram of the probability density by summing up the number of times a particle is in a bin, and compare it to the analytical solution. We can see the approximation from MCMC is pretty good.</p>
+<p>We can now play with the code by plotting the <span class="math notranslate nohighlight">\(\langle E\rangle\)</span> observable for each sweep (or equivalently <span class="math notranslate nohighlight">\(\langle x^2 \rangle\)</span> vs. iteration) to measure the equilibrium time; or measure the autocorrelation function/autocorrelation time, etc.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">stairs</span><span class="p">(</span><span class="n">prob_histogram</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">prob_histogram</span><span class="o">*</span><span class="n">DELTAX</span><span class="p">),</span> <span class="n">x_bins</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;MCMC, $</span><span class="se">\\</span><span class="s2">tau = </span><span class="si">{</span><span class="n">TAU</span><span class="si">}</span><span class="s2">$, $</span><span class="se">\\</span><span class="s2">delta</span><span class="se">\\</span><span class="s2">tau=</span><span class="si">{</span><span class="n">DELTATAU</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_bins</span><span class="p">,</span> <span class="n">psi_analytical</span><span class="o">*</span><span class="n">psi_analytical</span><span class="o">.</span><span class="n">conjugate</span><span class="p">(),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Analytical&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/7a475d85749901e39b70938514d58db85dea767d25931e35c31cd33aecc498a6.png" src="../../_images/7a475d85749901e39b70938514d58db85dea767d25931e35c31cd33aecc498a6.png" />
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./labs/lab15"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../lab12/Lab12.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Lab 12: MCMC Tutorial</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../lab17/lab17.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Lab 17: VEGAS Tutorial</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Javier Duarte
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

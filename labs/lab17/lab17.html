@@ -1,0 +1,983 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Lab 17: VEGAS Tutorial &#8212; UCSD PHYS 142/242</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'labs/lab17/lab17';</script>
+    <link rel="canonical" href="https://jduarte.physics.ucsd.edu/phys142/labs/lab17/lab17.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="Lab 15: MCMC for Feynman Path Integral Tutorial" href="../lab15/Lab15.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/Interference_electrons_double-slit_at_10cm.png" class="logo__image only-light" alt="UCSD PHYS 142/242 - Home"/>
+    <script>document.write(`<img src="../../_static/Interference_electrons_double-slit_at_10cm.png" class="logo__image only-dark" alt="UCSD PHYS 142/242 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../README.html">
+                    UCSD PHYS 142/242: Computational Physics II (Winter 2025)
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/syllabus.pdf">Syllabus</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/01_Introduction.pdf">Lecture 01: Introduction</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/labs/lab1/01_DataHub.pdf">Lab 01: DataHub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab1/Lab1.html">Lab 1: Introduction</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/02_FeynmanPathIntegral.pdf">Lecture 02: Feynman Path Integral</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab2/Lab2.html">Lab 2: Numba and ffmpeg</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/quiz1.pdf">Quiz 01</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/03_FeynmanPathIntegralContinued.pdf">Lecture 03: Feynman Path Integral (Continued)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab3/Lab3.html">Lab 3: Introduction to Julia</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/04_FreeParticle.pdf">Lecture 04: Free Particle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab4/Lab4.html">Lab 4: Free Particle Propagator (Assignment 1 Tutorial)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/05_HarmonicOscillator.pdf">Lecture 05: Harmonic Oscillator</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/quiz2.pdf">Quiz 02</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 3</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/06_SchrodingerEquation.pdf">Lecture 06: Schrodinger Equation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab5/lab05.html">Lab 5: Git/GitHub Tutorial</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/07_UnitarityPropagatorTraceContinued.pdf">Lecture 07: Unitarity and Propagator Trace</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/assignment1.pdf">Assignment 01</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 4</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/08_UnitarityPropagatorTraceContinued.pdf">Lecture 08: Unitarity and Propagator Trace (Continued)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/09_DoubleWellTunneling.pdf">Lecture 09: Double Well and Tunneling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab8/Lab8.html">Lab 8: Assignment 2 Tutorial</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/10_EigenvalueProblem.pdf">Lecture 10: Eigenvalue Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../lectures/10_EigenvalueProblemDemo.html">Lecture 10: Eigenvalue Problem Demo</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 5</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/11_StatMechRecap.pdf">Lecture 11: Statistical Mechanics Recap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab9/Lab9.html">Lab 9: Eigenvalue Problem Demo</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/13_MCMC.pdf">Lecture 13: Markov chain Monte Carlo</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/assignment2.pdf">Assignment 02</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 6</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/14_MCMC_Continued.pdf">Lecture 14: Markov chain Monte Carlo (Continued)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/15_Ising_Model.pdf">Lecture 15: Ising Model and MCMC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab12/Lab12.html">Lab 12: MCMC Tutorial</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/16_Path_Integral_MCMC.pdf">Lecture 16: Path Integral and MCMC</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 7</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/17_Path_Integral_MCMC_Continued.pdf">Lecture 17: Path Integral and MCMC (Continued)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab15/Lab15.html">Lab 15: MCMC for Feynman Path Integral Tutorial</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/assignment3.pdf">Assignment 03</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 8</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/18_Particle_Physics_VEGAS.pdf">Lecture 18: Particle Physics and VEGAS</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/19_Particle_Physics_VEGAS_Continued.pdf">Lecture 19: Particle Physics and VEGAS (Continued)</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Lab 17: VEGAS Tutorial</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/20_Particle_Physics_VEGAS_Part3.pdf">Lecture 20: Particle Physics and VEGAS (Part 3)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 9</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/22_Final_Projects.pdf">Lecture 22: Final Projects</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/23_Preview_139.pdf">Lecture 23: Preview of PHYS 139</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 10</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/final_projects.pdf">Final Projects</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/jmduarte/phys142/main?urlpath=tree/labs/lab17/lab17.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://datahub.ucsd.edu/hub/user-redirect/git-pull?repo=https%3A//github.com/jmduarte/phys142&urlpath=tree/phys142/labs/lab17/lab17.ipynb&branch=main" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onJupyterHub"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="btn__text-container">JupyterHub</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/jmduarte/phys142/blob/main/labs/lab17/lab17.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jmduarte/phys142" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jmduarte/phys142/issues/new?title=Issue%20on%20page%20%2Flabs/lab17/lab17.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/labs/lab17/lab17.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Lab 17: VEGAS Tutorial</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#acceptance-rejection-method">Acceptance-rejection Method</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vegas-method">Vegas Method</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="lab-17-vegas-tutorial">
+<h1>Lab 17: VEGAS Tutorial<a class="headerlink" href="#lab-17-vegas-tutorial" title="Permalink to this heading">#</a></h1>
+<p>In this lab, we will learn how to use the VEGAS algorithm to estimate the integral of a function. VEGAS is a Monte Carlo algorithm that uses importance sampling to estimate the integral of a function. The algorithm is particularly useful for high-dimensional integrals, where traditional methods such as the trapezoidal rule or Simpson’s rule become impractical.</p>
+<p>We will attempt to produce 100,000 events of the following function composed of two Gaussian distributions:</p>
+<div class="math notranslate nohighlight">
+\[f(x, y) = A_1 \exp\left [-\frac{1}{2} \left ( \frac{(x - \mu_{1x})^2}{\sigma_{1x}^2} + \frac{(y - \mu_{1y})^2}{\sigma_{1y}^2} \right ) \right] + A_2 \exp\left [-\frac{1}{2} \left ( \frac{(x - \mu_{2x})^2}{\sigma_{2x}^2} + \frac{(y - \mu_{2y})^2}{\sigma_{2y}^2} \right ) \right]\]</div>
+<p>over the range <span class="math notranslate nohighlight">\(0 &lt; x, y &lt; 5\)</span>. We will use the following parameters for the function:
+$<span class="math notranslate nohighlight">\(A_1 = 1.0, \quad\mu_{1x} = 2.5, \quad\sigma_{1x} = 1.0, \quad\mu_{1y} = 2.5, \quad\sigma_{1y} = 1.0\)</span><span class="math notranslate nohighlight">\(
+\)</span><span class="math notranslate nohighlight">\(A_2 = 4.0, \quad\mu_{2x} = 2.5, \quad\sigma_{2x} = 0.1, \quad\mu_{2y} = 2.5, \quad\sigma_{2y} = 0.1\)</span>$</p>
+<p>References:</p>
+<ol class="arabic simple">
+<li><p>T. Barklow, “Monte Carlo Techniques”, <a class="reference external" href="https://courses.physics.illinois.edu/phys524/fa2023/topics.html">https://courses.physics.illinois.edu/phys524/fa2023/topics.html</a> (2023).</p></li>
+<li><p>G. P. Lepage, “A New Algorithm for Adaptive Multidimensional Integration”, J. Comput. Phys. 27, 192 (1978).</p></li>
+<li><p>G. P. Lepage, “Adaptive multidimensional integration: VEGAS enhanced”, J. Comput. Phys. 439, 110386 (2021).</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import the required libraries</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mpl</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A1</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">A2</span> <span class="o">=</span> <span class="mf">4.0</span>
+<span class="n">MU1X</span> <span class="o">=</span> <span class="mf">2.5</span>
+<span class="n">MU2X</span> <span class="o">=</span> <span class="mf">2.5</span>
+<span class="n">SIGMA1X</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">SIGMA2X</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">MU1Y</span> <span class="o">=</span> <span class="mf">2.5</span>
+<span class="n">MU2Y</span> <span class="o">=</span> <span class="mf">2.5</span>
+<span class="n">SIGMA1Y</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">SIGMA2Y</span> <span class="o">=</span> <span class="mf">0.1</span>
+
+<span class="n">XMIN</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="n">YMIN</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="n">XMAX</span> <span class="o">=</span> <span class="mf">5.0</span>
+<span class="n">YMAX</span> <span class="o">=</span> <span class="mf">5.0</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">yy1</span><span class="p">,</span> <span class="n">yy2</span><span class="p">):</span>
+    <span class="n">exponent1</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span>
+        <span class="p">((</span><span class="n">yy1</span> <span class="o">-</span> <span class="n">MU1X</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">SIGMA1X</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="o">+</span> <span class="p">((</span><span class="n">yy2</span> <span class="o">-</span> <span class="n">MU1Y</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">SIGMA1Y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">exponent2</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span>
+        <span class="p">((</span><span class="n">yy1</span> <span class="o">-</span> <span class="n">MU2X</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">SIGMA2X</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="o">+</span> <span class="p">((</span><span class="n">yy2</span> <span class="o">-</span> <span class="n">MU2Y</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">SIGMA2Y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">A1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">exponent1</span><span class="p">)</span> <span class="o">+</span> <span class="n">A2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">exponent2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+
+<span class="n">F_VAL_MAX</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">MU1X</span><span class="p">,</span> <span class="n">MU1Y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This lego plot will show the function we are trying to integrate.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">lego_plot</span><span class="p">(</span><span class="n">xAmplitudes</span><span class="p">,</span> <span class="n">yAmplitudes</span><span class="p">,</span> <span class="n">nBins</span><span class="p">,</span> <span class="n">xLabel</span><span class="p">,</span> <span class="n">yLabel</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">xAmplitudes</span><span class="p">)</span>  <span class="c1"># turn x,y data into numpy arrays</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">yAmplitudes</span><span class="p">)</span>  <span class="c1"># useful for regular matplotlib arrays</span>
+
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>  <span class="c1"># create a canvas, tell matplotlib it&#39;s 3d</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s2">&quot;3d&quot;</span><span class="p">)</span>
+
+    <span class="c1"># make histograms - set bins</span>
+    <span class="n">hist</span><span class="p">,</span> <span class="n">xedges</span><span class="p">,</span> <span class="n">yedges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="p">(</span><span class="n">nBins</span><span class="p">,</span> <span class="n">nBins</span><span class="p">))</span>
+    <span class="n">xpos</span><span class="p">,</span> <span class="n">ypos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">xedges</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">xedges</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">yedges</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">yedges</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+
+    <span class="n">xpos</span> <span class="o">=</span> <span class="n">xpos</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.0</span>
+    <span class="n">ypos</span> <span class="o">=</span> <span class="n">ypos</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.0</span>
+    <span class="n">zpos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">xpos</span><span class="p">)</span>
+
+    <span class="n">dx</span> <span class="o">=</span> <span class="n">xedges</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">xedges</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="n">yedges</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">yedges</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">dz</span> <span class="o">=</span> <span class="n">hist</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+
+    <span class="n">cmap</span> <span class="o">=</span> <span class="n">mpl</span><span class="o">.</span><span class="n">colormaps</span><span class="p">[</span><span class="s2">&quot;jet&quot;</span><span class="p">]</span>
+    <span class="n">max_height</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">dz</span><span class="p">)</span>  <span class="c1"># get range of colorbars so we can normalize</span>
+    <span class="n">min_height</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">dz</span><span class="p">)</span>
+    <span class="c1"># scale each z to [0,1], and get their rgb values</span>
+    <span class="n">rgba</span> <span class="o">=</span> <span class="p">[</span><span class="n">cmap</span><span class="p">((</span><span class="n">k</span> <span class="o">-</span> <span class="n">min_height</span><span class="p">)</span> <span class="o">/</span> <span class="n">max_height</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">dz</span><span class="p">]</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">bar3d</span><span class="p">(</span><span class="n">xpos</span><span class="p">,</span> <span class="n">ypos</span><span class="p">,</span> <span class="n">zpos</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="n">dz</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">rgba</span><span class="p">,</span> <span class="n">zsort</span><span class="o">=</span><span class="s2">&quot;average&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="n">xLabel</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="n">yLabel</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="n">XMIN</span><span class="p">,</span> <span class="n">XMAX</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="n">YMIN</span><span class="p">,</span> <span class="n">YMAX</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="acceptance-rejection-method">
+<h2>Acceptance-rejection Method<a class="headerlink" href="#acceptance-rejection-method" title="Permalink to this heading">#</a></h2>
+<p>Now, we define the standard acceptance-rejection method.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">brute_force</span><span class="p">(</span><span class="n">nPoints</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">nFunctionEval</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">yy1_rej_method</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">yy2_rej_method</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">maxWeightEncounteredRej</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0e20</span>
+    <span class="n">generator</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">yy1_rej_method</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">nPoints</span><span class="p">:</span>
+        <span class="n">rr</span> <span class="o">=</span> <span class="n">generator</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+        <span class="n">yy1</span><span class="p">,</span> <span class="n">yy2</span> <span class="o">=</span> <span class="n">XMIN</span> <span class="o">+</span> <span class="n">rr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">XMAX</span> <span class="o">-</span> <span class="n">XMIN</span><span class="p">),</span> <span class="n">YMIN</span> <span class="o">+</span> <span class="n">rr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">YMAX</span> <span class="o">-</span> <span class="n">YMIN</span><span class="p">)</span>
+        <span class="n">nFunctionEval</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">f_val</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">yy1</span><span class="p">,</span> <span class="n">yy2</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">f_val</span> <span class="o">&gt;</span> <span class="n">maxWeightEncounteredRej</span><span class="p">:</span>
+            <span class="n">maxWeightEncounteredRej</span> <span class="o">=</span> <span class="n">f_val</span>
+        <span class="k">if</span> <span class="n">f_val</span> <span class="o">&gt;</span> <span class="n">F_VAL_MAX</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot; f_val=</span><span class="si">{</span><span class="n">f_val</span><span class="si">}</span><span class="s2"> exceeds F_VAL_MAX=</span><span class="si">{</span><span class="n">F_VAL_MAX</span><span class="si">}</span><span class="s2">, program will now exit&quot;</span>
+            <span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">99</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">f_val</span> <span class="o">/</span> <span class="n">F_VAL_MAX</span> <span class="o">&gt;</span> <span class="n">rr</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span>
+            <span class="n">yy1_rej_method</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">yy1</span><span class="p">)</span>
+            <span class="n">yy2_rej_method</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">yy2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;yy1&quot;</span><span class="p">:</span> <span class="n">yy1_rej_method</span><span class="p">,</span>
+        <span class="s2">&quot;yy2&quot;</span><span class="p">:</span> <span class="n">yy2_rej_method</span><span class="p">,</span>
+        <span class="s2">&quot;nFunEval&quot;</span><span class="p">:</span> <span class="n">nFunctionEval</span><span class="p">,</span>
+        <span class="s2">&quot;maxWeightEncountered&quot;</span><span class="p">:</span> <span class="n">maxWeightEncounteredRej</span><span class="p">,</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="vegas-method">
+<h2>Vegas Method<a class="headerlink" href="#vegas-method" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">setup_intervals</span><span class="p">(</span><span class="n">NN</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">KK</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">nIterations</span><span class="o">=</span><span class="mi">4000</span><span class="p">,</span> <span class="n">alpha_damp</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Input:</span>
+<span class="sd">        NN: Number of intervals in [XMIN, XMAX] or [YMIN, YMAX]</span>
+<span class="sd">        KK: function evaluations per iteration</span>
+<span class="sd">        nIterations: number of iterations</span>
+<span class="sd">        alpha_damp: damping parameter in the Vegas algorithm</span>
+<span class="sd">    Return:</span>
+<span class="sd">        Intervals specified by xLow, yLow: each is a 1D numpy array of size NN+1, with</span>
+<span class="sd">        xLow[0] = 0, xLow[NN] = ym; yLow[0] = 0, yLow[NN] = ym</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># intitial intervals: uniform intervals between XMIN/YMIN and XMAX/YMAX</span>
+    <span class="n">xLow</span> <span class="o">=</span> <span class="n">XMIN</span> <span class="o">+</span> <span class="p">(</span><span class="n">XMAX</span> <span class="o">-</span> <span class="n">XMIN</span><span class="p">)</span> <span class="o">/</span> <span class="n">NN</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">NN</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">delx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">NN</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">XMAX</span> <span class="o">-</span> <span class="n">XMIN</span><span class="p">)</span> <span class="o">/</span> <span class="n">NN</span>
+    <span class="n">px</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">NN</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">XMAX</span> <span class="o">-</span> <span class="n">XMIN</span><span class="p">)</span>  <span class="c1"># probability density in each interval</span>
+    <span class="n">yLow</span> <span class="o">=</span> <span class="n">YMIN</span> <span class="o">+</span> <span class="n">YMAX</span> <span class="o">/</span> <span class="n">NN</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">NN</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">dely</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">NN</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">YMAX</span> <span class="o">-</span> <span class="n">YMIN</span><span class="p">)</span> <span class="o">/</span> <span class="n">NN</span>
+    <span class="n">py</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">NN</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">YMAX</span> <span class="o">-</span> <span class="n">YMIN</span><span class="p">)</span>
+
+    <span class="n">generator</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nIterations</span><span class="p">):</span>
+        <span class="n">ixLow</span> <span class="o">=</span> <span class="n">generator</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">NN</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">KK</span><span class="p">)</span>
+        <span class="n">xx</span> <span class="o">=</span> <span class="n">xLow</span><span class="p">[</span><span class="n">ixLow</span><span class="p">]</span> <span class="o">+</span> <span class="n">delx</span><span class="p">[</span><span class="n">ixLow</span><span class="p">]</span> <span class="o">*</span> <span class="n">generator</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">KK</span><span class="p">)</span>
+        <span class="n">iyLow</span> <span class="o">=</span> <span class="n">generator</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">NN</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">KK</span><span class="p">)</span>
+        <span class="n">yy</span> <span class="o">=</span> <span class="n">yLow</span><span class="p">[</span><span class="n">iyLow</span><span class="p">]</span> <span class="o">+</span> <span class="n">dely</span><span class="p">[</span><span class="n">iyLow</span><span class="p">]</span> <span class="o">*</span> <span class="n">generator</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">KK</span><span class="p">)</span>
+        <span class="n">ff</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">)</span>
+        <span class="n">f2barx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+            <span class="p">[</span><span class="nb">sum</span><span class="p">((</span><span class="n">ff</span><span class="p">[</span><span class="n">ixLow</span> <span class="o">==</span> <span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="n">py</span><span class="p">[</span><span class="n">iyLow</span><span class="p">[</span><span class="n">ixLow</span> <span class="o">==</span> <span class="n">i</span><span class="p">]])</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">NN</span><span class="p">)]</span>
+        <span class="p">)</span>
+        <span class="n">fbarx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">f2barx</span><span class="p">)</span>
+        <span class="n">f2bary</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+            <span class="p">[</span><span class="nb">sum</span><span class="p">((</span><span class="n">ff</span><span class="p">[</span><span class="n">iyLow</span> <span class="o">==</span> <span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="n">px</span><span class="p">[</span><span class="n">ixLow</span><span class="p">[</span><span class="n">iyLow</span> <span class="o">==</span> <span class="n">i</span><span class="p">]])</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">NN</span><span class="p">)]</span>
+        <span class="p">)</span>
+        <span class="n">fbary</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">f2bary</span><span class="p">)</span>
+        <span class="n">fbardelxSum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">fbarx</span> <span class="o">*</span> <span class="n">delx</span><span class="p">)</span>
+        <span class="n">fbardelySum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">fbary</span> <span class="o">*</span> <span class="n">dely</span><span class="p">)</span>
+        <span class="n">logArgx</span> <span class="o">=</span> <span class="n">fbarx</span> <span class="o">*</span> <span class="n">delx</span> <span class="o">/</span> <span class="n">fbardelxSum</span>
+        <span class="n">logArgy</span> <span class="o">=</span> <span class="n">fbary</span> <span class="o">*</span> <span class="n">dely</span> <span class="o">/</span> <span class="n">fbardelySum</span>
+        <span class="n">mmx</span> <span class="o">=</span> <span class="n">KK</span> <span class="o">*</span> <span class="nb">pow</span><span class="p">((</span><span class="n">logArgx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">logArgx</span><span class="p">),</span> <span class="n">alpha_damp</span><span class="p">)</span>
+        <span class="n">mmx</span> <span class="o">=</span> <span class="n">mmx</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">mmx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">mmx</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="n">mmx</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">mmy</span> <span class="o">=</span> <span class="n">KK</span> <span class="o">*</span> <span class="nb">pow</span><span class="p">((</span><span class="n">logArgy</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">logArgy</span><span class="p">),</span> <span class="n">alpha_damp</span><span class="p">)</span>
+        <span class="n">mmy</span> <span class="o">=</span> <span class="n">mmy</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">mmy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">mmy</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="n">mmy</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">xLowNew</span> <span class="o">=</span> <span class="p">[</span><span class="n">xLow</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">mmx</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">*</span> <span class="n">delx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="n">mmx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">NN</span><span class="p">)]</span>
+        <span class="n">xLowNew</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">xLowNew</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">yLowNew</span> <span class="o">=</span> <span class="p">[</span><span class="n">yLow</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">mmy</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">*</span> <span class="n">dely</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="n">mmy</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">NN</span><span class="p">)]</span>
+        <span class="n">yLowNew</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">yLowNew</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">nCombx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">xLowNew</span><span class="p">)</span> <span class="o">/</span> <span class="n">NN</span><span class="p">)</span>
+        <span class="n">nComby</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">yLowNew</span><span class="p">)</span> <span class="o">/</span> <span class="n">NN</span><span class="p">)</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">NN</span><span class="p">)</span>
+        <span class="n">xLow</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">xLowNew</span><span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="n">nCombx</span><span class="p">]</span>
+        <span class="n">yLow</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">yLowNew</span><span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="n">nComby</span><span class="p">]</span>
+        <span class="n">delx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">xLow</span><span class="p">)</span>
+        <span class="n">dely</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">yLow</span><span class="p">)</span>
+        <span class="n">px</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">delx</span> <span class="o">/</span> <span class="n">NN</span>
+        <span class="n">py</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">dely</span> <span class="o">/</span> <span class="n">NN</span>
+
+    <span class="k">return</span> <span class="n">xLow</span><span class="p">,</span> <span class="n">yLow</span><span class="p">,</span> <span class="n">delx</span><span class="p">,</span> <span class="n">dely</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">vegas</span><span class="p">(</span>
+    <span class="n">nPoints</span><span class="p">,</span>
+    <span class="n">vegasRatioFactor</span><span class="p">,</span>
+    <span class="n">NN</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+    <span class="n">KK</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span>
+    <span class="n">nIterations</span><span class="o">=</span><span class="mi">4000</span><span class="p">,</span>
+    <span class="n">alpha_damp</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>
+    <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="n">xLow</span><span class="p">,</span> <span class="n">yLow</span><span class="p">,</span> <span class="n">delx</span><span class="p">,</span> <span class="n">dely</span> <span class="o">=</span> <span class="n">setup_intervals</span><span class="p">(</span><span class="n">NN</span><span class="p">,</span> <span class="n">KK</span><span class="p">,</span> <span class="n">nIterations</span><span class="p">,</span> <span class="n">alpha_damp</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
+    <span class="n">vegasRatioMax</span> <span class="o">=</span> <span class="n">vegasRatioFactor</span> <span class="o">*</span> <span class="n">F_VAL_MAX</span> <span class="o">*</span> <span class="n">NN</span> <span class="o">*</span> <span class="n">NN</span> <span class="o">*</span> <span class="n">delx</span><span class="p">[</span><span class="n">NN</span> <span class="o">-</span> <span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">dely</span><span class="p">[</span><span class="n">NN</span> <span class="o">-</span> <span class="mi">2</span><span class="p">]</span>
+    <span class="n">nFunctionEval</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">yy1_vegas_method</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">yy2_vegas_method</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">yy1_vrho_method</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">yy2_vrho_method</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">maxWeightEncountered</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0e20</span>
+
+    <span class="n">generator</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">yy1_vegas_method</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">nPoints</span><span class="p">:</span>
+        <span class="n">ixLow</span> <span class="o">=</span> <span class="n">generator</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">NN</span><span class="p">)</span>
+        <span class="n">xx</span> <span class="o">=</span> <span class="n">xLow</span><span class="p">[</span><span class="n">ixLow</span><span class="p">]</span> <span class="o">+</span> <span class="n">delx</span><span class="p">[</span><span class="n">ixLow</span><span class="p">]</span> <span class="o">*</span> <span class="n">generator</span><span class="o">.</span><span class="n">uniform</span><span class="p">()</span>
+        <span class="n">iyLow</span> <span class="o">=</span> <span class="n">generator</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">NN</span><span class="p">)</span>
+        <span class="n">yy</span> <span class="o">=</span> <span class="n">yLow</span><span class="p">[</span><span class="n">iyLow</span><span class="p">]</span> <span class="o">+</span> <span class="n">delx</span><span class="p">[</span><span class="n">iyLow</span><span class="p">]</span> <span class="o">*</span> <span class="n">generator</span><span class="o">.</span><span class="n">uniform</span><span class="p">()</span>
+        <span class="n">yy1_vrho_method</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span>
+        <span class="n">yy2_vrho_method</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">yy</span><span class="p">)</span>
+        <span class="n">nFunctionEval</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">f_val</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">)</span>
+        <span class="n">ratio</span> <span class="o">=</span> <span class="n">f_val</span> <span class="o">*</span> <span class="n">NN</span> <span class="o">*</span> <span class="n">NN</span> <span class="o">*</span> <span class="n">delx</span><span class="p">[</span><span class="n">ixLow</span><span class="p">]</span> <span class="o">*</span> <span class="n">dely</span><span class="p">[</span><span class="n">iyLow</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">ratio</span> <span class="o">&gt;</span> <span class="n">maxWeightEncountered</span><span class="p">:</span>
+            <span class="n">maxWeightEncountered</span> <span class="o">=</span> <span class="n">ratio</span>
+        <span class="k">if</span> <span class="n">ratio</span> <span class="o">&gt;</span> <span class="n">vegasRatioMax</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;ratio=</span><span class="si">{</span><span class="n">ratio</span><span class="si">}</span><span class="s2"> exceeds vegasRatioMax=</span><span class="si">{</span><span class="n">vegasRatioMax</span><span class="si">}</span><span class="s2">, yy=</span><span class="si">{</span><span class="n">yy</span><span class="si">}</span><span class="s2"> program will now exit &quot;</span>
+            <span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">99</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ratio</span> <span class="o">/</span> <span class="n">vegasRatioMax</span> <span class="o">&gt;</span> <span class="n">generator</span><span class="o">.</span><span class="n">uniform</span><span class="p">():</span>
+            <span class="n">yy1_vegas_method</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span>
+            <span class="n">yy2_vegas_method</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">yy</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;yy1vrho&quot;</span><span class="p">:</span> <span class="n">yy1_vrho_method</span><span class="p">,</span>
+        <span class="s2">&quot;yy2vrho&quot;</span><span class="p">:</span> <span class="n">yy2_vrho_method</span><span class="p">,</span>
+        <span class="s2">&quot;yy1vegas&quot;</span><span class="p">:</span> <span class="n">yy1_vegas_method</span><span class="p">,</span>
+        <span class="s2">&quot;yy2vegas&quot;</span><span class="p">:</span> <span class="n">yy2_vegas_method</span><span class="p">,</span>
+        <span class="s2">&quot;nFunEval&quot;</span><span class="p">:</span> <span class="n">nFunctionEval</span><span class="p">,</span>
+        <span class="s2">&quot;maxWeightEncountered&quot;</span><span class="p">:</span> <span class="n">maxWeightEncountered</span><span class="p">,</span>
+        <span class="s2">&quot;vegasRatioMax&quot;</span><span class="p">:</span> <span class="n">vegasRatioMax</span><span class="p">,</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Run both algorithms and compare results</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plot_results</span><span class="p">(</span>
+    <span class="n">nPoints</span><span class="p">,</span>
+    <span class="n">vegasRatioFactor</span><span class="p">,</span>
+    <span class="n">nBins</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+    <span class="n">NN</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+    <span class="n">KK</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span>
+    <span class="n">nIterations</span><span class="o">=</span><span class="mi">4000</span><span class="p">,</span>
+    <span class="n">alpha_damp</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>
+    <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="n">bf</span> <span class="o">=</span> <span class="n">brute_force</span><span class="p">(</span><span class="n">nPoints</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
+    <span class="n">vg</span> <span class="o">=</span> <span class="n">vegas</span><span class="p">(</span><span class="n">nPoints</span><span class="p">,</span> <span class="n">vegasRatioFactor</span><span class="p">,</span> <span class="n">NN</span><span class="p">,</span> <span class="n">KK</span><span class="p">,</span> <span class="n">nIterations</span><span class="p">,</span> <span class="n">alpha_damp</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
+    <span class="c1"># brute force</span>
+    <span class="n">titleRej</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;Acceptance-rejection Method $f(x,y)$&quot;</span>
+    <span class="n">lego_plot</span><span class="p">(</span><span class="n">bf</span><span class="p">[</span><span class="s2">&quot;yy1&quot;</span><span class="p">],</span> <span class="n">bf</span><span class="p">[</span><span class="s2">&quot;yy2&quot;</span><span class="p">],</span> <span class="n">nBins</span><span class="p">,</span> <span class="s2">&quot;$x$&quot;</span><span class="p">,</span> <span class="s2">&quot;$y$&quot;</span><span class="p">,</span> <span class="n">titleRej</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="c1"># Vegas method</span>
+    <span class="n">titleVrho</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;Vegas Method $p(x,y)$&quot;</span>
+    <span class="n">lego_plot</span><span class="p">(</span><span class="n">vg</span><span class="p">[</span><span class="s2">&quot;yy1vrho&quot;</span><span class="p">],</span> <span class="n">vg</span><span class="p">[</span><span class="s2">&quot;yy2vrho&quot;</span><span class="p">],</span> <span class="n">nBins</span><span class="p">,</span> <span class="s2">&quot;$x$&quot;</span><span class="p">,</span> <span class="s2">&quot;$y$&quot;</span><span class="p">,</span> <span class="n">titleVrho</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="n">titleVegas</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;Vegas Method $f(x,y)$&quot;</span>
+    <span class="n">lego_plot</span><span class="p">(</span><span class="n">vg</span><span class="p">[</span><span class="s2">&quot;yy1vegas&quot;</span><span class="p">],</span> <span class="n">vg</span><span class="p">[</span><span class="s2">&quot;yy2vegas&quot;</span><span class="p">],</span> <span class="n">nBins</span><span class="p">,</span> <span class="s2">&quot;$x$&quot;</span><span class="p">,</span> <span class="s2">&quot;$y$&quot;</span><span class="p">,</span> <span class="n">titleVegas</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Acceptance-rejection method nPoints=</span><span class="si">{</span><span class="n">nPoints</span><span class="si">}</span><span class="s2">, nFunctionEval=</span><span class="si">{</span><span class="n">bf</span><span class="p">[</span><span class="s1">&#39;nFunEval&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">, maxWeightEncounteredRej=</span><span class="si">{</span><span class="n">bf</span><span class="p">[</span><span class="s1">&#39;maxWeightEncountered&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">, F_VAL_MAX=</span><span class="si">{</span><span class="n">F_VAL_MAX</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Vegas method nPoints=</span><span class="si">{</span><span class="n">nPoints</span><span class="si">}</span><span class="s2">, nFunctionEval=</span><span class="si">{</span><span class="n">vg</span><span class="p">[</span><span class="s1">&#39;nFunEval&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">, maxWeightEncountered=</span><span class="si">{</span><span class="n">vg</span><span class="p">[</span><span class="s1">&#39;maxWeightEncountered&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">, vegasRatioMax=</span><span class="si">{</span><span class="n">vg</span><span class="p">[</span><span class="s1">&#39;vegasRatioMax&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">, vegasRatioFactor=</span><span class="si">{</span><span class="n">vegasRatioFactor</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
+
+
+<span class="n">plot_results</span><span class="p">(</span><span class="mi">100_000</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/929a6ac23d36564c999c0cb24cf41490defd7fa1d9f71c90d5e1a252250e7d1b.png" src="../../_images/929a6ac23d36564c999c0cb24cf41490defd7fa1d9f71c90d5e1a252250e7d1b.png" />
+<img alt="../../_images/83f03cd6c8e48f489f7b6042ba3ebd74880f2df787d7f7a41a37fb6dca0f9148.png" src="../../_images/83f03cd6c8e48f489f7b6042ba3ebd74880f2df787d7f7a41a37fb6dca0f9148.png" />
+<img alt="../../_images/652d4189d9528ba12f4efaddca143db46437265727c5f0777c1d00c0490dac00.png" src="../../_images/652d4189d9528ba12f4efaddca143db46437265727c5f0777c1d00c0490dac00.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Acceptance-rejection method nPoints=100000, nFunctionEval=1110999, maxWeightEncounteredRej=4.999996096591685, F_VAL_MAX=5.0
+Vegas method nPoints=100000, nFunctionEval=597883, maxWeightEncountered=52.28511711704734, vegasRatioMax=66.76319311575904, vegasRatioFactor=0.1
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Try without the <code class="docutils literal notranslate"><span class="pre">alpha_damp</span></code> parameter, i.e.</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># mmx = KK * pow((logArgx - 1) / np.log(logArgx), alpha_damp)</span>
+<span class="n">mmx</span> <span class="o">=</span> <span class="n">KK</span> <span class="o">*</span> <span class="n">logArgx</span>
+<span class="n">mmx</span> <span class="o">=</span> <span class="n">mmx</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">mmx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">mmx</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="n">mmx</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="c1"># mmy = KK * pow((logArgy - 1) / np.log(logArgy), alpha_damp)</span>
+<span class="n">mmy</span> <span class="o">=</span> <span class="n">KK</span> <span class="o">*</span> <span class="n">logArgy</span>
+<span class="n">mmy</span> <span class="o">=</span> <span class="n">mmy</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">mmy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">mmy</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="n">mmy</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Change the form of the Gaussians to be offset from one another, e.g.</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">A1</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">A2</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">MU1X</span> <span class="o">=</span> <span class="mf">2.5</span>
+<span class="n">MU2X</span> <span class="o">=</span> <span class="mf">2.5</span>
+<span class="n">SIGMA1X</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">SIGMA2X</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">MU1Y</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.5</span>
+<span class="n">MU2Y</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.5</span>
+<span class="n">SIGMA1Y</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">SIGMA2Y</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+<span class="n">XMIN</span> <span class="o">=</span> <span class="o">-</span><span class="mf">5.0</span>
+<span class="n">YMIN</span> <span class="o">=</span> <span class="o">-</span><span class="mf">5.0</span>
+<span class="n">XMAX</span> <span class="o">=</span> <span class="mf">5.0</span>
+<span class="n">YMAX</span> <span class="o">=</span> <span class="mf">5.0</span>
+</pre></div>
+</div>
+<p>Note, you may have to change <code class="docutils literal notranslate"><span class="pre">vegasRatioFactor</span></code> to a different value.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./labs/lab17"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../lab15/Lab15.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Lab 15: MCMC for Feynman Path Integral Tutorial</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#acceptance-rejection-method">Acceptance-rejection Method</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vegas-method">Vegas Method</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Javier Duarte
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

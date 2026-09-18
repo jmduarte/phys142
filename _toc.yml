@@ -1,94 +1,63 @@
+# PHYS 142/242, Fall 2026. Week numbering and lab numbers match syllabus/syllabus.tex.
+# Lectures are added as their slides are updated for Fall 2026.
+# Quizzes are in-class and closed-device this year, so they are not linked here.
 format: jb-book
 root: README.md
 parts:
+  - caption: Week 0
+    chapters:
+    - url: https://jduarte.physics.ucsd.edu/phys142/syllabus.pdf
+      title: "Syllabus"
   - caption: Week 1
     chapters:
-    - url : https://jduarte.physics.ucsd.edu/phys142/syllabus.pdf
-      title: "Syllabus"
-    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/01_Introduction.pdf
-      title: "Lecture 01: Introduction"
     - url: https://jduarte.physics.ucsd.edu/phys142/labs/lab1/01_DataHub.pdf
-      title: "Lab 01: DataHub"
+      title: "Lab 01: Python, Jupyter, and DataHub (Slides)"
     - file: labs/lab1/Lab1.ipynb
-    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/02_FeynmanPathIntegral.pdf
-      title: "Lecture 02: Feynman Path Integral"
+      title: "Lab 01: Python, Jupyter, and DataHub (Notebook)"
     - file: labs/lab2/Lab2.md
-    - url: https://jduarte.physics.ucsd.edu/phys142/quiz1.pdf
-      title: "Quiz 01"
+      title: "Lab 02: NumPy, SciPy, and Matplotlib"
   - caption: Week 2
-    chapters: 
-    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/03_FeynmanPathIntegralContinued.pdf
-      title: "Lecture 03: Feynman Path Integral (Continued)"
-    - file: labs/lab3/Lab3.ipynb
-    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/04_FreeParticle.pdf
-      title: "Lecture 04: Free Particle"
-    - file: labs/lab4/Lab4.ipynb
-    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/05_HarmonicOscillator.pdf
-      title: "Lecture 05: Harmonic Oscillator"
-    - url: https://jduarte.physics.ucsd.edu/phys142/quiz2.pdf
-      title: "Quiz 02"
+    chapters:
+    # TODO Tue 10/6 Lab 03: Random Numbers, Seeding, and Reproducible Simulation (no materials yet)
+    - file: labs/lab5/lab05.ipynb
+      title: "Lab 04: Git and GitHub"
   - caption: Week 3
     chapters:
-    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/06_SchrodingerEquation.pdf
-      title: "Lecture 06: Schrodinger Equation"
-    - file: labs/lab5/lab05.ipynb
-    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/07_UnitarityPropagatorTraceContinued.pdf
-      title: "Lecture 07: Unitarity and Propagator Trace"
     - url: https://jduarte.physics.ucsd.edu/phys142/assignment1.pdf
-      title: "Assignment 01"
+      title: "Assignment 01 (Due Mon 10/19)"
+    - file: labs/lab4/Lab4.ipynb
+      title: "Lab 05: Assignment 1 Tutorial"
   - caption: Week 4
     chapters:
-    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/08_UnitarityPropagatorTraceContinued.pdf
-      title: "Lecture 08: Unitarity and Propagator Trace (Continued)"
-    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/09_DoubleWellTunneling.pdf
-      title: "Lecture 09: Double Well and Tunneling"
-    - file: labs/lab8/Lab8.ipynb
-    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/10_EigenvalueProblem.pdf
-      title: "Lecture 10: Eigenvalue Problem"
-    - file: lectures/10_EigenvalueProblemDemo.ipynb
+    - file: labs/lab3/Lab3.ipynb
+      title: "Lab 08: Compiled Code and Python Interop"
   - caption: Week 5
     chapters:
-    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/11_StatMechRecap.pdf
-      title: "Lecture 11: Statistical Mechanics Recap"
-    - file: labs/lab9/Lab9.ipynb
-    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/13_MCMC.pdf
-      title: "Lecture 13: Markov chain Monte Carlo"
     - url: https://jduarte.physics.ucsd.edu/phys142/assignment2.pdf
-      title: "Assignment 02"
+      title: "Assignment 02 (Due Mon 11/2)"
+    - file: labs/lab8/Lab8.ipynb
+      title: "Lab 09: Assignment 2 Tutorial"
+    # TODO Thu 10/29 Lab 10: Auditing AI-Generated Numerical Code (no materials yet)
   - caption: Week 6
     chapters:
-    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/14_MCMC_Continued.pdf
-      title: "Lecture 14: Markov chain Monte Carlo (Continued)"
-    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/15_Ising_Model.pdf
-      title: "Lecture 15: Ising Model and MCMC"
     - file: labs/lab12/Lab12.ipynb
-    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/16_Path_Integral_MCMC.pdf
-      title: "Lecture 16: Path Integral and MCMC"
+      title: "Lab 11: MCMC and the 2D Ising Model"
   - caption: Week 7
     chapters:
-    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/17_Path_Integral_MCMC_Continued.pdf
-      title: "Lecture 17: Path Integral and MCMC (Continued)"
-    - file: labs/lab15/Lab15.ipynb
     - url: https://jduarte.physics.ucsd.edu/phys142/assignment3.pdf
-      title: "Assignment 03"
+      title: "Assignment 03 (Due Mon 11/16)"
+    # TODO Tue 11/10 Lab 13: Statistical Error Estimation (no materials yet)
+    - file: labs/lab15/Lab15.ipynb
+      title: "Lab 14: Path-Integral MCMC Tutorial"
   - caption: Week 8
-    chapters:
-    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/18_Particle_Physics_VEGAS.pdf
-      title: "Lecture 18: Particle Physics and VEGAS"
-    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/19_Particle_Physics_VEGAS_Continued.pdf
-      title: "Lecture 19: Particle Physics and VEGAS (Continued)"
-    - file: labs/lab17/lab17.ipynb
-    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/20_Particle_Physics_VEGAS_Part3.pdf
-      title: "Lecture 20: Particle Physics and VEGAS (Part 3)"
-  - caption: Week 9
-    chapters:
-    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/22_Final_Projects.pdf
-      title: "Lecture 22: Final Projects"
-    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/23_Preview_139.pdf
-      title: "Lecture 23: Preview of PHYS 139"
-  - caption: Week 10
     chapters:
     - url: https://jduarte.physics.ucsd.edu/phys142/final_projects.pdf
       title: "Final Projects"
-
-
+    - file: labs/lab17/lab17.ipynb
+      title: "Lab 16: VEGAS Tutorial"
+  # Week 9 has no linked materials yet (Lecture 25, Lab 17 project help).
+  # Jupyter Book rejects a part with no chapters, so the week is omitted until then.
+  - caption: Week 10
+    chapters:
+    - url: https://jduarte.physics.ucsd.edu/phys142/final_projects.pdf
+      title: "Final Presentations (Mon 11/30 to Fri 12/4); Report and Code Due Fri 12/11"

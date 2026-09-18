@@ -14,6 +14,7 @@
 \usepackage{relsize}
 \usepackage{color, colortbl}
 \usepackage{booktabs}
+\usepackage{array}
 \usepackage[dvipsnames]{xcolor}
 \definecolor{darkblue}{RGB}{46,48,147}
 \hypersetup{colorlinks=true,
@@ -25,6 +26,7 @@
 \definecolor{LightRed}{rgb}{1,0.92,0.92}
 \newcommand{\solColor}{blue}
 \newcommand{\sol}{\color{\solColor}}
+\newcommand{\tbd}[1]{\textcolor{BrickRed}{\textbf{[TBD: #1]}}}
 \newcommand*\publistbasestyle{phys}
 \usepackage[style=publist,
 biblabel=brackets,
@@ -54,30 +56,38 @@ nameorder=given-family,
   \textbf{
     University of California San Diego\\
     Department of Physics\\
-    Physics 142/242, Winter 2025\\
-    Computational Physics II: PDE and Matrix Models (4 units)
+    Physics 142/242, Fall 2026\\
+    Computational Physics: Stochastic Methods and Path Integrals (4 units)
   }
 \end{center}
 
-\noindent\textbf{Instructor}: Javier Duarte, \href{mailto:jduarte@ucsd.edu}{jduarte@ucsd.edu}, OH after lecture M and by appt., \href{https://ucsd.zoom.us/j/95142068599}{Zoom: 95142068599}\\
-\noindent \textbf{Teaching assistant}: Anthony Aportela, \href{mailto:aaportel@ucsd.edu}{aaportel@ucsd.edu}, OH during/after lab TuTh, \href{https://ucsd.zoom.us/j/99809876934}{Zoom: 99809876934}\\
+\noindent\emph{\small Note on the course title: the current catalog description for PHYS 142/242 (``PDE and Matrix Models'') predates the way this course and PHYS 141/241 have been taught in recent years. The department is in the process of realigning the catalog descriptions with course content. The description in this syllabus is what the course actually covers.}
+
+\begin{center}
+  \rule{\textwidth}{0.5pt}
+\end{center}
+
+\noindent\textbf{Instructor}: Javier Duarte, \href{mailto:jduarte@ucsd.edu}{jduarte@ucsd.edu}, OH by appt.\\
+\noindent \textbf{Teaching assistant}: Anthony Aportela, \href{mailto:aaportel@ucsd.edu}{aaportel@ucsd.edu}, OH during/after lab TuTh\\
 
 \noindent\textbf{Course webpage}: \href{https://jduarte.physics.ucsd.edu/phys142}{https://jduarte.physics.ucsd.edu/phys142}.
 
-\noindent\textbf{Canvas}: \href{https://canvas.ucsd.edu/courses/62113}{https://canvas.ucsd.edu/courses/62113}.
+\noindent\textbf{Canvas}: \href{https://canvas.ucsd.edu/courses/78771}{https://canvas.ucsd.edu/courses/78771}.
 
-\noindent\textbf{Gradescope}: \href{https://www.gradescope.com/courses/935676}{https://www.gradescope.com/courses/935676}.\\
+\noindent\textbf{Gradescope}: .\\
 
 \noindent\textbf{Schedule}:
 \begin{center}
   \begin{tabular}{|l|c|l|m{90mm}|}
     \hline
-    Lecture & MWF  & 10:00a-10:50a & PCYNH	121, \href{https://ucsd.zoom.us/j/95142068599}{Zoom: 95142068599} \\\hline
-    Lab     & TuTh & 2:00p-3:20p   & CENTR	222, \href{https://ucsd.zoom.us/j/99809876934}{Zoom: 99809876934} \\\hline\end{tabular}
+    Lecture & MWF  & 3:00p--3:50p   & Coalition Building 123 \\\hline
+    Lab     & TuTh & 11:00a--12:20p & Pepper Canyon Hall 121 \\\hline\end{tabular}
 \end{center}
 
-\noindent\textbf{First lecture}: Monday, January 6, 2025.\\
-\textbf{First lab}: Tuesday, January 7, 2025.
+\noindent\textbf{First lecture}: Friday, September 25, 2026.\\
+\textbf{First lab}: Tuesday, September 29, 2026. \emph{Labs begin in Week 2; there is no lab on Thursday, September 24.}\\
+
+\noindent\textbf{Final exam}: There is no final exam in this course. The final report and code are due Friday, December 11, 2026, at 8:00pm.
 
 \begin{center}
   \rule{\textwidth}{0.5pt}
@@ -90,17 +100,34 @@ At the end of the syllabus, we list a bibliography of textbooks and online resou
   \rule{\textwidth}{0.5pt}
 \end{center}
 
-\noindent\textbf{Course information}: This course is an upper-division undergraduate course and introductory graduate course on computational physics, focusing on solving select physics problems in quantum mechanics using Feynman's path integral approach, combined with Markov chain Monte Carlo methods.
+\noindent\textbf{Course information}: This course is an upper-division undergraduate course and introductory graduate course on computational physics, focusing on \emph{stochastic} methods: Monte Carlo integration, Markov chain Monte Carlo, and the statistical analysis of simulation output.
+We develop these methods in the setting of Feynman's path integral formulation of quantum mechanics, which turns quantum mechanical problems into high-dimensional integrals that are natural targets for sampling.
 The course will explore both the theoretical foundations and computer implementations.
 Students will develop their own code to solve the physics applications.
 Basic knowledge of calculus, quantum mechanics, Linux, and programming in some language is expected.
 
-The course structure will consist of weekly lectures on conceptual topics, e.g, quantum mechanics, and lab sections on computational tools, e.g., programming in Python and C/C++.
-Students will learn how to apply physical reasoning to programming, optimize and debug code, create simulations of physical systems.
-We will focus primarily on numerically solving quantum mechanics problems using Feynman's path integral approach, combined with Markov chain Monte Carlo methods.
-Students will also learn how to use modern tools to efficiently solve scientific computing problems interpreted (Python) vs. compiled (C/C++) languages and how to link the two.
+The course structure will consist of weekly lectures on conceptual topics, e.g., quantum mechanics and Monte Carlo theory, and lab sections on computational tools, e.g., programming in Python and C/C++.
+Students will learn how to apply physical reasoning to programming, optimize and debug code, create simulations of physical systems, and---critically for stochastic methods---report results with honest uncertainties.
+Students will also learn how to use modern tools to efficiently solve scientific computing problems: interpreted (Python) vs.\ compiled (C/C++) languages and how to link the two.
 There will be 2 individual homework assignments and an individual midterm project.
 There will also be a final project in which students will work in groups.
+
+\begin{center}
+  \rule{\textwidth}{0.5pt}
+\end{center}
+
+\noindent\textbf{Relationship to PHYS 141/241}: \textbf{PHYS 141/241 and PHYS 142/242 are independent companion courses. Neither is a prerequisite for the other, and they may be taken in either order.}
+In academic year 2026--27, PHYS 142/242 is offered in Fall and PHYS 141/241 is offered in Winter, so many of you will take this course first.
+Nothing in this course assumes you have taken PHYS 141/241.
+
+The two courses divide computational physics by \emph{methods}:
+\begin{itemize}
+  \itemsep-0.3em
+  \item \textbf{PHYS 141/241 (deterministic methods)}: ODE integrators (Euler, Runge--Kutta, symplectic/leapfrog), stability and accuracy analysis, boundary value problems and shooting, PDE solvers (finite difference, Crank--Nicolson, spectral, finite element), deterministic $N$-body simulation.
+  \item \textbf{PHYS 142/242 (stochastic methods, this course)}: pseudorandom number generation and sampling, Monte Carlo integration and variance reduction (importance sampling, VEGAS), Markov chains, the Metropolis--Hastings algorithm, detailed balance, autocorrelation and statistical error estimation, path integrals, and the imaginary-time mapping between quantum mechanics and statistical mechanics.
+\end{itemize}
+Both courses begin with a short, self-contained introduction to Python, Jupyter, and version control, so that either can be taken first.
+The final week of this course includes a lecture surveying the deterministic methods covered in PHYS 141/241 and how they relate to what we do here.
 
 \begin{center}
   \rule{\textwidth}{0.5pt}
@@ -110,11 +137,14 @@ There will also be a final project in which students will work in groups.
 \begin{itemize}
   \itemsep-0.3em
   \item Design computer programs to numerically solve physics problems, like the harmonic oscillator using the Feynman path integral approach.
+  \item Estimate and report statistical uncertainties on Monte Carlo results, accounting for autocorrelation between samples.
+  \item Validate a stochastic calculation against an independent deterministic one (e.g., matrix diagonalization) and explain any residual discrepancy quantitatively.
   \item Consider multiple approaches and compare their computational performance, accuracy, and fidelity to physical laws.
   \item Find and choose the best tool or programming language for the task.
+  \item Use AI coding assistants effectively and critically: verify generated numerical code against physical and statistical benchmarks, and recognize its characteristic failure modes.
   \item Visualize the solutions.
   \item Collaborate with peers to tackle complex, realistic problems.
-  \item Present findings.
+  \item Present findings, and defend the technical choices behind them.
 \end{itemize}
 
 \begin{center}
@@ -124,59 +154,95 @@ There will also be a final project in which students will work in groups.
 \noindent\textbf{Grading policy}: Your final course grade will be determined according to the following:
 \begin{itemize}
   \itemsep-0.3em
-  \item 30\% Homework.
-  \item 15\% Quizzes.
-  \item 10\% Participation and attendance.
-  \item 20\% Midterm project.
-  \item 25\% Final project.
+  \item 20\% Homework (3 assignments).
+  \item 20\% Oral checkpoints (3 individual, during lab).
+  \item 20\% Quizzes (4 short in-class quizzes, lowest score dropped).
+  \item 30\% Final project.
+  \item 10\% Participation (attendance, engagement, and exit tickets).
 \end{itemize}
 
 \begin{center}
   \rule{\textwidth}{0.5pt}
 \end{center}
 
-\noindent\textbf{Attendance (lectures and labs)}: In-person lecture and lab attendance is strongly recommended and worth 10\% of your grade (see below).
-Lecture will be mostly conceptual while labs will include hands-on portions, with interactive problem-solving and pair programming throughout.
-These sessions will be recorded.
+\noindent\textbf{Academic integrity and the use of AI tools}: Please read the College Policies section of the \href{http://senate.ucsd.edu/Operating-Procedures/Senate-Manual/Appendices/2}{UCSD's Policy on Integrity of Scholarship}. These rules will be enforced.
 
-\emph{Exit tickets}: At the end of each class, you will be invited to fill out an \href{https://forms.gle/opY7EFZJiRBgkMsAA}{exit ticket}.
+AI coding assistants (ChatGPT, Claude, Copilot, Cursor, and similar tools) are increasingly being used in computational physics.
+\textbf{You are permitted to use them on homework and projects, but you must disclose their use.}
+The policy below per assessment type is below.
+
+\begin{center}
+  \begin{tabular}{@{}p{40mm}p{50mm}p{68mm}@{}}
+    \toprule
+    \textbf{Tier}                  & \textbf{Applies to}       & \textbf{Rule}                                                                                      \\
+    \midrule
+    \textbf{0. No AI}              & Quizzes, oral checkpoints & Closed device. No AI tools, no notes beyond what is explicitly permitted.                          \\
+    \addlinespace
+    \textbf{1. AI as collaborator} & Homework, final project   & You may use AI tools freely, including to write code, \emph{provided you disclose it} (see below). \\
+    \bottomrule
+  \end{tabular}
+\end{center}
+
+\vspace{2mm}
+\noindent\emph{AI use appendix (required)}: Every homework and project submission must end with a short appendix, no more than half a page, containing:
+\begin{enumerate}
+  \itemsep-0.3em
+  \item Which tools you used, and for what.
+  \item The prompts you used, or a share link to the conversation.
+  \item What the tool got wrong, and how you caught it.
+\end{enumerate}
+``I did not use AI tools on this assignment'' is a complete and perfectly acceptable appendix.
+The appendix is worth points on each assignment.
+
+\vspace{2mm}
+\noindent The third item is important.
+Language models are confidently wrong about numerical physics in specific ways, e.g., they may propose Metropolis updates that violate detailed balance, report $\sigma/\sqrt{N}$ uncertainties on correlated samples, drop factors of $\delta\tau$, confuse conventions where $\hbar=1$, and produce suspiciously clean results from runs that never converged.
+Finding those errors is an integral skill that we will spend a lab on (Lab 10).
+
+\vspace{2mm}
+\noindent \emph{Enforcement}: Submitting AI-generated work with a false or missing AI use appendix, submitting another person's work as your own, copying from any source without attribution, or using unauthorized aids during a quiz or oral checkpoint are all violations and will be reported to the UCSD Office of Academic Integrity, and can result in an automatic ``F'' for the course at the discretion of the instructor.
+
+\vspace{2mm}
+\noindent\emph{Collaboration with your peers} is encouraged---discuss concepts, approaches, and debugging freely.
+But by the time you start writing your own solution to turn in, you should not be looking at anyone else's.
+Plagiarizing a solution but changing variable names is cheating.
+Soliciting solutions online (Chegg, Quora, course-answer sites) is cheating.
+
+\vspace{2mm}
+\noindent Any questions on what constitutes an academic integrity violation should be addressed to the instructor.
+
+\begin{center}
+  \rule{\textwidth}{0.5pt}
+\end{center}
+
+\noindent\textbf{Homework}: There will be 3 homework assignments, submitted as code and a report on Gradescope.
 
 \begin{itemize}
   \itemsep-0.3em
-  \item \textbf{Lecture attendance (5\%)}:
-        \begin{itemize}
-          \itemsep-0.3em
-          \item To record your attendance, write your name on the whiteboard or chalkboard either at the beginning or end of lecture.
-          \item The full 5\% will be awarded for attending 80\% of the lectures.
-        \end{itemize}
-  \item \textbf{Lab attendance (5\%)}:
-        \begin{itemize}
-          \itemsep-0.3em
-          \item Similar to lecture, write your name on the whiteboard or chalkboard either at the beginning or end of lab.
-          \item The full 5\% will be awarded for attending 80\% of the labs.
-        \end{itemize}
+  \item \textbf{Parameters:} Several problems assign numerical parameters (e.g., potential shape, temperature, lattice size, or random seed) derived from your student ID. Using someone else's parameters is straightforwardly detectable.
+  \item \textbf{Random seeds:} Every numerical result must be reported with the random seed that produced it and an honest uncertainty. We may clone your repository and re-run it; we should be able to reproduce your results.
+  \item \textbf{Failure modes:} Several problems ask you to run a method in a regime where it works badly---a hit size that is too large, a chain that is too short, a $\tau_b$ that is too small---and to diagnose what went wrong from the output.
 \end{itemize}
 
-%\textbf{Note}: Please email the TA (\href{mailto:aaportel@ucsd.edu}{aaportel@ucsd.edu}) for any extenuating circumstances.
+\begin{center}
+  \rule{\textwidth}{0.5pt}
+\end{center}
+
+\noindent\textbf{Oral checkpoints}: Three times during the quarter, you will meet individually with the instructor or TA during lab for about five minutes to walk us through your own code.
+You may be asked to run it, change something on the spot (e.g., ``double the hit size---what happens to the acceptance rate?'', ``show me the autocorrelation time''), or explain a few lines.
+
+If you wrote and understand your code---whatever tools helped you get there---this should be a pleasant five-minute conversation about your own work.
+They are graded on whether you can explain and modify what you submitted.
+Checkpoints are tied to Assignments 1, 2, and 3, and are scheduled in Labs 07, 12, and 15.
 
 \begin{center}
   \rule{\textwidth}{0.5pt}
 \end{center}
 
-\noindent\textbf{Discussion board}: We will use Discord: \href{https://discord.gg/WnDCU6xsGk}{https://discord.gg/WnDCU6xsGk}
-
-\begin{center}
-  \rule{\textwidth}{0.5pt}
-\end{center}
-
-
-\noindent\textbf{Homework}: Homework assignments will be submitted as code and a report on Gradescope.
-
-There will be a first deadline to submit the homework, which will be graded based on effort and completeness.
-
-There will be a second deadline to submit corrections to the homework, which will be graded based on effort and correctness.
-You are required to submit corrections for all assignments even if everything is correct.
-For each problem, you can indicate that you've checked the solution and your solution is equivalent.
+\noindent\textbf{Quizzes}: There will be 4 short quizzes, taken \textbf{in class, on paper, closed-device}, each about 20 minutes.
+They cover conceptual material from the preceding lectures.
+A basic calculator is permitted; phones and laptops are not.
+Your lowest quiz score is dropped.
 
 \begin{center}
   \rule{\textwidth}{0.5pt}
@@ -184,31 +250,31 @@ For each problem, you can indicate that you've checked the solution and your sol
 
 \noindent\textbf{Final project}:
 For the final project, students will work in groups of $\sim$4.
-The project deliverables are: (1) code provided as a public GitHub repository, (2) a 20-minute presentation by all members of the group, and (3) self and peer evaluations for group contributions.
+The project deliverables are: (1) code provided as a public GitHub repository, (2) a 20-minute presentation by all members of the group, (3) a $\sim$4-page report in the Phys.\ Rev.\ Lett.\ two-column format, and (4) self and peer evaluations for group contributions.
+
+Two notes:
+\begin{itemize}
+  \itemsep-0.3em
+  \item \textbf{Q\&A:} Following each group presentation, there will be about 5 minutes of questions in which each group member should be able to answer questions about any part of the project. Divide the work, but make sure everyone understands the whole project.
+  \item \textbf{Commit history:} Your repository should show the actual development of the project.
+\end{itemize}
 
 \begin{center}
   \rule{\textwidth}{0.5pt}
 \end{center}
 
-\noindent\textbf{Academic integrity (including AI tools, e.g. ChatGPT)}: Please read the College Policies section of the \href{http://senate.ucsd.edu/Operating-Procedures/Senate-Manual/Appendices/2}{UCSD's Policy on Integrity of Scholarship}.
-These rules will be enforced.
-Cheating includes, but is not limited to: submitting another person's work as your own, copying from any person/source, and using any unauthorized materials or aids during exams.
+\noindent\textbf{Attendance and participation (lectures and labs)}: In-person attendance is strongly recommended.
+Lecture will be mostly conceptual, while labs include hands-on portions with interactive problem-solving and pair programming.
+Quizzes are given in lecture and oral checkpoints are held in lab.
+Sessions will be recorded.
 
-We understand that many of you may utilize AI tools such as ChatGPT to assist with your coursework.
-While these tools can be valuable resources for learning and exploring concepts, it is important to use them responsibly.
-Copying and pasting AI-generated answers without making an effort to understand the material not only undermines your learning but also violates the principles of academic integrity.
-Although we can often identify the use of such tools, we recognize that some instances may go undetected.
-Relying solely on these tools without comprehension will hinder your long-term academic and professional development.
-We encourage you to use AI assistance to enhance your understanding and support your problem-solving processes, but ensure that all submitted work reflects your own effort and comprehension.
+\emph{Exit tickets}: At the end of each class, you will be invited to fill out an exit ticket (\tbd{form link}). These, together with attendance and engagement, make up the 10\% participation grade.
 
-Copying from an online solution, a peer's solution, a Chegg solution, or shared work (on Discord, for example) is considered cheating.
-Collaboration is encouraged, but by the time you start writing your own solution to turn in, you should not be looking at any other source.
-You should know the rough outline of the solution well enough that you do not need to reference something line-by-line.
-Plagiarizing a solution but changing variable names is considered cheating.
-Soliciting help online via Chegg, Quora, etc. is considered cheating.
-If suspected, you might be asked to rework similar problems in a Zoom one-on-one meeting with the instructor and/or TA.
+\begin{center}
+  \rule{\textwidth}{0.5pt}
+\end{center}
 
-Any questions on what constitutes an academic integrity violation should be addressed to the instructor; any violation of academic integrity will result in immediate reporting to the UCSD Office of Academic Integrity, and can result in an automatic ``F'' for the course at the discretion of the instructor.
+\noindent\textbf{Discussion board}: We will use Discord: \tbd{invite link}
 
 \begin{center}
   \rule{\textwidth}{0.5pt}
@@ -216,7 +282,7 @@ Any questions on what constitutes an academic integrity violation should be addr
 
 \noindent\textbf{Counseling and Psychological Services (CAPS):} The mission of CAPS is to promote the personal, social, and emotional growth of students.
 Many services are available to UCSD students including individual, couples, and family counseling, groups, workshops, and forums, consultations and outreach, psychiatry, and peer education.
-To make an appointment, call (858) 534-755.
+To make an appointment, call (858) 534-3755.
 For more information, visit \href{https://wellness.ucsd.edu/caps/}{https://wellness.ucsd.edu/caps/}.
 
 \begin{center}
@@ -225,129 +291,135 @@ For more information, visit \href{https://wellness.ucsd.edu/caps/}{https://welln
 
 \noindent\textbf{\emph{Schedule}} (Subject to change):\\
 
+\noindent\textbf{Week 0}
+
+\emph{Thursday 9/24}: \emph{No lab} (labs begin in Week 1)
+
+\emph{Friday 9/25}: \underline{Lecture 01}: Course overview, the double-slit experiment, and how this course handles AI
+
 \noindent\textbf{Week 1}
 
-\emph{Monday 1/6}: \underline{Lecture 01}: Course overview, preview of double-slit experiments
+\emph{Monday 9/28}: \underline{Lecture 02}: Quantum mechanics refresher: states, operators, and the propagator
 
-\emph{Tuesday 1/7}: \underline{Lab 01}: Python, Jupyter, and DataHub
+\emph{Tuesday 9/29}: \underline{Lab 01}: Python, Jupyter, and DataHub
 
-\emph{Wednesday 1/8}: \underline{Lecture 02}: Feynman path integral
+\emph{Wednesday 9/30}: \underline{Lecture 03}: Feynman path integral
 
-\emph{Thursday 1/9}: \underline{Lab 02}: NumPy, SciPy, Numba, and Matplotlib
+\emph{Thursday 10/1}: \underline{Lab 02}: NumPy, SciPy, and Matplotlib
 
-\emph{Friday 1/10}: \underline{Lecture 03}: Feynman path integral (continued); \textbf{Quiz 1}
+\emph{Friday 10/2}: \underline{Lecture 04}: Feynman path integral (continued)
 
 \noindent\textbf{Week 2}
 
-\emph{Monday 1/13}: \underline{Lecture 04}: Free particle
+\emph{Monday 10/5}: \underline{Lecture 05}: Free particle; \textbf{Quiz 1}
 
-\emph{Tuesday 1/14}: \underline{Lab 03}: Introduction to Julia
+\emph{Tuesday 10/6}: \underline{Lab 03}: Random numbers, seeding, and reproducible simulation
 
-\emph{Wednesday 1/15}: \underline{Lecture 05}: Harmonic oscillator
+\emph{Wednesday 10/7}: \underline{Lecture 06}: Harmonic oscillator
 
-\emph{Thursday 1/16}: \underline{Lab 04}: Assignment 1 tutorial
+\emph{Thursday 10/8}: \underline{Lab 04}: Git and GitHub
 
-\emph{Friday 1/17}: \underline{Lecture 06}: Schr\"{o}dinger equation; \textbf{Quiz 2}
+\emph{Friday 10/9}: \underline{Lecture 07}: Schr\"{o}dinger equation
 
 \noindent\textbf{Week 3}
 
-\emph{Monday 1/20}: \textbf{Martin Luther King Jr. Day: No class}
+\emph{Monday 10/12}: \underline{Lecture 08}: Unitarity and the propagator trace; \textbf{Quiz 2}
 
-\emph{Tuesday 1/21}: \underline{Lab 05}: Git/GitHub tutorial
+\emph{Tuesday 10/13}: \underline{Lab 05}: Assignment 1 tutorial
 
-\emph{Wednesday 1/22}: \underline{Lecture 07}: Unitarity and propagator trace
+\emph{Wednesday 10/14}: \underline{Lecture 09}: Unitarity and the propagator trace (continued)
 
-\emph{Thursday 1/23}: \underline{Lab 06}: Assignment 1 help
+\emph{Thursday 10/15}: \underline{Lab 06}: Assignment 1 help
 
-\emph{Friday 1/24}: \underline{Lecture 08}: Unitarity and propagator trace (continued); \textbf{Assignment 1 Due}
+\emph{Friday 10/16}: \underline{Lecture 10}: Double well potential
 
 \noindent\textbf{Week 4}
 
-\emph{Monday 1/27}: \underline{Lecture 09}: Double well potential
+\emph{Monday 10/19}: \underline{Lecture 11}: The eigenvalue problem as a validation tool (with demo); \textbf{Assignment 1 due}
 
-\emph{Tuesday 1/28}: \underline{Lab 07}: Assignment 1 review
+\emph{Tuesday 10/20}: \underline{Lab 07}: \textbf{Oral checkpoint 1} (Assignment 1)
 
-\emph{Wednesday 1/29}: \underline{Lecture 10}: Eigenvalue problem; \textbf{Assignment 1 Corrections Due}
+\emph{Wednesday 10/21}: \underline{Lecture 12}: Statistical mechanics recap
 
-\emph{Thursday 1/30}: \underline{Lab 08}: Assignment 2 tutorial
+\emph{Thursday 10/22}: \underline{Lab 08}: Compiled code and Python interop (C/C++, Julia, Numba)
 
-\emph{Friday 1/31}: \underline{Lecture 11}: Statistical mechanics recap
+\emph{Friday 10/23}: \underline{Lecture 13}: Density matrix and the path integral
 
 \noindent\textbf{Week 5}
 
-\emph{Monday 2/3}: \underline{Lecture 12}: Density matrix and path integral
+\emph{Monday 10/26}: \underline{Lecture 14}: Markov chain Monte Carlo and the Metropolis algorithm; \textbf{Quiz 3}
 
-\emph{Tuesday 2/4}: \underline{Lab 09}: Eigenvalue problem demo
+\emph{Tuesday 10/27}: \underline{Lab 09}: Assignment 2 tutorial
 
-\emph{Wednesday 2/5}: \underline{Lecture 13}: Markov chain Monte Carlo, Metropolis algorithm
+\emph{Wednesday 10/28}: \underline{Lecture 15}: MCMC (continued): detailed balance, ergodicity, burn-in
 
-\emph{Thursday 2/6}: \underline{Lab 10}: Assignment 2 help
+\emph{Thursday 10/29}: \underline{Lab 10}: Auditing AI-generated numerical code
 
-\emph{Friday 2/7}: \underline{Lecture 14}: MCMC (continued); \textbf{Assignment 2 Due}
+\emph{Friday 10/30}: \underline{Lecture 16}: Autocorrelation and statistical error estimation
 
 \noindent\textbf{Week 6}
 
-\emph{Monday 2/10}:  \underline{Lecture 15}: MCMC for 2D Ising model
+\emph{Monday 11/2}: \underline{Lecture 17}: MCMC for the 2D Ising model; \textbf{Assignment 2 due}
 
-\emph{Tuesday 2/11}: \underline{Lab 11}: Assignment 2 review
+\emph{Tuesday 11/3}: \underline{Lab 11}: MCMC and the 2D Ising model
 
-\emph{Wednesday 2/12}: \underline{Lecture 16}: MCMC for Feynman path integral; \textbf{Assignment 2 Corrections Due}
+\emph{Wednesday 11/4}: \underline{Lecture 18}: MCMC for the Feynman path integral
 
-\emph{Thursday 2/13}: \underline{Lab 12}: MCMC tutorial
+\emph{Thursday 11/5}: \underline{Lab 12}: \textbf{Oral checkpoint 2} (Assignment 2)
 
-\emph{Friday 2/14}: \underline{Lecture 17}: MCMC for Feynman path integral (continued)
+\emph{Friday 11/6}: \underline{Lecture 19}: MCMC for the Feynman path integral (continued)
 
 \noindent\textbf{Week 7}
 
-\emph{Monday 2/17}: \textbf{Presidents' Day: No class}
+\emph{Monday 11/9}: \underline{Lecture 20}: Assignment 3 overview; \textbf{Quiz 4}
 
-\emph{Tuesday 2/18}: TBD
+\emph{Tuesday 11/10}: \underline{Lab 13}: Statistical error estimation: autocorrelation, blocking, jackknife, bootstrap
 
-\emph{Wednesday 2/19}: \underline{Lecture 17}: MCMC for Feynman path integral (continued)
+\emph{Wednesday 11/11}: \textbf{Veterans Day: No class}
 
-\emph{Thursday 2/20}: \underline{Lab 13}: Midterm help
+\emph{Thursday 11/12}: \underline{Lab 14}: Path-integral MCMC tutorial
 
-\emph{Friday 2/21}: \underline{Lecture 18}: Particle physics MC and the VEGAS algorithm; \textbf{Midterm due}
+\emph{Friday 11/13}: \underline{Lecture 21}: Particle physics Monte Carlo and the VEGAS algorithm
 
 \noindent\textbf{Week 8}
 
-\emph{Monday 2/24}: \underline{Lecture 19}: Particle physics MC and the VEGAS algorithm (continued)
+\emph{Monday 11/16}: \underline{Lecture 22}: Particle physics MC and VEGAS (continued); \textbf{Assignment 3 due}
 
-\emph{Tuesday 2/25}: \underline{Lab 14}: Midterm review
+\emph{Tuesday 11/17}: \underline{Lab 15}: \textbf{Oral checkpoint 3} (Assignment 3)
 
-\emph{Wednesday 2/26}: \underline{Lecture 20}: Particle physics MC and the VEGAS algorithm (part 3); \textbf{Midterm corrections due}
+\emph{Wednesday 11/18}: \underline{Lecture 23}: Particle physics MC and VEGAS (part 3)
 
-\emph{Thursday 2/27}: \underline{Lab 15}: MCMC for Feynman Path Integral Tutorial
+\emph{Thursday 11/19}: \underline{Lab 16}: VEGAS tutorial
 
-\emph{Friday 2/28}: \underline{Lecture 21}: Final project overview
+\emph{Friday 11/20}: \underline{Lecture 24}: Final project overview
 
 \noindent\textbf{Week 9}
 
-\emph{Monday 3/3}: TBD
+\emph{Monday 11/23}: \underline{Lecture 25}: Companion methods: what PHYS 141/241 covers
 
-\emph{Tuesday 3/4}: \underline{Lab 16}: Final project help
+\emph{Tuesday 11/24}: \underline{Lab 17}: Final project help
 
-\emph{Wednesday 3/5}: TBD
+\emph{Wednesday 11/25}: \underline{Lecture 26}: Final project work session
 
-\emph{Thursday 3/6}: \underline{Lab 17}: VEGAS Tutorial
+\emph{Thursday 11/26}: \textbf{Thanksgiving: No class}
 
-\emph{Friday 3/7}: \underline{Lecture 23}: Preview of PHYS 141/241
+\emph{Friday 11/27}: \textbf{Thanksgiving: No class}
 
 \noindent\textbf{Week 10}
 
-\emph{Monday 3/10}: \underline{Lecture 26}: Final presentations
+\emph{Monday 11/30}: \underline{Lecture 27}: Final presentations
 
-\emph{Tuesday 3/11}: \underline{Lab 19}: Final presentations
+\emph{Tuesday 12/1}: \underline{Lab 18}: Final presentations
 
-\emph{Wednesday 3/12}: \underline{Lecture 27}: Final presentations
+\emph{Wednesday 12/2}: \underline{Lecture 28}: Final presentations
 
-\emph{Thursday 3/13}: \underline{Lab 20}: Final presentations
+\emph{Thursday 12/3}: \underline{Lab 19}: Final presentations
 
-\emph{Friday 3/14}: \underline{Lecture 28}: Final presentations
+\emph{Friday 12/4}: \underline{Lecture 29}: Final presentations
 
 \noindent\textbf{Finals Week}
 
-\emph{Friday 3/21}: \textbf{Final paper and code due}
+\emph{Friday 12/11}: \textbf{Final report and code due, 8:00pm}
 
 \begin{center}
   \rule{\textwidth}{0.5pt}

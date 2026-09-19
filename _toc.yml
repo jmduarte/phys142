@@ -16,6 +16,9 @@ parts:
       title: "Lab 01: Python, Jupyter, and DataHub (Notebook)"
     - file: labs/lab2/Lab2.md
       title: "Lab 02: NumPy, SciPy, and Matplotlib"
+      sections:
+      - file: labs/lab2/Lab2_Numba.ipynb
+      - file: labs/lab2/Lab2_ffmpeg.ipynb
   - caption: Week 2
     chapters:
     # TODO Tue 10/6 Lab 03: Random Numbers, Seeding, and Reproducible Simulation (no materials yet)

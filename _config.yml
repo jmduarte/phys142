@@ -6,6 +6,10 @@ author: Javier Duarte
 logo: images/Interference_electrons_double-slit_at_10cm.png
 favicon: images/favicon.ico
 
+# Only build pages listed in _toc.yml. This keeps untracked files in this folder
+# (e.g., *_sol.ipynb solutions, materials/) out of local builds that get uploaded.
+only_build_toc_files: true
+
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html
 execute:

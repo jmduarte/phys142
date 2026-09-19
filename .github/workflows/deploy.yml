@@ -67,10 +67,6 @@ jobs:
             cd ../assignment3 && \
             latexmk -pdf && \
             cd ../final_projects && \
-            latexmk -pdf && \
-            cd ../quiz1 && \
-            latexmk -pdf && \
-            cd ../quiz2 && \
             latexmk -pdf"
 
       - name: Copy syllabus and homework for deployment
@@ -79,9 +75,7 @@ jobs:
           cp assignments/assignment1/assignment1.pdf _build/html/assignment1.pdf && \
           cp assignments/assignment2/assignment2.pdf _build/html/assignment2.pdf && \
           cp assignments/assignment3/assignment3.pdf _build/html/assignment3.pdf && \
-          cp assignments/final_projects/final_projects.pdf _build/html/final_projects.pdf && \
-          cp assignments/quiz1/quiz1.pdf _build/html/quiz1.pdf && \
-          cp assignments/quiz2/quiz2.pdf _build/html/quiz2.pdf
+          cp assignments/final_projects/final_projects.pdf _build/html/final_projects.pdf
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4

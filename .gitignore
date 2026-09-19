@@ -178,3 +178,6 @@ _build
 *.fdb_latexmk
 *.synctex.gz
 *.run.xml
+
+# Quizzes are given in class, closed-device; keep sources and solutions out of this public repo
+assignments/quiz*/

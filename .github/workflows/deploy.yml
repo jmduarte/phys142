@@ -82,6 +82,28 @@ jobs:
         with:
           path: _build/html
 
+      # Deploys the built site to the department web server (jduarte.physics.ucsd.edu).
+      # Additive on purpose: no --delete, so files uploaded by hand (e.g. lecture PDFs,
+      # labs/lab1/01_DataHub.pdf) are preserved. Skips silently until secrets are set.
+      - name: Deploy to users.physics.ucsd.edu
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        env:
+          SSH_KEY: ${{ secrets.PHYSICS_SSH_KEY }}
+          KNOWN_HOSTS: ${{ secrets.PHYSICS_KNOWN_HOSTS }}
+          DEST: ${{ secrets.PHYSICS_DEST }}
+        run: |
+          set -euo pipefail
+          if [ -z "${SSH_KEY:-}" ] || [ -z "${DEST:-}" ]; then
+            echo "PHYSICS_SSH_KEY / PHYSICS_DEST not set - skipping web server deploy."
+            exit 0
+          fi
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/id_deploy && chmod 600 ~/.ssh/id_deploy
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts && chmod 644 ~/.ssh/known_hosts
+          rsync -rlvz --chmod=D755,F644 --omit-dir-times --no-perms \
+            -e "ssh -i ~/.ssh/id_deploy -o IdentitiesOnly=yes" \
+            _build/html/ "$DEST/"
+
       - name: GitHub Pages action
         if: github.event_name == 'push'
         uses: peaceiris/actions-gh-pages@v3.9.3

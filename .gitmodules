@@ -1,0 +1,3 @@
+[submodule "assignments/private"]
+	path = assignments/private
+	url = git@github.com:jmduarte/phys142_private.git

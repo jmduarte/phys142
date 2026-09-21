@@ -82,6 +82,16 @@ jobs:
         with:
           path: _build/html
 
+      - name: GitHub Pages action
+        if: github.event_name == 'push'
+        uses: peaceiris/actions-gh-pages@v3.9.3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: _build/html
+          force_orphan: true
+          user_name: "github-actions[bot]"
+          user_email: "github-actions[bot]@users.noreply.github.com"
+
       # Deploys the built site to the department web server (jduarte.physics.ucsd.edu).
       # Additive on purpose: no --delete, so files uploaded by hand (e.g. lecture PDFs,
       # labs/lab1/01_DataHub.pdf) are preserved. Skips silently until secrets are set.
@@ -102,14 +112,4 @@ jobs:
           printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts && chmod 644 ~/.ssh/known_hosts
           rsync -rlvz --chmod=D755,F644 --omit-dir-times --no-perms \
             -e "ssh -i ~/.ssh/id_deploy -o IdentitiesOnly=yes" \
-            _build/html/ "$DEST/"
-
-      - name: GitHub Pages action
-        if: github.event_name == 'push'
-        uses: peaceiris/actions-gh-pages@v3.9.3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: _build/html
-          force_orphan: true
-          user_name: "github-actions[bot]"
-          user_email: "github-actions[bot]@users.noreply.github.com"
+            _build/html/ "$DEST"

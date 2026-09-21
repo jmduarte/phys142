@@ -62,7 +62,13 @@ nameorder=given-family,
   }
 \end{center}
 
-\noindent\emph{\small Note on the course title: the current catalog title and description for PHYS 142/242 (``Computational Physics II: PDE and Matrix Models'') predate the way this course and PHYS 141/241 have been taught in recent years. The department is in the process of realigning the catalog descriptions with course content. The description in this syllabus is what the course actually covers.}
+
+\begin{center}
+  \includegraphics[width=0.8\textwidth]{pathintegral.png}
+\end{center}
+
+\noindent\emph{\small Note on the course title: the current catalog title and description for PHYS 142/242 (``Computational Physics II: PDE and Matrix Models'') predate the way this course and PHYS 141/241 have been taught in recent years.
+  The department is in the process of realigning the catalog descriptions with course content.}
 
 \begin{center}
   \rule{\textwidth}{0.5pt}
@@ -137,11 +143,11 @@ Week 9 of this course includes a lecture surveying the deterministic methods cov
 \begin{itemize}
   \itemsep-0.3em
   \item Design computer programs to numerically solve physics problems, like the harmonic oscillator using the Feynman path integral approach.
-  \item Estimate and report statistical uncertainties on Monte Carlo results, accounting for autocorrelation between samples.
-  \item Validate a stochastic calculation against an independent deterministic one (e.g., matrix diagonalization) and explain any residual discrepancy quantitatively.
+  \item Estimate and report statistical uncertainties on Monte Carlo results.
+  \item Validate a stochastic calculation against an independent deterministic one and explain any residual discrepancy quantitatively.
   \item Consider multiple approaches and compare their computational performance, accuracy, and fidelity to physical laws.
   \item Find and choose the best tool or programming language for the task.
-  \item Use AI coding assistants effectively and critically: verify generated numerical code against physical and statistical benchmarks, and recognize its characteristic failure modes.
+  \item Use AI coding assistants effectively and critically, and recognize its characteristic failure modes.
   \item Visualize the solutions.
   \item Collaborate with peers to tackle complex, realistic problems.
   \item Present findings, and defend the technical choices behind them.
@@ -196,7 +202,7 @@ The appendix is worth points on each assignment.
 
 \vspace{2mm}
 \noindent The third item is important.
-Language models are confidently wrong about numerical physics in specific ways, e.g., they may propose Metropolis updates that violate detailed balance, report $\sigma/\sqrt{N}$ uncertainties on correlated samples, drop factors of $\delta\tau$, confuse conventions where $\hbar=1$, and produce suspiciously clean results from runs that never converged.
+Language models may be confidently wrong about numerical physics in different ways.
 Finding those errors is an integral skill that we will spend a lab on (Lab 10).
 
 \vspace{2mm}
@@ -228,10 +234,10 @@ Soliciting solutions online (Chegg, Quora, course-answer sites) is cheating.
   \rule{\textwidth}{0.5pt}
 \end{center}
 
-\noindent\textbf{Oral checkpoints}: Three times during the quarter, you will meet individually with the instructor or TA during lab for about five minutes to walk us through your own code.
-You may be asked to run it, change something on the spot (e.g., ``halve the time step---what happens to the propagator?'', ``show me the autocorrelation time''), or explain a few lines.
+\noindent\textbf{Oral checkpoints}: Three times during the quarter, you will meet individually with the instructor or TA during lab for about 5 minutes to walk us through your own code.
+You may be asked to run it, change something, or explain a few lines.
 
-If you wrote and understand your code---whatever tools helped you get there---this should be a pleasant five-minute conversation about your own work.
+If you wrote and understand your code---whatever tools helped you get there---this should be a brief conversation about your own work.
 They are graded on whether you can explain and modify what you submitted.
 Checkpoints are tied to Assignments 1, 2, and 3, and are scheduled in Labs 07, 12, and 15.
 

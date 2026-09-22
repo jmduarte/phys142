@@ -2,7 +2,7 @@
 
 Author: Javier Duarte <a href="https://orcid.org/0000-0002-5076-7096"><img src="https://orcid.org/assets/vectors/orcid.logo.icon.svg" width=15/></a>
 
-[![Jupyter Book Badge](https://jupyterbook.org/badge.svg)](https://jduarte.physics.ucsd.edu/phys142)
+[![Jupyter Book Badge](https://jupyterbook.org/v1/badge.svg)](https://jduarte.physics.ucsd.edu/phys142)
 ![deploy-book](https://github.com/jmduarte/phys142/actions/workflows/deploy.yml/badge.svg)
 
 *The registrar lists this course under its catalog title, "Computational Physics II: PDE and Matrix Models," which predates how the course is now taught. The description below is what the course actually covers.*

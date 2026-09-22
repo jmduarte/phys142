@@ -25,12 +25,12 @@ biblabel=brackets,
   {\vbox{
       \vspace{2mm}
       \large
-      Computational Physics II \hfill
+      Computational Physics: Stochastic Methods and Path Integrals \hfill
       UCSD PHYS 142/242 \hfill \\[1pt]
       Final Projects\hfill
-      Presentations: Monday, March 10 - Friday, March 14, 2025\\
+      Presentations: Monday, November 30, 2026 -- Friday, December 4, 2026\\
 	  \hfill
-	  Report and code due: Friday, March 21, 2025, 8:00pm\\
+	  Report and code due: Friday, December 11, 2026, 8:00pm\\
     }
   }
 }
@@ -186,6 +186,87 @@ Use the VEGAS Monte Carlo method~\cite{Lepage:1977sw,Lepage:2020tgj} to generate
 Compare how many function evaluations are needed to arrive at the same number of samples, e.g. 10,000.
 Discuss the settings you use for the VEGAS algorithm, i.e. how many iterations, what kind of damping factor, and how many bins, etc.
 \end{problem}
+
+\newpage
+\section{Polymer Collapse with MCMC: A Toy Model of Protein Folding}
+
+A protein is a chain of amino acids that, in water, collapses from an extended coil into a compact structure.
+Coarse-grained models replace each amino acid with a single bead, and even a \emph{homopolymer}, in which all beads are identical, captures the first step of folding: as the temperature is lowered, the chain undergoes a transition from a swollen coil to a compact globule~\cite{deGennes:1979}.
+(Folding into one specific structure requires different interactions between different beads; see the extensions below.)
+This project, introduced in Lecture 21, is adapted from a homework assignment on MCMC for protein folding in CS~2840 (Spring 2025).
+
+Consider a chain of $N$ beads at positions $\vec r_1, \dots, \vec r_N$ in three dimensions.
+In reduced units ($\epsilon = \sigma = k_B = 1$), the potential energy is
+\begin{equation}
+  U(\vec x) = \sum_{i=1}^{N-1} k\left(|\vec r_{i+1}-\vec r_i| - r_0\right)^2 + \sum_{|i-j|\geq 2} 4\left[\left(\frac{1}{r_{ij}}\right)^{12} - \left(\frac{1}{r_{ij}}\right)^{6}\right],
+\end{equation}
+with $k = 50$, $r_0 = 1$, and $r_{ij} = |\vec r_i - \vec r_j|$.
+The first term connects consecutive beads with harmonic bonds, which are fixed: they are never formed or broken.
+The second is a Lennard-Jones interaction between all other pairs of beads.
+The equilibrium distribution is $\pi(\vec x) \propto e^{-U(\vec x)/T}$, and the size of the chain is measured by its radius of gyration,
+\begin{equation}
+  R_g^2 = \frac{1}{N}\sum_{i=1}^{N}|\vec r_i - \vec r_\text{cm}|^2, \qquad \vec r_\text{cm} = \frac{1}{N}\sum_{i=1}^N \vec r_i.
+\end{equation}
+
+Starter code is available at \url{https://github.com/jmduarte/phys142/blob/main/assignments/final_projects/polymer_mcmc.py}.
+It implements $U$, $R_g^2$, and a single-bead Metropolis sampler~\cite{Metropolis:1953} with a symmetric Gaussian proposal.
+It is correct but slow.
+For Problems B--D you will need to speed it up, e.g., by computing the energy change of a single-bead move in $O(N)$ rather than $O(N^2)$ and compiling the inner loop with Numba.
+Report the speedup you achieve.
+
+\begin{problem}
+\emph{Validation.}
+For $N=2$, the chain is a single bond.
+Show that the bond length $d$ is distributed as $P(d) \propto d^2 e^{-k(d-r_0)^2/T}$, and explain the origin of the factor $d^2$.
+Show that $\langle d\rangle \approx r_0 + T/(k r_0)$ to leading order in $T/(k r_0^2)$.
+At $T=1$, compute $\langle d \rangle$ by numerical quadrature and compare it with your MCMC estimate.
+Your MCMC error bar must account for autocorrelation between samples, e.g., using blocking~\cite{Flyvbjerg:1989} or the integrated autocorrelation time.
+\end{problem}
+
+\begin{problem}
+\emph{Coil--globule transition.}
+For $N=16$ and $N=32$, scan the temperature over $0.4 \leq T \leq 5$.
+Plot $\langle R_g^2\rangle^{1/2}$, the energy per bead $\langle U\rangle/N$, and the heat capacity per bead $C_V/N = (\langle U^2\rangle - \langle U\rangle^2)/(N T^2)$ versus $T$, all with error bars (use a jackknife or bootstrap for $C_V$).
+Estimate the temperature at which the chain collapses.
+Does $C_V$ have a clear peak at the collapse? Discuss.
+Describe your strategy for the initial configuration, burn-in, step size (and resulting acceptance rate), number of sweeps, and thinning (if any).
+Plot the integrated autocorrelation time of $R_g^2$ versus $T$ and discuss what it implies for how long you must run.
+\end{problem}
+
+\begin{problem}
+\emph{The Hastings correction.}
+Replace the symmetric proposal with a biased one: displace the chosen bead by $\vec\delta \sim \mathcal N(\mu\hat x, s^2 \mathbb{1})$ with $\mu = s$.
+Since $q(\vec x'|\vec x)\neq q(\vec x|\vec x')$, the acceptance probability must include the Hastings factor~\cite{Hastings:1970},
+\begin{equation}
+  A(\vec x\to\vec x') = \min\left(1, e^{-\Delta U/T}\,\frac{q(\vec x|\vec x')}{q(\vec x'|\vec x)}\right).
+\end{equation}
+Derive $q(\vec x|\vec x')/q(\vec x'|\vec x)$ for this proposal.
+For $N=16$ at $T=1$, compare $\langle R_g^2\rangle$ and the diagonal components $\langle S_{xx}\rangle$, $\langle S_{yy}\rangle$, $\langle S_{zz}\rangle$ of the gyration tensor, $S_{\alpha\beta} = \frac{1}{N}\sum_i (r_{i,\alpha} - r_{\text{cm},\alpha})(r_{i,\beta} - r_{\text{cm},\beta})$, from three samplers: symmetric, biased without the Hastings factor, and biased with it.
+Which agree with each other? What happens to the acceptance rate and the autocorrelation time?
+Finally, show that for $N=2$ the biased sampler gives the correct $\langle d\rangle$ even without the Hastings factor, and explain why.
+
+\begin{hint}
+  Compare averages, e.g., $\langle S_{xx}\rangle$ with $\langle S_{yy}\rangle$, rather than the average of a ratio such as $\langle S_{xx}/S_{yy}\rangle$.
+\end{hint}
+\end{problem}
+
+\begin{problem}
+\emph{Scaling.}
+At a high temperature ($T=4$, swollen coil) and a low temperature ($T=0.4$, compact globule), measure $\langle R_g^2\rangle^{1/2}$ for $N = 8$, 16, and 32, and fit $R_g \propto N^\nu$.
+Compare your exponents with $\nu \approx 0.588$ for a self-avoiding walk, $\nu = 1/2$ for an ideal chain (the $\theta$ point), and $\nu = 1/3$ for a compact globule~\cite{deGennes:1979}.
+How does the autocorrelation time grow with $N$?
+Discuss finite-size effects and the limitations of single-bead moves.
+Including $N=64$ is optional and will likely require one of the extensions below.
+\end{problem}
+
+\noindent\textbf{Possible extensions:}
+\begin{itemize}
+  \item Pivot moves: rotate the part of the chain on one side of a randomly chosen bead by a random rotation~\cite{Madras:1988}.
+        Show that this proposal is symmetric, and compare autocorrelation times with single-bead moves, especially for large $N$ at high $T$.
+  \item Parallel tempering at low temperatures, where single-bead moves get stuck.
+  \item Heteropolymers: make the Lennard-Jones well depth depend on the bead types (e.g., hydrophobic and polar beads), and study whether a specific compact structure emerges.
+  \item Start from the $C_\alpha$ trace of a real protein from the Protein Data Bank, and discuss why a homopolymer model does not keep it folded.
+\end{itemize}
 
 \newpage
 

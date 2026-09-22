@@ -110,6 +110,7 @@ jobs:
           mkdir -p ~/.ssh && chmod 700 ~/.ssh
           printf '%s\n' "$SSH_KEY" > ~/.ssh/id_deploy && chmod 600 ~/.ssh/id_deploy
           printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts && chmod 644 ~/.ssh/known_hosts
-          rsync -rlvz --chmod=D755,F644 --omit-dir-times --no-perms \
+          # LC_ALL/LANG=C: the server (CentOS 7) lacks C.UTF-8, which ssh would otherwise forward.
+          LC_ALL=C LANG=C rsync -rlvz --chmod=D755,F644 \
             -e "ssh -i ~/.ssh/id_deploy -o IdentitiesOnly=yes" \
             _build/html/ "$DEST"

@@ -1,6 +1,9 @@
 # PHYS 142/242, Fall 2026. Week numbering and lab numbers match syllabus/syllabus.tex.
 # Lectures are added as their slides are updated for Fall 2026.
 # Quizzes are in-class and closed-device this year, so they are not linked here.
+# Assignments and final projects are published only while linked here: the deploy
+# copies a handout's PDF to the site (and removes it from the web server otherwise)
+# based on whether its "- url:" line is uncommented. To release one, uncomment it.
 format: jb-book
 root: README.md
 parts:
@@ -26,8 +29,9 @@ parts:
       title: "Lab 04: Git and GitHub"
   - caption: Week 3
     chapters:
-    - url: https://jduarte.physics.ucsd.edu/phys142/assignment1.pdf
-      title: "Assignment 01 (Due Mon 10/19)"
+    # UNRELEASED: uncomment the next two lines to publish Assignment 1.
+    # - url: https://jduarte.physics.ucsd.edu/phys142/assignment1.pdf
+    #   title: "Assignment 01 (Due Mon 10/19)"
     - file: labs/lab4/Lab4.ipynb
       title: "Lab 05: Assignment 1 Tutorial"
   - caption: Week 4
@@ -36,8 +40,9 @@ parts:
       title: "Lab 08: Compiled Code and Python Interop"
   - caption: Week 5
     chapters:
-    - url: https://jduarte.physics.ucsd.edu/phys142/assignment2.pdf
-      title: "Assignment 02 (Due Mon 11/2)"
+    # UNRELEASED: uncomment the next two lines to publish Assignment 2.
+    # - url: https://jduarte.physics.ucsd.edu/phys142/assignment2.pdf
+    #   title: "Assignment 02 (Due Mon 11/2)"
     - file: labs/lab8/Lab8.ipynb
       title: "Lab 09: Assignment 2 Tutorial"
     # TODO Thu 10/29 Lab 10: Auditing AI-Generated Numerical Code (no materials yet)
@@ -47,20 +52,24 @@ parts:
       title: "Lab 11: MCMC and the 2D Ising Model"
   - caption: Week 7
     chapters:
-    - url: https://jduarte.physics.ucsd.edu/phys142/assignment3.pdf
-      title: "Assignment 03 (Due Mon 11/16)"
+    # UNRELEASED: uncomment the next two lines to publish Assignment 3.
+    # - url: https://jduarte.physics.ucsd.edu/phys142/assignment3.pdf
+    #   title: "Assignment 03 (Due Mon 11/16)"
     # TODO Tue 11/10 Lab 13: Statistical Error Estimation (no materials yet)
     - file: labs/lab15/Lab15.ipynb
       title: "Lab 14: Path-Integral MCMC Tutorial"
   - caption: Week 8
     chapters:
-    - url: https://jduarte.physics.ucsd.edu/phys142/final_projects.pdf
-      title: "Final Projects"
+    # UNRELEASED: uncomment the next two lines (and Week 10 below) to publish the final projects.
+    # - url: https://jduarte.physics.ucsd.edu/phys142/final_projects.pdf
+    #   title: "Final Projects"
     - file: labs/lab17/lab17.ipynb
       title: "Lab 16: VEGAS Tutorial"
   # Week 9 has no linked materials yet (Lecture 25, Lab 17 project help).
   # Jupyter Book rejects a part with no chapters, so the week is omitted until then.
-  - caption: Week 10
-    chapters:
-    - url: https://jduarte.physics.ucsd.edu/phys142/final_projects.pdf
-      title: "Final Presentations (Mon 11/30 to Fri 12/4); Report and Code Due Fri 12/11"
+  # UNRELEASED: uncomment this week together with the Week 8 final projects entry.
+  # (Its only entry is the handout, and Jupyter Book rejects an empty week.)
+  # - caption: Week 10
+  #   chapters:
+  #   - url: https://jduarte.physics.ucsd.edu/phys142/final_projects.pdf
+  #     title: "Final Presentations (Mon 11/30 to Fri 12/4); Report and Code Due Fri 12/11"

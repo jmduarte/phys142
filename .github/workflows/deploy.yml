@@ -69,13 +69,19 @@ jobs:
             cd ../final_projects && \
             latexmk -pdf"
 
-      - name: Copy syllabus and homework for deployment
+      - name: Copy syllabus and released handouts for deployment
         run: |
-          cp syllabus/syllabus.pdf _build/html/syllabus.pdf && \
-          cp assignments/assignment1/assignment1.pdf _build/html/assignment1.pdf && \
-          cp assignments/assignment2/assignment2.pdf _build/html/assignment2.pdf && \
-          cp assignments/assignment3/assignment3.pdf _build/html/assignment3.pdf && \
-          cp assignments/final_projects/final_projects.pdf _build/html/final_projects.pdf
+          cp syllabus/syllabus.pdf _build/html/syllabus.pdf
+          # A handout is released when its "- url:" line in _toc.yml is uncommented.
+          # All of them are still compiled above, so LaTeX errors show up before release.
+          for doc in assignment1 assignment2 assignment3 final_projects; do
+            if grep -Eq "^[[:space:]]*- url: .*/${doc}\.pdf" _toc.yml; then
+              cp "assignments/${doc}/${doc}.pdf" "_build/html/${doc}.pdf"
+              echo "released:     ${doc}"
+            else
+              echo "not released: ${doc}"
+            fi
+          done
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
@@ -112,5 +118,14 @@ jobs:
           printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts && chmod 644 ~/.ssh/known_hosts
           # LC_ALL/LANG=C: the server (CentOS 7) lacks C.UTF-8, which ssh would otherwise forward.
           LC_ALL=C LANG=C rsync -rlvz --chmod=D755,F644 \
+            -e "ssh -i ~/.ssh/id_deploy -o IdentitiesOnly=yes" \
+            _build/html/ "$DEST"
+          # Handouts follow _toc.yml: delete any that are not released. The filters scope
+          # this to exactly these four files, and --max-delete caps it, so nothing else
+          # on the server can be removed.
+          LC_ALL=C LANG=C rsync -rlvz --delete --max-delete=4 \
+            --include='/assignment1.pdf' --include='/assignment2.pdf' \
+            --include='/assignment3.pdf' --include='/final_projects.pdf' \
+            --exclude='*' \
             -e "ssh -i ~/.ssh/id_deploy -o IdentitiesOnly=yes" \
             _build/html/ "$DEST"

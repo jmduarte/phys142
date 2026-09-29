@@ -52,9 +52,10 @@ The initial probability amplitude (sometimes called the wavefunction) of the ele
 \end{equation}
 where $\alpha = 2$ and $x_\mathrm{start}$ is set by your student ID (PID),
 \begin{equation}
-  x_\mathrm{start} = s\left(0.5 + \frac{d}{200}\right),
+  x_\mathrm{start} = (-1)^s\left(0.5 + \frac{d}{200}\right),
 \end{equation}
-where $d$ is the last two digits of your PID (00 to 99), and $s = +1$ if the third-to-last digit of your PID is even and $s = -1$ if it is odd.
+where $d$ is the last two digits of your PID (00 to 99), and $s$ is the third-to-last digit of your PID (0 to 9).
+The sign of $x_\mathrm{start}$ is positive if $s$ is even and negative if $s$ is odd.
 For example, a PID of A12345678 gives $x_\mathrm{start} = +(0.5 + 78/200) = +0.89$, and A12345123 gives $x_\mathrm{start} = -(0.5 + 23/200) = -0.615$.
 State your $x_\mathrm{start}$ at the top of your report.
 The amplitude can be represented as a vector $\psi_0$ with $N_D+1$ components, $\psi_0 = (\Psi_0(x_0), \Psi_0(x_1), \ldots, \Psi_0(x_{N_D}))$.
@@ -110,7 +111,7 @@ We recommend using complex NumPy arrays, e.g. \texttt{np.array([1+2j, 3+4j])} an
       \langle V\rangle = \int \frac{1}{2}x^2 P_t(x) dx.
     \end{equation}
     For the mean value of $K$, there are a few different ways to calculate it.
-    The simplest uses the kinetic energy operator (Lecture 2), but rewrites it in terms of the time derivative of the wavefunction:
+    The simplest uses the kinetic energy operator (Lecture 2), but rewrites it in terms of the first derivative of the wavefunction using integration by parts:
     \begin{equation}
       \langle K\rangle = \int \Psi_t^\ast(x) \left(- \frac{\hbar^2}{2} \frac{\partial^2}{\partial x^2}\right) \Psi_t(x) dx = \frac{\hbar^2}{2} \int \left|\frac{\partial\Psi_t}{\partial x}\right|^2  dx
     \end{equation}

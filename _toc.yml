@@ -1,5 +1,5 @@
 # PHYS 142/242, Fall 2026. Week numbering and lab numbers match syllabus/syllabus.tex.
-# Lectures are added as their slides are updated for Fall 2026.
+# Lectures are added by scripts/publish_lecture.py as their slides are finished.
 # Quizzes are in-class and closed-device this year, so they are not linked here.
 # Assignments and final projects are published only while linked here: the deploy
 # copies a handout's PDF to the site (and removes it from the web server otherwise)
@@ -11,8 +11,12 @@ parts:
     chapters:
     - url: https://jduarte.physics.ucsd.edu/phys142/syllabus.pdf
       title: "Syllabus"
+    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/01_Introduction.pdf
+      title: "Lecture 01: Course overview, the double-slit experiment, and how this course handles AI"
   - caption: Week 1
     chapters:
+    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/02_QuantumMechRecap.pdf
+      title: "Lecture 02: Quantum mechanics refresher: states, operators, and the propagator"
     - url: https://jduarte.physics.ucsd.edu/phys142/labs/lab1/01_DataHub.pdf
       title: "Lab 01: Python, Jupyter, and DataHub (Slides)"
     - file: labs/lab1/Lab1.ipynb

@@ -10,11 +10,13 @@ favicon: images/favicon.ico
 # (e.g., *_sol.ipynb solutions, materials/) out of local builds that get uploaded.
 only_build_toc_files: true
 
-# Force re-execution of notebooks on each build.
+# Re-execute notebooks except the handout used for live coding.
 # See https://jupyterbook.org/content/execute.html
 execute:
   execute_notebooks: force
   timeout: -1
+  exclude_patterns:
+    - labs/lab01_lab02/lab01_lab02.ipynb
 
 # Define the name of the latex output file for PDF builds
 latex:

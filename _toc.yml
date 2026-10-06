@@ -17,8 +17,10 @@ parts:
     chapters:
     - url: https://jduarte.physics.ucsd.edu/phys142/lectures/02_QuantumMechRecap.pdf
       title: "Lecture 02: Quantum mechanics refresher: states, operators, and the propagator"
-    - file: labs/lab01_lab02/lab01_lab02.ipynb
-      title: "Labs 1 and 2: Python, Jupyter, DataHub, NumPy, SciPy, and Matplotlib"
+    - file: labs/lab01/lab01.ipynb
+      title: "Lab 01: Python, Jupyter, and DataHub"
+    - file: labs/lab02/lab02.ipynb
+      title: "Lab 02: NumPy, SciPy, and Matplotlib"
     # Previous Week 1 lab materials: preserved, but hidden from the website TOC.
     # - url: https://jduarte.physics.ucsd.edu/phys142/labs/lab1/01_DataHub.pdf
     #   title: "Lab 01: Python, Jupyter, and DataHub (Slides)"
@@ -31,7 +33,8 @@ parts:
     #   - file: labs/lab2/Lab2_ffmpeg.ipynb
   - caption: Week 2
     chapters:
-    # TODO Tue 10/6 Lab 03: Random Numbers, Seeding, and Reproducible Simulation (no materials yet)
+    - file: labs/lab03/lab03.ipynb
+      title: "Lab 03: Random Numbers, Seeding, and Reproducible Simulation"
     - file: labs/lab5/lab05.ipynb
       title: "Lab 04: Git and GitHub"
   - caption: Week 3

@@ -20,6 +20,14 @@ execute:
     - labs/lab01/lab01.ipynb
     - labs/lab02/lab02.ipynb
     - labs/lab03/lab03.ipynb
+    - labs/lab04/lab04.ipynb
+
+# Render standard Mermaid fences in notebooks with the pinned MyST parser.
+sphinx:
+  local_extensions:
+    mermaid_fences: _ext
+  config:
+    mermaid_height: auto
 
 # Define the name of the latex output file for PDF builds
 latex:

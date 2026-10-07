@@ -19,3 +19,4 @@ dependencies:
       - requests
       - ipywidgets
       - widgetsnbextension
+      - sphinxcontrib-mermaid==2.0.2

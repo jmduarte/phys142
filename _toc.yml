@@ -35,7 +35,7 @@ parts:
     chapters:
     - file: labs/lab03/lab03.ipynb
       title: "Lab 03: Random Numbers, Seeding, and Reproducible Simulation"
-    - file: labs/lab5/lab05.ipynb
+    - file: labs/lab04/lab04.ipynb
       title: "Lab 04: Git and GitHub"
   - caption: Week 3
     chapters:

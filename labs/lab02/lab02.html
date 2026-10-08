@@ -1,0 +1,1391 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Lab 02: NumPy, SciPy, and Matplotlib &#8212; UCSD PHYS 142/242</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'labs/lab02/lab02';</script>
+    <link rel="canonical" href="https://jduarte.physics.ucsd.edu/phys142/labs/lab02/lab02.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Lab 03: Random numbers, seeding, and reproducible simulation" href="../lab03/lab03.html" />
+    <link rel="prev" title="Labs 1 and 2: Python, Jupyter, DataHub, NumPy, SciPy, and Matplotlib" href="../lab01/lab01.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/pathintegral_logo.png" class="logo__image only-light" alt="UCSD PHYS 142/242 - Home"/>
+    <script>document.write(`<img src="../../_static/pathintegral_logo.png" class="logo__image only-dark" alt="UCSD PHYS 142/242 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../README.html">
+                    UCSD PHYS 142/242: Computational Physics — Stochastic Methods and Path Integrals (Fall 2026)
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 0</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/syllabus.pdf">Syllabus</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/01_Introduction.pdf">Lecture 01: Course overview, the double-slit experiment, and how this course handles AI</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/02_QuantumMechRecap.pdf">Lecture 02: Quantum mechanics refresher: states, operators, and the propagator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab01/lab01.html">Lab 01: Python, Jupyter, and DataHub</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Lab 02: NumPy, SciPy, and Matplotlib</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../lab03/lab03.html">Lab 03: Random Numbers, Seeding, and Reproducible Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab04/lab04.html">Lab 04: Git and GitHub</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 3</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../lab4/Lab4.html">Lab 05: Assignment 1 Tutorial</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 4</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../lab3/Lab3.html">Lab 08: Compiled Code and Python Interop</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 5</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../lab8/Lab8.html">Lab 09: Assignment 2 Tutorial</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 6</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../lab12/Lab12.html">Lab 11: MCMC and the 2D Ising Model</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 7</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../lab15/Lab15.html">Lab 14: Path-Integral MCMC Tutorial</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 8</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../lab17/lab17.html">Lab 16: VEGAS Tutorial</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/jmduarte/phys142/main?urlpath=tree/labs/lab02/lab02.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://datahub.ucsd.edu/hub/user-redirect/git-pull?repo=https%3A//github.com/jmduarte/phys142&urlpath=tree/phys142/labs/lab02/lab02.ipynb&branch=main" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onJupyterHub"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="btn__text-container">JupyterHub</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/jmduarte/phys142/blob/main/labs/lab02/lab02.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jmduarte/phys142" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jmduarte/phys142/issues/new?title=Issue%20on%20page%20%2Flabs/lab02/lab02.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/labs/lab02/lab02.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Lab 02: NumPy, SciPy, and Matplotlib</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#if-a-package-is-missing">If a package is missing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numpy-arrays">NumPy arrays</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#convenience-functions">Convenience functions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#making-arrays-without-typing-every-value">Making arrays without typing every value</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#slices-and-masks">Slices and masks</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#make-a-copy-before-changing-an-array">Make a copy before changing an array</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#two-dimensional-arrays">Two-dimensional arrays</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matplotlib">Matplotlib</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-a-function">Plotting a function</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scipy">SciPy</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#integrating-a-function">Integrating a function</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#save-a-plot-and-a-data-file">Save a plot and a data file</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#try-it-with-another-dataset">Try it with another dataset</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="lab-02-numpy-scipy-and-matplotlib">
+<h1>Lab 02: NumPy, SciPy, and Matplotlib<a class="headerlink" href="#lab-02-numpy-scipy-and-matplotlib" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p><strong>Import before using a package</strong></p></li>
+<li><p><strong>Point out the short names</strong></p></li>
+</ul>
+<p>We’ll use a short set of temperature readings to work with arrays, make plots, and fit
+a line. The readings are provided below; there’s no data file to download.</p>
+<p>First, import the packages. <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">numpy</span> <span class="pre">as</span> <span class="pre">np</span></code> lets us use the short name <code class="docutils literal notranslate"><span class="pre">np</span></code>.
+<code class="docutils literal notranslate"><span class="pre">matplotlib.pyplot</span></code> is the plotting module; we’ll call it <code class="docutils literal notranslate"><span class="pre">plt</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Which versions did we import?</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"NumPy:"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"SciPy:"</span><span class="p">,</span> <span class="n">scipy</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="if-a-package-is-missing">
+<h2>If a package is missing<a class="headerlink" href="#if-a-package-is-missing" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Install into this notebook’s environment</strong></p></li>
+<li><p><strong>After restarting, import again</strong></p></li>
+</ul>
+<p>If the import cell gives <code class="docutils literal notranslate"><span class="pre">ModuleNotFoundError</span></code>, the package isn’t available in that
+kernel. In Colab or your own local notebook, remove the <code class="docutils literal notranslate"><span class="pre">#</span></code> from the line below and run it.
+<code class="docutils literal notranslate"><span class="pre">%pip</span></code> installs into the environment used by this notebook.</p>
+<p>If installation asks for a restart, restart the kernel. After any successful installation,
+rerun the import cell above. Then put the <code class="docutils literal notranslate"><span class="pre">#</span></code> back so Run All doesn’t keep running
+the installation command. For a different
+package, replace the names with the package you need.</p>
+<p>On DataHub, these packages should be in the course environment. If they aren’t, check
+which environment you selected and ask me before installing over the existing setup.
+For a separate custom environment, use the <a class="reference external" href="https://support.ucsd.edu/services?id=kb_article_view&amp;sysparm_article=KB0033812">DataHub instructions</a>.</p>
+<p><strong>Install</strong> adds the package to an environment. <strong>Import</strong> makes it available to the
+current Python session. You’ll import again after a restart. A new Colab runtime may
+also need packages installed again.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">art</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">pip</span> install art
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="numpy-arrays">
+<h2>NumPy arrays<a class="headerlink" href="#numpy-arrays" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Same values, different containers</strong></p></li>
+<li><p><strong>Predict before you run</strong></p></li>
+</ul>
+<p>With an array, we can apply the same calculation to every number at once. A list behaves
+differently: multiplying a list repeats it, while multiplying an array multiplies its values.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">values_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">values_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">values_list</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Predict: a list times two.</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">values_list</span> <span class="o">*</span> <span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Same operator. Now an array.</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">values_array</span> <span class="o">*</span> <span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Square every entry.</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">values_array</span><span class="o">**</span><span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>One time, one temperature</strong></p></li>
+<li><p><strong>Inspect before calculating</strong></p></li>
+</ul>
+<p>Here’s our example data. Each temperature goes with the time at the same index.
+<code class="docutils literal notranslate"><span class="pre">shape</span></code> gives the size of each dimension, and <code class="docutils literal notranslate"><span class="pre">dtype</span></code> gives the type of the entries.
+These are one-dimensional arrays with six entries each.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">time_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+<span class="n">temperature_c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">20.0</span><span class="p">,</span> <span class="mf">21.1</span><span class="p">,</span> <span class="mf">21.8</span><span class="p">,</span> <span class="mf">23.2</span><span class="p">,</span> <span class="mf">23.9</span><span class="p">,</span> <span class="mf">25.1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>How many dimensions? How many entries?</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">temperature_c</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>What kind of numbers are stored?</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">temperature_c</span><span class="o">.</span><span class="n">dtype</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Convert the whole array at once.</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">temperature_c</span> <span class="o">*</span> <span class="mi">9</span> <span class="o">/</span> <span class="mi">5</span> <span class="o">+</span> <span class="mi">32</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">convert2f</span><span class="p">(</span><span class="n">ctemp</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">ctemp</span> <span class="o">*</span> <span class="mi">9</span> <span class="o">/</span> <span class="mi">5</span> <span class="o">+</span> <span class="mi">32</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">convert2f</span><span class="p">(</span><span class="n">temperature_c</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="convenience-functions">
+<h2>Convenience functions<a class="headerlink" href="#convenience-functions" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Reduce six readings to one mean.</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">temperature_c</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Find the smallest and largest readings.</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"Minimum:"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">temperature_c</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Maximum:"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">temperature_c</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Remember <code class="docutils literal notranslate"><span class="pre">0.1</span> <span class="pre">+</span> <span class="pre">0.2</span></code>? Compare with tolerance.</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="mf">0.1</span> <span class="o">+</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Be careful with <code class="docutils literal notranslate"><span class="pre">np.isclose</span></code> in particular: <a class="reference external" href="https://numpy.org/devdocs/reference/generated/numpy.isclose.html">https://numpy.org/devdocs/reference/generated/numpy.isclose.html</a></p>
+<section id="making-arrays-without-typing-every-value">
+<h3>Making arrays without typing every value<a class="headerlink" href="#making-arrays-without-typing-every-value" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Choose a step or point count</strong></p></li>
+<li><p><strong>Check whether the endpoint appears</strong></p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">np.arange(start,</span> <span class="pre">stop,</span> <span class="pre">step)</span></code> steps through values and excludes the stop value.
+<code class="docutils literal notranslate"><span class="pre">np.linspace(start,</span> <span class="pre">stop,</span> <span class="pre">num)</span></code> makes <code class="docutils literal notranslate"><span class="pre">num</span></code> evenly spaced points, including both endpoints.
+Use <code class="docutils literal notranslate"><span class="pre">linspace</span></code> when you want control over the number of points.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Choose the number of points.</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>More points. Same endpoints.</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Count the gaps between points</strong></p></li>
+<li><p><strong>Check the first and last values</strong></p></li>
+</ul>
+<p>Make an array of 21 evenly spaced points from 0 to 10. What will the spacing be?
+Then make the same array using <code class="docutils literal notranslate"><span class="pre">arange</span></code>. Remember that its stop value is excluded.</p>
+</section>
+<section id="slices-and-masks">
+<h3>Slices and masks<a class="headerlink" href="#slices-and-masks" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Show the mask before selecting</strong></p></li>
+<li><p><strong>Keep times and temperatures paired</strong></p></li>
+</ul>
+<p>Array slices work like list slices. You can also select values with a condition.
+<code class="docutils literal notranslate"><span class="pre">temperature_c</span> <span class="pre">&gt;</span> <span class="pre">23</span></code> creates an array of <code class="docutils literal notranslate"><span class="pre">True</span></code> and <code class="docutils literal notranslate"><span class="pre">False</span></code> values, called a mask.
+Use the same mask on both arrays to keep the times paired with their temperatures.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">temperature_c</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>One <code class="docutils literal notranslate"><span class="pre">True</span></code> or <code class="docutils literal notranslate"><span class="pre">False</span></code> per reading.</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">above_23</span> <span class="o">=</span> <span class="n">temperature_c</span> <span class="o">&gt;</span> <span class="mi">23</span>
+<span class="n">above_23</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Use the same mask on both arrays.</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"Selected times:"</span><span class="p">,</span> <span class="n">time_min</span><span class="p">[</span><span class="n">above_23</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Selected temperatures:"</span><span class="p">,</span> <span class="n">temperature_c</span><span class="p">[</span><span class="n">above_23</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>One condition, then two</strong></p></li>
+<li><p><strong>Parentheses around each comparison</strong></p></li>
+</ul>
+<p>Change the condition to select readings at or below 23 °C. If you want two conditions,
+use <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> with parentheses around each one, for example <code class="docutils literal notranslate"><span class="pre">(temperature_c</span> <span class="pre">&gt;</span> <span class="pre">21)</span> <span class="pre">&amp;</span> <span class="pre">(temperature_c</span> <span class="pre">&lt;</span> <span class="pre">24)</span></code>.
+Python’s <code class="docutils literal notranslate"><span class="pre">and</span></code> doesn’t combine array conditions element by element.</p>
+</section>
+<section id="make-a-copy-before-changing-an-array">
+<h3>Make a copy before changing an array<a class="headerlink" href="#make-a-copy-before-changing-an-array" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Two names. One array.</strong></p></li>
+<li><p><strong>Change one; check the other</strong></p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">new</span> <span class="pre">=</span> <span class="pre">old</span></code> gives the same array a second name. It doesn’t copy the data.
+A basic slice such as <code class="docutils literal notranslate"><span class="pre">old[:3]</span></code> also shares data with the original array.
+Use <code class="docutils literal notranslate"><span class="pre">.copy()</span></code> if you want to change one without changing the other.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">original</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">,</span> <span class="mf">30.0</span><span class="p">])</span>
+<span class="n">same_array</span> <span class="o">=</span> <span class="n">original</span>
+<span class="n">same_array</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Original after changing its other name:"</span><span class="p">,</span> <span class="n">original</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Now copy it. Does the original change?</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">separate_array</span> <span class="o">=</span> <span class="n">original</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">separate_array</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">99</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Original:"</span><span class="p">,</span> <span class="n">original</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Copy:"</span><span class="p">,</span> <span class="n">separate_array</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="two-dimensional-arrays">
+<h3>Two-dimensional arrays<a class="headerlink" href="#two-dimensional-arrays" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Point to one row and column</strong></p></li>
+<li><p><strong>Which dimension are we averaging over?</strong></p></li>
+</ul>
+<p>Suppose we have three runs with four readings each. We’ll store one run per row.
+An array with shape <code class="docutils literal notranslate"><span class="pre">(3,</span> <span class="pre">4)</span></code> has three rows and four columns. <code class="docutils literal notranslate"><span class="pre">runs[1,</span> <span class="pre">2]</span></code> selects
+row 1, column 2.</p>
+<p>For this layout, <code class="docutils literal notranslate"><span class="pre">axis=0</span></code> averages across runs, giving one result per time.
+<code class="docutils literal notranslate"><span class="pre">axis=1</span></code> averages across times, giving one result per run. Without an axis, <code class="docutils literal notranslate"><span class="pre">mean</span></code>
+averages every entry together.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">runs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mf">20.0</span><span class="p">,</span> <span class="mf">21.0</span><span class="p">,</span> <span class="mf">22.0</span><span class="p">,</span> <span class="mf">23.0</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">20.2</span><span class="p">,</span> <span class="mf">21.1</span><span class="p">,</span> <span class="mf">21.9</span><span class="p">,</span> <span class="mf">23.2</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">19.8</span><span class="p">,</span> <span class="mf">20.9</span><span class="p">,</span> <span class="mf">22.1</span><span class="p">,</span> <span class="mf">22.8</span><span class="p">],</span>
+<span class="p">])</span>
+<span class="n">runs</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Rows first. Columns second.</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">runs</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Find row 1, column 2.</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">runs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Average down the rows. Four results.</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">runs</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Average across columns. Three results.</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">runs</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Predict each result’s length</strong></p></li>
+<li><p><strong>A colon selects every entry</strong></p></li>
+</ul>
+<p>Print the first row with <code class="docutils literal notranslate"><span class="pre">runs[0,</span> <span class="pre">:]</span></code>, then the first column with <code class="docutils literal notranslate"><span class="pre">runs[:,</span> <span class="pre">0]</span></code>.
+The colon selects everything along that dimension. Check their lengths against the shape.</p>
+</section>
+</section>
+<section id="matplotlib">
+<h2>Matplotlib<a class="headerlink" href="#matplotlib" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>One marker per pair of values</strong></p></li>
+<li><p><strong>Label both axes with units</strong></p></li>
+</ul>
+<p>Let’s plot the temperature data. <code class="docutils literal notranslate"><span class="pre">plt.subplots</span></code> returns a figure and an axes object.
+The figure is the whole image; the axes is the plot we’re drawing on.</p>
+<p><code class="docutils literal notranslate"><span class="pre">ax.plot(x,</span> <span class="pre">y,</span> <span class="pre">&quot;o&quot;)</span></code> draws a marker for each pair of values. Both arrays need the same
+length. The labels tell us what the numbers mean and which units we’re using.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig_data</span><span class="p">,</span> <span class="n">ax_data</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax_data</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time_min</span><span class="p">,</span> <span class="n">temperature_c</span><span class="p">,</span> <span class="s2">"o"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Readings"</span><span class="p">)</span>
+<span class="n">ax_data</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"Time (min)"</span><span class="p">)</span>
+<span class="n">ax_data</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"Temperature (°C)"</span><span class="p">)</span>
+<span class="n">ax_data</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">"Temperature readings"</span><span class="p">)</span>
+<span class="n">ax_data</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Connecting points does not fit them</strong></p></li>
+<li><p><strong>Two series, same axes</strong></p></li>
+</ul>
+<p>Change <code class="docutils literal notranslate"><span class="pre">&quot;o&quot;</span></code> to <code class="docutils literal notranslate"><span class="pre">&quot;o-&quot;</span></code> and run the cell again. What changed? The line connects the
+points; it doesn’t calculate a fit.</p>
+<p>Try <code class="docutils literal notranslate"><span class="pre">color=&quot;tab:orange&quot;</span></code> in <code class="docutils literal notranslate"><span class="pre">ax_data.plot(...)</span></code>, or change the figure size.
+To put two series on the same plot, call <code class="docutils literal notranslate"><span class="pre">plot</span></code> twice on the same axes before <code class="docutils literal notranslate"><span class="pre">plt.show()</span></code>.</p>
+<section id="plotting-a-function">
+<h3>Plotting a function<a class="headerlink" href="#plotting-a-function" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Pass an array into our function</strong></p></li>
+<li><p><strong>More x values, more plotted points</strong></p></li>
+</ul>
+<p>Our functions can accept arrays too, as long as the operations inside work on arrays.
+Here’s a line, <span class="math notranslate nohighlight">\(y=mx+b\)</span>. <code class="docutils literal notranslate"><span class="pre">slope</span></code> and <code class="docutils literal notranslate"><span class="pre">intercept</span></code> are inputs, so we can change them when
+we call it. A denser grid gives us more points to draw the line with.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">line</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">slope</span><span class="p">,</span> <span class="n">intercept</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">slope</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">intercept</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Choose where to evaluate the function.</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">time_dense</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Draw our guess over the data.</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig_guess</span><span class="p">,</span> <span class="n">ax_guess</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax_guess</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time_min</span><span class="p">,</span> <span class="n">temperature_c</span><span class="p">,</span> <span class="s2">"o"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Readings"</span><span class="p">)</span>
+<span class="n">ax_guess</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time_dense</span><span class="p">,</span> <span class="n">line</span><span class="p">(</span><span class="n">time_dense</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Line we chose"</span><span class="p">)</span>
+<span class="n">ax_guess</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"Time (min)"</span><span class="p">)</span>
+<span class="n">ax_guess</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"Temperature (°C)"</span><span class="p">)</span>
+<span class="n">ax_guess</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Change slope, then intercept</strong></p></li>
+<li><p><strong>Watch what each parameter changes</strong></p></li>
+</ul>
+<p>In the plotting cell above, change the slope and intercept to get the line closer to the points. Changing the slope
+tilts the line; changing the intercept shifts it up or down.</p>
+<p>Next we’ll have SciPy choose the parameters from the data.</p>
+</section>
+</section>
+<section id="scipy">
+<h2>SciPy<a class="headerlink" href="#scipy" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Give SciPy the function itself</strong></p></li>
+<li><p><strong>It chooses the slope and intercept</strong></p></li>
+</ul>
+<p>SciPy provides routines for tasks such as fitting, integration, and solving equations.
+We’ll try two of them. <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">scipy.optimize</span> <span class="pre">import</span> <span class="pre">curve_fit</span></code> imports one function,
+so we can call it as <code class="docutils literal notranslate"><span class="pre">curve_fit(...)</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">curve_fit</span></code> takes a function, x data, and y data. Here it chooses the slope and intercept
+that minimize the sum of squared differences between the line and the readings.
+Pass <code class="docutils literal notranslate"><span class="pre">line</span></code>, not <code class="docutils literal notranslate"><span class="pre">line(...)</span></code>: SciPy will call the function with different parameters.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.optimize</span><span class="w"> </span><span class="kn">import</span> <span class="n">curve_fit</span>
+
+<span class="n">parameters</span><span class="p">,</span> <span class="n">covariance</span> <span class="o">=</span> <span class="n">curve_fit</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">time_min</span><span class="p">,</span> <span class="n">temperature_c</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Read the slope and intercept.</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fitted_slope</span><span class="p">,</span> <span class="n">fitted_intercept</span> <span class="o">=</span> <span class="n">parameters</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Slope: </span><span class="si">{</span><span class="n">fitted_slope</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> °C/min"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Intercept: </span><span class="si">{</span><span class="n">fitted_intercept</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> °C"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Evaluate the fitted line at our times.</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">line</span><span class="p">(</span><span class="n">time_min</span><span class="p">,</span> <span class="n">fitted_slope</span><span class="p">,</span> <span class="n">fitted_intercept</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Unpack parameters in the function’s order</strong></p></li>
+<li><p><strong>Residual means data minus fitted value</strong></p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">parameters</span></code> contains the fitted values in the order they appear after <code class="docutils literal notranslate"><span class="pre">x</span></code> in our function:
+slope, then intercept. The assignment to two names unpacks those two values.
+<code class="docutils literal notranslate"><span class="pre">covariance</span></code> is a separate estimate of the fitted parameters’ covariance; we don’t need
+it to draw the line.</p>
+<p>Plot the result and check the differences. Those differences are called <strong>residuals</strong>.
+An axes array lets us put two plots in the same figure.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fitted_values</span> <span class="o">=</span> <span class="n">line</span><span class="p">(</span><span class="n">time_min</span><span class="p">,</span> <span class="n">fitted_slope</span><span class="p">,</span> <span class="n">fitted_intercept</span><span class="p">)</span>
+<span class="n">residuals</span> <span class="o">=</span> <span class="n">temperature_c</span> <span class="o">-</span> <span class="n">fitted_values</span>
+<span class="n">residuals</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Plot the fit. Look at the residuals.</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig_fit</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time_min</span><span class="p">,</span> <span class="n">temperature_c</span><span class="p">,</span> <span class="s2">"o"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Readings"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time_dense</span><span class="p">,</span> <span class="n">line</span><span class="p">(</span><span class="n">time_dense</span><span class="p">,</span> <span class="n">fitted_slope</span><span class="p">,</span> <span class="n">fitted_intercept</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Fitted line"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"Temperature (°C)"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time_min</span><span class="p">,</span> <span class="n">residuals</span><span class="p">,</span> <span class="s2">"o"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.5"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">"--"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"Time (min)"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"Data − line (°C)"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Move one point; predict the fit</strong></p></li>
+<li><p><strong>Restore the data and rerun</strong></p></li>
+</ul>
+<p>Increase the last temperature reading by 2 °C in the data cell. Rerun that cell,
+the fit, parameter unpacking, residual calculation, and this plot. Does the line move through the changed point, or does it
+compromise between all the points? Restore the data when you’re done, then rerun the
+data, fit, parameter, residual, and plot cells so the figure agrees with the values you’ll save.</p>
+<p><code class="docutils literal notranslate"><span class="pre">sharex=True</span></code> makes the two panels use the same x axis limits. <code class="docutils literal notranslate"><span class="pre">axes[0]</span></code> is the top
+plot and <code class="docutils literal notranslate"><span class="pre">axes[1]</span></code> is the bottom one.</p>
+<section id="integrating-a-function">
+<h3>Integrating a function<a class="headerlink" href="#integrating-a-function" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Check against an integral we know</strong></p></li>
+<li><p><strong>Read both returned values</strong></p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">scipy.integrate.quad</span></code> calculates a definite integral. For example, the area under
+<span class="math notranslate nohighlight">\(x^2\)</span> from 0 to 1 is <span class="math notranslate nohighlight">\(1/3\)</span>. Let’s check that numerically.</p>
+<p>Give <code class="docutils literal notranslate"><span class="pre">quad</span></code> the function and the two limits. It returns the integral and an estimate
+of its numerical error. That estimate doesn’t check whether you supplied the right function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.integrate</span><span class="w"> </span><span class="kn">import</span> <span class="n">quad</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">square</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Give it the function and two limits.</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">area</span><span class="p">,</span> <span class="n">error_estimate</span> <span class="o">=</span> <span class="n">quad</span><span class="p">(</span><span class="n">square</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Integral:"</span><span class="p">,</span> <span class="n">area</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Read the numerical error estimate.</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">error_estimate</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Check against a result we know.</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"Expected:"</span><span class="p">,</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Agreement:"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">area</span><span class="p">,</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Change the limit and expected answer</strong></p></li>
+<li><p><strong>Use help to check arguments</strong></p></li>
+</ul>
+<p>Change the upper limit to 2 in the integration cell. Rerun it, then replace both
+<code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">/</span> <span class="pre">3</span></code> values in the check cell with <code class="docutils literal notranslate"><span class="pre">8</span> <span class="pre">/</span> <span class="pre">3</span></code> and run that cell.
+Then try another function whose
+integral you know. You can look up the arguments with <code class="docutils literal notranslate"><span class="pre">help(quad)</span></code> in a new cell.</p>
+</section>
+</section>
+<section id="save-a-plot-and-a-data-file">
+<h2>Save a plot and a data file<a class="headerlink" href="#save-a-plot-and-a-data-file" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Save the figure and the numbers</strong></p></li>
+<li><p><strong>Same filename replaces the old file</strong></p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">savefig</span></code> writes a figure to disk. <code class="docutils literal notranslate"><span class="pre">np.savetxt</span></code> writes numbers, and <code class="docutils literal notranslate"><span class="pre">np.loadtxt</span></code> reads
+them back. Here <code class="docutils literal notranslate"><span class="pre">column_stack</span></code> puts the time and temperature arrays into two columns.</p>
+<p>These files go into the notebook’s current working directory. Running the cell again
+replaces the files with these names.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig_fit</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">"temperature_fit.png"</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">"tight"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>One column per variable. Write the CSV.</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">time_min</span><span class="p">,</span> <span class="n">temperature_c</span><span class="p">))</span>
+<span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="s2">"temperature.csv"</span><span class="p">,</span> <span class="n">table</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s2">","</span><span class="p">,</span>
+           <span class="n">header</span><span class="o">=</span><span class="s2">"time_min,temperature_c"</span><span class="p">,</span> <span class="n">comments</span><span class="o">=</span><span class="s2">""</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Read the file back.</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">loaded</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s2">"temperature.csv"</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s2">","</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">loaded</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Did the numbers survive the round trip?</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">loaded</span><span class="p">,</span> <span class="n">table</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Load it back; check the columns</strong></p></li>
+<li><p><strong>Download files before leaving Colab</strong></p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">delimiter=&quot;,&quot;</span></code> separates the columns with commas. <code class="docutils literal notranslate"><span class="pre">skiprows=1</span></code> skips the header when
+reading the file. <code class="docutils literal notranslate"><span class="pre">loaded[:,</span> <span class="pre">0]</span></code> gives the time column and <code class="docutils literal notranslate"><span class="pre">loaded[:,</span> <span class="pre">1]</span></code> gives temperature.</p>
+<p>On DataHub, the files appear in the file browser on the left. Right-click a file to
+download it. In Colab, open the Files panel and download them there. Files created in
+the Colab runtime aren’t automatically saved to Drive and disappear when that runtime is deleted.</p>
+</section>
+<section id="try-it-with-another-dataset">
+<h2>Try it with another dataset<a class="headerlink" href="#try-it-with-another-dataset" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Build it from the earlier pieces</strong></p></li>
+<li><p><strong>Use new names for this dataset</strong></p></li>
+</ul>
+<p>Use the arrays below to fit and plot a line. Write the code yourself; the earlier cells
+have the pieces you need.</p>
+<ol class="arabic simple">
+<li><p>Print the array shapes and the mean temperature.</p></li>
+<li><p>Plot the readings with axis labels and units.</p></li>
+<li><p>Fit <code class="docutils literal notranslate"><span class="pre">line</span></code> with <code class="docutils literal notranslate"><span class="pre">curve_fit</span></code>, then add the fitted line to your plot.</p></li>
+<li><p>Print the fitted slope and intercept. Save the plot with a new filename.</p></li>
+</ol>
+<p>Keep separate names for this dataset so the earlier plots still use their original data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">new_time_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+<span class="n">new_temperature_c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">18.1</span><span class="p">,</span> <span class="mf">18.9</span><span class="p">,</span> <span class="mf">20.2</span><span class="p">,</span> <span class="mf">20.8</span><span class="p">,</span> <span class="mf">22.1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add your analysis here.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Restart and run everything</strong></p></li>
+<li><p><strong>Save and download the notebook</strong></p></li>
+</ul>
+<p>Save your edits, restart the kernel, and run the whole notebook from the top.
+In JupyterLab, use <strong>Kernel → Restart Kernel and Run All Cells</strong>. In Colab, restart
+the session from <strong>Runtime</strong>, then run all cells.</p>
+<p>Fix any missing definitions, save again, and download the <code class="docutils literal notranslate"><span class="pre">.ipynb</span></code>. In Colab, use the
+File menu; in JupyterLab, right-click the notebook in the file browser and choose Download.
+This gives you a copy with the code, notes, and latest outputs together.</p>
+<p>For syntax you don’t remember: <a class="reference external" href="https://numpy.org/doc/stable/user/absolute_beginners.html">NumPy</a>,
+<a class="reference external" href="https://matplotlib.org/stable/tutorials/pyplot.html">Matplotlib</a>,
+<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.curve_fit.html">curve_fit</a>,
+<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.quad.html">quad</a>,
+and <a class="reference external" href="https://ipython.readthedocs.io/en/stable/interactive/magics.html#magic-pip">notebook package installation</a>.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./labs/lab02"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../lab01/lab01.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Labs 1 and 2: Python, Jupyter, DataHub, NumPy, SciPy, and Matplotlib</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../lab03/lab03.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Lab 03: Random numbers, seeding, and reproducible simulation</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#if-a-package-is-missing">If a package is missing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numpy-arrays">NumPy arrays</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#convenience-functions">Convenience functions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#making-arrays-without-typing-every-value">Making arrays without typing every value</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#slices-and-masks">Slices and masks</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#make-a-copy-before-changing-an-array">Make a copy before changing an array</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#two-dimensional-arrays">Two-dimensional arrays</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matplotlib">Matplotlib</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-a-function">Plotting a function</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scipy">SciPy</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#integrating-a-function">Integrating a function</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#save-a-plot-and-a-data-file">Save a plot and a data file</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#try-it-with-another-dataset">Try it with another dataset</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Javier Duarte
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

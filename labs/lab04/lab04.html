@@ -1,0 +1,2319 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Lab 04: Git and GitHub &#8212; UCSD PHYS 142/242</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";
+
+
+
+
+
+const initStyles = () => {
+    const defaultStyle = document.createElement('style');
+    defaultStyle.textContent = `pre.mermaid {
+    /* Same as .mermaid-container > pre */
+    display: block;
+    width: 100%;
+}
+
+pre.mermaid > svg {
+    /* Same as .mermaid-container > pre > svg */
+    height: auto;
+    width: 100%;
+    max-width: 100% !important;
+}`;
+    document.head.appendChild(defaultStyle);
+
+    const fullscreenStyle = document.createElement('style');
+    fullscreenStyle.textContent = `.mermaid-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.mermaid-container > pre {
+    display: block;
+    width: 100%;
+}
+
+.mermaid-container > pre > svg {
+    height: auto;
+    width: 100%;
+    max-width: 100% !important;
+}
+
+.mermaid-fullscreen-btn {
+    width: 28px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    font-size: 14px;
+    line-height: 1;
+    padding: 0;
+    color: #333;
+}
+
+.mermaid-fullscreen-btn:hover {
+    opacity: 100% !important;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    transform: scale(1.1);
+}
+
+.mermaid-fullscreen-btn.dark-theme {
+    background: rgba(50, 50, 50, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #e0e0e0;
+}
+
+.mermaid-fullscreen-btn.dark-theme:hover {
+    background: rgba(60, 60, 60, 1);
+    box-shadow: 0 3px 10px rgba(255, 255, 255, 0.2);
+}
+
+.mermaid-fullscreen-modal {
+    display: none;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 95vw;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.98);
+    z-index: 9999;
+    padding: 20px;
+    overflow: auto;
+}
+
+.mermaid-fullscreen-modal.dark-theme {
+    background: rgba(0, 0, 0, 0.98);
+}
+
+.mermaid-fullscreen-modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen {
+    position: relative;
+    width: 95vw;
+    height: 90vh;
+    max-width: 95vw;
+    max-height: 90vh;
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen.dark-theme {
+    background: #1a1a1a;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+}
+
+.mermaid-container-fullscreen pre.mermaid {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen .mermaid svg {
+    height: 100% !important;
+    width: 100% !important;
+    cursor: grab;
+}
+
+.mermaid-fullscreen-close {
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s;
+    font-size: 24px;
+    line-height: 1;
+    color: #333;
+}
+
+.mermaid-fullscreen-close:hover {
+    background: white;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    transform: scale(1.1);
+}
+
+.mermaid-fullscreen-close.dark-theme {
+    background: rgba(50, 50, 50, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #e0e0e0;
+}
+
+.mermaid-fullscreen-close.dark-theme:hover {
+    background: rgba(60, 60, 60, 1);
+    box-shadow: 0 6px 16px rgba(255, 255, 255, 0.2);
+}
+
+.mermaid-fullscreen-modal .mermaid-fullscreen-btn {
+    display: none !important;
+}`;
+    document.head.appendChild(fullscreenStyle);
+}
+
+// Detect if page has dark background
+const isDarkTheme = () => {
+    // We use a set of heuristics:
+    // 1. Check for common dark mode classes or attributes
+    // 2. Check computed background color brightness
+    if (document.documentElement.classList.contains('dark') ||
+        document.documentElement.getAttribute('data-theme') === 'dark' ||
+        document.body.classList.contains('dark') ||
+        document.body.getAttribute('data-theme') === 'dark') {
+        // console.log("Dark theme detected via class/attribute");
+        return true;
+    }
+    if (document.documentElement.classList.contains('light') ||
+        document.documentElement.getAttribute('data-theme') === 'light' ||
+        document.body.classList.contains('light') ||
+        document.body.getAttribute('data-theme') === 'light') {
+        // console.log("Light theme detected via class/attribute");
+        return false;
+    }
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        // console.log("Dark theme detected via prefers-color-scheme");
+        return true;
+    }
+    const bgColor = window.getComputedStyle(document.body).backgroundColor;
+    const match = bgColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)/);
+    if (match) {
+        const r = parseInt(match[1]);
+        const g = parseInt(match[2]);
+        const b = parseInt(match[3]);
+        const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+        // console.log("Background color brightness:", brightness);
+        return brightness < 128;
+    }
+    // console.log("No dark or light theme detected, defaulting to light theme");
+    return false;
+};
+
+let darkTheme = isDarkTheme();
+let modal = null;
+let modalContent = null;
+let previousScrollOffset = [window.scrollX, window.scrollY];
+
+const runMermaid = async (rerun) => {
+    console.log("Running mermaid diagrams, rerun =", rerun);
+    // clear all existing mermaid charts
+    let all_mermaids = document.querySelectorAll(".mermaid");
+
+    if (rerun) {
+        all_mermaids.forEach((el) => {
+            if(!el.hasAttribute("data-original-code")) {
+                // store original code
+                // console.log(`Storing original code for first run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+            if(el.getAttribute("data-processed") === "true") {
+                // remove and restore original
+                el.removeAttribute("data-processed");
+                // console.log(`Restoring original code for re-run: `, el.getAttribute('data-original-code'));
+                el.innerHTML = el.getAttribute('data-original-code');
+            } else {
+                // store original code
+                // console.log(`Storing original code for re-run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+        });
+        await mermaid.run();
+    }
+
+    all_mermaids = document.querySelectorAll(".mermaid");
+    const mermaids_processed = document.querySelectorAll(".mermaid[data-processed='true']");
+
+    if ("False" === "True") {
+        const mermaids_to_add_zoom = -1 === -1 ? all_mermaids.length : -1;
+        if(mermaids_to_add_zoom > 0) {
+            var svgs = d3.selectAll("");
+            if(all_mermaids.length !== mermaids_processed.length) {
+                setTimeout(() => runMermaid(false), 200);
+                return;
+            } else if(svgs.size() !== mermaids_to_add_zoom) {
+                setTimeout(() => runMermaid(false), 200);
+                return;
+            } else {
+                svgs.each(function() {
+                    var svg = d3.select(this);
+                    svg.html("<g class='wrapper'>" + svg.html() + "</g>");
+                    var inner = svg.select("g");
+                    var zoom = d3.zoom().on("zoom", function(event) {
+                        inner.attr("transform", event.transform);
+                    });
+                    svg.call(zoom);
+                });
+            }
+        }
+    } else if(all_mermaids.length !== mermaids_processed.length) {
+        // Wait for mermaid to process all diagrams
+        setTimeout(() => runMermaid(false), 200);
+        return;
+    }
+
+    // Stop here if not adding fullscreen capability
+    if ("True" !== "True") return;
+
+    if (modal !== null ) {
+        // Destroy existing modal
+        modal.remove();
+        modal = null;
+        modalContent = null;
+    }
+
+    modal = document.createElement('div');
+    modal.className = 'mermaid-fullscreen-modal' + (darkTheme ? ' dark-theme' : '');
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', 'Fullscreen diagram viewer');
+    modal.innerHTML = `
+        <button class="mermaid-fullscreen-close${darkTheme ? ' dark-theme' : ''}" aria-label="Close fullscreen">✕</button>
+        <div class="mermaid-container-fullscreen${darkTheme ? ' dark-theme' : ''}"></div>
+    `;
+    document.body.appendChild(modal);
+
+    modalContent = modal.querySelector('.mermaid-container-fullscreen');
+    const closeBtn = modal.querySelector('.mermaid-fullscreen-close');
+
+    const closeModal = () => {
+        modal.classList.remove('active');
+        modalContent.innerHTML = '';
+        document.body.style.overflow = ''
+        window.scrollTo({left: previousScrollOffset[0], top: previousScrollOffset[1], behavior: 'instant'});
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeModal();
+        }
+    });
+
+    document.querySelectorAll('.mermaid').forEach((mermaidDiv) => {
+        if (mermaidDiv.parentNode.classList.contains('mermaid-container') ||
+            mermaidDiv.closest('.mermaid-fullscreen-modal')) {
+            // Already processed, adjust button class if needed
+            const existingBtn = mermaidDiv.parentNode.querySelector('.mermaid-fullscreen-btn');
+            if (existingBtn) {
+                existingBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+            }
+            return;
+        }
+
+        const container = document.createElement('div');
+        container.className = 'mermaid-container';
+        mermaidDiv.parentNode.insertBefore(container, mermaidDiv);
+        container.appendChild(mermaidDiv);
+
+        const fullscreenBtn = document.createElement('button');
+        fullscreenBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+        fullscreenBtn.setAttribute('aria-label', 'View diagram in fullscreen');
+        fullscreenBtn.textContent = '⛶';
+        fullscreenBtn.style.opacity = '50%';
+
+        // Calculate dynamic position based on diagram's margin and padding
+        const diagramStyle = window.getComputedStyle(mermaidDiv);
+        const marginTop = parseFloat(diagramStyle.marginTop) || 0;
+        const marginRight = parseFloat(diagramStyle.marginRight) || 0;
+        const paddingTop = parseFloat(diagramStyle.paddingTop) || 0;
+        const paddingRight = parseFloat(diagramStyle.paddingRight) || 0;
+        fullscreenBtn.style.top = `${marginTop + paddingTop + 4}px`;
+        fullscreenBtn.style.right = `${marginRight + paddingRight + 4}px`;
+
+        fullscreenBtn.addEventListener('click', () => {
+            previousScrollOffset = [window.scroll, window.scrollY];
+            const clone = mermaidDiv.cloneNode(true);
+            modalContent.innerHTML = '';
+            modalContent.appendChild(clone);
+
+            const svg = clone.querySelector('svg');
+            if (svg) {
+                svg.removeAttribute('width');
+                svg.removeAttribute('height');
+                svg.style.width = '100%';
+                svg.style.height = 'auto';
+                svg.style.maxWidth = '100%';
+                svg.style.sdisplay = 'block';
+
+                if ("False" === "True") {
+                    setTimeout(() => {
+                        const g = svg.querySelector('g');
+                        if (g) {
+                            var svgD3 = d3.select(svg);
+                            svgD3.html("<g class='wrapper'>" + svgD3.html() + "</g>");
+                            var inner = svgD3.select("g");
+                            var zoom = d3.zoom().on("zoom", function(event) {
+                                inner.attr("transform", event.transform);
+                            });
+                            svgD3.call(zoom);
+                        }
+                    }, 100);
+                }
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        container.appendChild(fullscreenBtn);
+    });
+};
+
+const load = async () => {
+    initStyles();
+
+    await runMermaid(true);
+
+    const reRunIfThemeChanges = async () => {
+        const newDarkTheme = isDarkTheme();
+        if (newDarkTheme !== darkTheme) {
+            darkTheme = newDarkTheme;
+            console.log("Theme change detected, re-running mermaid with", darkTheme ? "dark" : "default", "theme");
+            await mermaid.initialize(
+                {...JSON.parse(
+                    `{"startOnLoad": false}`
+                ),
+                ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
+                }
+            );
+            await runMermaid(true);
+        }
+    };
+
+    // Update theme classes when theme changes
+    const themeObserver = new MutationObserver(reRunIfThemeChanges);
+    themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+    themeObserver.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+};
+
+
+
+
+
+console.log("Initializing mermaid with", darkTheme ? "dark" : "default", "theme");
+mermaid.initialize(
+    {...JSON.parse(
+        `{"startOnLoad": false}`
+    ),
+    ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
+    }
+);
+
+window.addEventListener("load", load);
+window.runMermaid = runMermaid;</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'labs/lab04/lab04';</script>
+    <link rel="canonical" href="https://jduarte.physics.ucsd.edu/phys142/labs/lab04/lab04.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Lab 05: Free Particle Propagator (Assignment 1 Tutorial)" href="../lab4/Lab4.html" />
+    <link rel="prev" title="Lab 03: Random numbers, seeding, and reproducible simulation" href="../lab03/lab03.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/pathintegral_logo.png" class="logo__image only-light" alt="UCSD PHYS 142/242 - Home"/>
+    <script>document.write(`<img src="../../_static/pathintegral_logo.png" class="logo__image only-dark" alt="UCSD PHYS 142/242 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../README.html">
+                    UCSD PHYS 142/242: Computational Physics — Stochastic Methods and Path Integrals (Fall 2026)
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 0</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/syllabus.pdf">Syllabus</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/01_Introduction.pdf">Lecture 01: Course overview, the double-slit experiment, and how this course handles AI</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/02_QuantumMechRecap.pdf">Lecture 02: Quantum mechanics refresher: states, operators, and the propagator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab01/lab01.html">Lab 01: Python, Jupyter, and DataHub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab02/lab02.html">Lab 02: NumPy, SciPy, and Matplotlib</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../lab03/lab03.html">Lab 03: Random Numbers, Seeding, and Reproducible Simulation</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Lab 04: Git and GitHub</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 3</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../lab4/Lab4.html">Lab 05: Assignment 1 Tutorial</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 4</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../lab3/Lab3.html">Lab 08: Compiled Code and Python Interop</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 5</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../lab8/Lab8.html">Lab 09: Assignment 2 Tutorial</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 6</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../lab12/Lab12.html">Lab 11: MCMC and the 2D Ising Model</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 7</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../lab15/Lab15.html">Lab 14: Path-Integral MCMC Tutorial</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 8</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../lab17/lab17.html">Lab 16: VEGAS Tutorial</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/jmduarte/phys142/main?urlpath=tree/labs/lab04/lab04.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://datahub.ucsd.edu/hub/user-redirect/git-pull?repo=https%3A//github.com/jmduarte/phys142&urlpath=tree/phys142/labs/lab04/lab04.ipynb&branch=main" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onJupyterHub"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="btn__text-container">JupyterHub</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/jmduarte/phys142/blob/main/labs/lab04/lab04.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jmduarte/phys142" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jmduarte/phys142/issues/new?title=Issue%20on%20page%20%2Flabs/lab04/lab04.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/labs/lab04/lab04.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Lab 04: Git and GitHub</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-git-for">What is Git for?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-does-github-add">What does GitHub add?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#where-is-the-change-right-now">Where is the change right now?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#forks-your-copy-of-the-course-repository">Forks: your copy of the course repository</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fork-the-course-repository">Fork the course repository</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#make-a-branch-for-your-homework-setup">Make a branch for your homework setup</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#open-a-pull-request-and-merge-it">Open a pull request and merge it</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-ssh-before-cloning-your-fork">Set up SSH before cloning your fork</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-an-ssh-key">Create an SSH key</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-the-public-key-to-github">Add the public key to GitHub</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#get-a-local-copy-of-your-fork">Get a local copy of your fork</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#set-your-name-and-email">Set your name and email</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-a-small-practice-calculation-to-your-workspace">Add a small practice calculation to your workspace</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stage-the-files">Stage the files</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#make-a-branch-from-the-terminal">Make a branch from the terminal</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#switch-back-to-main">Switch back to main</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#merge-the-changes">Merge the changes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#when-git-can-fast-forward">When Git can fast-forward</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#push-your-work-and-bring-updates-back">Push your work and bring updates back</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#upload-the-committed-history">Upload the committed history</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#make-a-remote-change-then-update-the-clone">Make a remote change, then update the clone</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bring-in-updates-from-the-course">Bring in updates from the course</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#follow-the-two-histories">Follow the two histories</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#start-your-assignment-1-directory">Start your Assignment 1 directory</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-make-and-resolve-a-merge-conflict">Optional: make and resolve a merge conflict</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#read-the-conflict-before-editing">Read the conflict before editing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#resolve-inspect-then-commit">Resolve, inspect, then commit</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#keep-this-beside-your-homework">Keep this beside your homework</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-small-command-reference">A small command reference</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#when-something-stops-you">When something stops you</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#final-check-ready-for-the-next-homework-session">Final check: ready for the next homework session</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-independent-challenge">Optional independent challenge</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#references-and-more-practice">References and more practice</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="lab-04-git-and-github">
+<h1>Lab 04: Git and GitHub<a class="headerlink" href="#lab-04-git-and-github" title="Permalink to this heading">#</a></h1>
+<p><strong>Leave with a repository for your homework.</strong></p>
+<ol class="arabic simple">
+<li><p>Fork the course repository.</p></li>
+<li><p>Make changes on branches. Review and merge them.</p></li>
+<li><p>Bring in course updates. Keep using your fork for homework.</p></li>
+</ol>
+<p><strong>Open beside this page:</strong></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com">GitHub</a>.</p></li>
+<li><p>A <strong>DataHub terminal</strong>: <strong>File → New → Terminal</strong> in JupyterLab.</p></li>
+<li><p>A local Bash terminal works too; use Git Bash on Windows.</p></li>
+</ul>
+<p>Run commands in the <strong>terminal, not Python cells</strong>. No Python kernel needed.</p>
+<ul class="simple">
+<li><p>Diagrams showing as source? Use the course page.</p></li>
+<li><p>The merge-conflict exercise at the end is optional.</p></li>
+</ul>
+<section id="what-is-git-for">
+<h2>What is Git for?<a class="headerlink" href="#what-is-git-for" title="Permalink to this heading">#</a></h2>
+<p><strong>Git is version control. It keeps your code’s history.</strong></p>
+<p>In Lab 03, we saved the seed and inputs. We need the code that used them too.</p>
+<ul class="simple">
+<li><p><strong>Commit:</strong> a snapshot you choose to record, with a message, author, and links to earlier commits.</p></li>
+<li><p><strong>Compare:</strong> see what changed and where a problem started.</p></li>
+<li><p><strong>Recover:</strong> get back to work you’ve committed.</p></li>
+<li><p><strong>Branch and merge:</strong> try changes separately, then combine them.</p></li>
+<li><p><strong>Work offline:</strong> a normal clone includes the files and history. Git is <em>distributed</em>.</p></li>
+</ul>
+<p>Keep one project with a history, instead of <code class="docutils literal notranslate"><span class="pre">simulation_final.py</span></code>,
+<code class="docutils literal notranslate"><span class="pre">simulation_final2.py</span></code>, and <code class="docutils literal notranslate"><span class="pre">simulation_really_final.py</span></code>.</p>
+<ul class="simple">
+<li><p>For a result, record <strong>commit + seed + inputs + environment</strong>.</p></li>
+<li><p><strong>Save, commit, and push are separate steps.</strong></p></li>
+<li><p>Still check the physics. Git doesn’t tell us whether the calculation is right.</p></li>
+</ul>
+<p><a class="reference external" href="https://git-scm.com/book/en/v2/Getting-Started-What-is-Git%3F">More: What is Git?</a></p>
+<section id="what-does-github-add">
+<h3>What does GitHub add?<a class="headerlink" href="#what-does-github-add" title="Permalink to this heading">#</a></h3>
+<p><strong>GitHub hosts Git repositories online.</strong> Git works without it.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Git</p></th>
+<th class="head"><p>GitHub</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Keeps commits and branches</p></td>
+<td><p>Hosts the code and history</p></td>
+</tr>
+<tr class="row-odd"><td><p>Compares and combines changes</p></td>
+<td><p>Adds sharing, permissions, and review</p></td>
+</tr>
+<tr class="row-even"><td><p>Works locally, including offline</p></td>
+<td><p>Lets others access the work online</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul class="simple">
+<li><p><strong>Pull requests:</strong> propose and review changes.</p></li>
+<li><p><strong>Issues:</strong> track problems and work to do.</p></li>
+<li><p><strong>Forks:</strong> make your own repository from someone else’s; contribute back if you want.</p></li>
+<li><p><strong>Actions:</strong> run automated checks.</p></li>
+</ul>
+<p>Here, <strong>local</strong> means the machine running Git: DataHub or your laptop.
+DataHub runs on a server; GitHub holds another copy.</p>
+<p>You committed offline. Can your partner see it on GitHub yet?</p>
+<p><a class="reference external" href="https://docs.github.com/en/get-started/using-github/hello-world">Browser walkthrough: GitHub Hello World</a></p>
+</section>
+<section id="where-is-the-change-right-now">
+<h3>Where is the change right now?<a class="headerlink" href="#where-is-the-change-right-now" title="Permalink to this heading">#</a></h3>
+<p><strong>Edit. Stage. Commit. Push.</strong></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Place</p></th>
+<th class="head"><p>What’s there?</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Working tree</p></td>
+<td><p>The files you’re editing</p></td>
+</tr>
+<tr class="row-odd"><td><p>Staging area</p></td>
+<td><p>Content selected for the next commit</p></td>
+</tr>
+<tr class="row-even"><td><p>Local repository</p></td>
+<td><p>Committed history, stored in <code class="docutils literal notranslate"><span class="pre">.git</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Remote</p></td>
+<td><p>Another repository, reached through a saved URL</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre  class="mermaid">
+        %%{init: {&quot;theme&quot;:&quot;base&quot;,&quot;themeVariables&quot;:{&quot;fontSize&quot;:&quot;16px&quot;,&quot;primaryColor&quot;:&quot;#eff6ff&quot;,&quot;primaryTextColor&quot;:&quot;#0f172a&quot;,&quot;primaryBorderColor&quot;:&quot;#2563eb&quot;,&quot;lineColor&quot;:&quot;#718096&quot;,&quot;textColor&quot;:&quot;#0f172a&quot;,&quot;edgeLabelBackground&quot;:&quot;#f1f5f9&quot;,&quot;clusterBkg&quot;:&quot;#f8fafc&quot;,&quot;clusterBorder&quot;:&quot;#64748b&quot;,&quot;titleColor&quot;:&quot;#0f172a&quot;},&quot;flowchart&quot;:{&quot;htmlLabels&quot;:true,&quot;curve&quot;:&quot;linear&quot;,&quot;nodeSpacing&quot;:32,&quot;rankSpacing&quot;:48},&quot;fontFamily&quot;:&quot;Arial&quot;}}%%
+flowchart TB
+    subgraph local[Local: DataHub or laptop]
+        W[Working files] --&gt;|git add| S[Staging area]
+        S --&gt;|git commit| C[Local branch and committed history]
+        T[Remote-tracking refs: origin/main] --&gt;|git merge origin/main| C
+        C --&gt;|switch or completed merge updates files| W
+    end
+    C --&gt;|git push| R[GitHub repository]
+    R --&gt;|git fetch| T
+    class W main
+    class S feature
+    class C merged
+    class R remote
+    class T main
+    style local fill:#f8fafc,stroke:#64748b,color:#0f172a
+
+    classDef default fill:#f8fafc,stroke:#64748b,color:#0f172a,stroke-width:2px
+    classDef main fill:#dbeafe,stroke:#2563eb,color:#172554,stroke-width:2px
+    classDef feature fill:#fef3c7,stroke:#b45309,color:#451a03,stroke-width:2px
+    classDef merged fill:#ccfbf1,stroke:#0f766e,color:#134e4a,stroke-width:3px
+    classDef remote fill:#ede9fe,stroke:#7c3aed,color:#2e1065,stroke-width:2px
+    classDef other fill:#ffe4e6,stroke:#be123c,color:#4c0519,stroke-width:2px
+    linkStyle default stroke:#718096,stroke-width:2px
+
+    </pre><ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">add</span></code>:</strong> stage content.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">commit</span></code>:</strong> record it locally.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">push</span></code>:</strong> send commits to the remote.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">fetch</span></code>:</strong> download history; update our record of remote branches. Working files stay put.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">merge</span></code>:</strong> combine that history with our current branch.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">pull</span></code>:</strong> fetch and integrate. We’ll use <code class="docutils literal notranslate"><span class="pre">pull</span> <span class="pre">--ff-only</span></code> when no merge commit is needed.</p></li>
+</ul>
+<p>After <code class="docutils literal notranslate"><span class="pre">add</span></code>, where is the change? After <code class="docutils literal notranslate"><span class="pre">commit</span></code>? Has either sent it to GitHub?</p>
+</section>
+</section>
+<section id="forks-your-copy-of-the-course-repository">
+<h2>Forks: your copy of the course repository<a class="headerlink" href="#forks-your-copy-of-the-course-repository" title="Permalink to this heading">#</a></h2>
+<p><strong>A fork is another repository. A branch lives inside one.</strong></p>
+<ul class="simple">
+<li><p>We’ll fork <a class="reference external" href="https://github.com/jmduarte/phys142">jmduarte/phys142</a> into your GitHub account.</p></li>
+<li><p>Your fork starts with the course history. You control it; GitHub keeps the connection.</p></li>
+<li><p>Your commits don’t change the course repo. Course updates don’t appear in your fork automatically.</p></li>
+</ul>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Operation</p></th>
+<th class="head"><p>What it creates or does</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Branch</p></td>
+<td><p>A name for a line of commits in one repository</p></td>
+</tr>
+<tr class="row-odd"><td><p>Fork</p></td>
+<td><p>Another GitHub repository, with its own branches and permissions</p></td>
+</tr>
+<tr class="row-even"><td><p>Clone</p></td>
+<td><p>Local files and repository history</p></td>
+</tr>
+<tr class="row-odd"><td><p>Pull request</p></td>
+<td><p>Proposes a merge within a repo or across forks</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre  class="mermaid">
+        %%{init: {&quot;theme&quot;:&quot;base&quot;,&quot;themeVariables&quot;:{&quot;fontSize&quot;:&quot;16px&quot;,&quot;primaryColor&quot;:&quot;#eff6ff&quot;,&quot;primaryTextColor&quot;:&quot;#0f172a&quot;,&quot;primaryBorderColor&quot;:&quot;#2563eb&quot;,&quot;lineColor&quot;:&quot;#718096&quot;,&quot;textColor&quot;:&quot;#0f172a&quot;,&quot;edgeLabelBackground&quot;:&quot;#f1f5f9&quot;,&quot;clusterBkg&quot;:&quot;#f8fafc&quot;,&quot;clusterBorder&quot;:&quot;#64748b&quot;,&quot;titleColor&quot;:&quot;#0f172a&quot;},&quot;flowchart&quot;:{&quot;htmlLabels&quot;:true,&quot;curve&quot;:&quot;linear&quot;,&quot;nodeSpacing&quot;:32,&quot;rankSpacing&quot;:48},&quot;fontFamily&quot;:&quot;Arial&quot;}}%%
+flowchart TB
+    accTitle: The course repository, your fork, and your clone
+    accDescr: Fork the course repository on GitHub, clone your fork, and push your own commits to it. Fetch and merge upstream updates into your local branch, then push to your fork.
+    U[&quot;Course repository: jmduarte/phys142&quot;]
+    F[&quot;Your GitHub fork: origin&quot;]
+    L[&quot;Your local clone on DataHub&quot;]
+    U --&gt;|Fork once on GitHub| F
+    F --&gt;|git clone| L
+    F --&gt;|git fetch origin| L
+    L --&gt;|git push origin| F
+    U --&gt;|git fetch upstream| L
+    class U main
+    class F feature
+    class L merged
+    classDef default fill:#f8fafc,stroke:#64748b,color:#0f172a,stroke-width:2px
+    classDef main fill:#dbeafe,stroke:#2563eb,color:#172554,stroke-width:2px
+    classDef feature fill:#fef3c7,stroke:#b45309,color:#451a03,stroke-width:2px
+    classDef merged fill:#ccfbf1,stroke:#0f766e,color:#134e4a,stroke-width:3px
+    classDef remote fill:#ede9fe,stroke:#7c3aed,color:#2e1065,stroke-width:2px
+    classDef other fill:#ffe4e6,stroke:#be123c,color:#4c0519,stroke-width:2px
+    linkStyle default stroke:#718096,stroke-width:2px
+
+    </pre><ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">origin</span></code> → your fork.</strong> Push your commits here.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">upstream</span></code> → the course.</strong> Fetch updates here, then merge them locally.</p></li>
+<li><p>These are remote names. Adding one doesn’t give you push access.</p></li>
+</ul>
+<p><a class="reference external" href="https://docs.github.com/en/pull-requests/reference/forks">More: GitHub forks</a></p>
+</section>
+<section id="fork-the-course-repository">
+<h2>Fork the course repository<a class="headerlink" href="#fork-the-course-repository" title="Permalink to this heading">#</a></h2>
+<p><strong>Make your copy. Use it for the rest of the course.</strong></p>
+<ol class="arabic simple">
+<li><p>Sign in and open <a class="reference external" href="https://github.com/jmduarte/phys142">jmduarte/phys142</a>.</p></li>
+<li><p>Choose <strong>Fork</strong>. Owner: <strong>your account</strong>. Name: <strong><code class="docutils literal notranslate"><span class="pre">phys142</span></code></strong>. Copy only <strong><code class="docutils literal notranslate"><span class="pre">main</span></code></strong>.</p></li>
+<li><p>Create the fork. Check its URL: <code class="docutils literal notranslate"><span class="pre">https://github.com/YOUR-USERNAME/phys142</span></code>.</p></li>
+<li><p>Find <strong>forked from jmduarte/phys142</strong> below the name.</p></li>
+<li><p>Leave <strong>Actions disabled</strong>. We don’t need the website deployment workflow.</p></li>
+</ol>
+<ul class="simple">
+<li><p>Already have this fork or a <code class="docutils literal notranslate"><span class="pre">homework/</span></code> directory? Look at it with me before repeating setup.</p></li>
+<li><p>Your fork is public. You can look at each other’s repositories.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">assignments/private</span></code> is a separate staff submodule. Don’t initialize it or copy its contents.</strong></p></li>
+<li><p>Your files go under <strong><code class="docutils literal notranslate"><span class="pre">homework/</span></code></strong>. Leave course files in place.</p></li>
+<li><p>Submit <strong>code and a report on Gradescope</strong>. Pushing doesn’t submit homework.</p></li>
+</ul>
+<p>Find the <strong>owner, repo name, branch, and latest commit</strong>. Check the URL:
+the README and its links still describe the course, even in your fork.</p>
+<section id="make-a-branch-for-your-homework-setup">
+<h3>Make a branch for your homework setup<a class="headerlink" href="#make-a-branch-for-your-homework-setup" title="Permalink to this heading">#</a></h3>
+<p><strong>Both branches start at the same commit.</strong></p>
+<ol class="arabic simple">
+<li><p>In <strong>your fork</strong>, create <strong><code class="docutils literal notranslate"><span class="pre">homework-setup</span></code></strong> from <code class="docutils literal notranslate"><span class="pre">main</span></code> using the branch selector.</p></li>
+<li><p>On that branch, choose <strong>Add file → Create new file</strong>.</p></li>
+<li><p>Name it <strong><code class="docutils literal notranslate"><span class="pre">homework/README.md</span></code></strong>. GitHub creates the directory from the path.</p></li>
+<li><p>Add:</p></li>
+</ol>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span># My PHYS 142 homework
+
+My code, reports, and notes for PHYS 142 go here.
+Record how to run each calculation, including its seed and inputs.
+</pre></div>
+</div>
+<ol class="arabic simple" start="5">
+<li><p>Choose <strong>Commit changes</strong>. Message: <strong><code class="docutils literal notranslate"><span class="pre">Add</span> <span class="pre">my</span> <span class="pre">homework</span> <span class="pre">README</span></code></strong>.</p></li>
+<li><p>Commit to <strong><code class="docutils literal notranslate"><span class="pre">homework-setup</span></code></strong>.</p></li>
+</ol>
+<ul class="simple">
+<li><p>A branch is a <strong>name pointing to a commit</strong>, not another directory.</p></li>
+<li><p>This commit moves <code class="docutils literal notranslate"><span class="pre">homework-setup</span></code>; <code class="docutils literal notranslate"><span class="pre">main</span></code> stays put.</p></li>
+<li><p>Use messages that tell us what changed. <code class="docutils literal notranslate"><span class="pre">stuff</span></code> won’t help later.</p></li>
+</ul>
+<p>Switch to <code class="docutils literal notranslate"><span class="pre">main</span></code>: is the file there? Switch back and find your commit.</p>
+</section>
+<section id="open-a-pull-request-and-merge-it">
+<h3>Open a pull request and merge it<a class="headerlink" href="#open-a-pull-request-and-merge-it" title="Permalink to this heading">#</a></h3>
+<p><strong>Check the destination. Read the diff.</strong></p>
+<p>Open a PR with these settings:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Choose</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Base repository — receives the change</p></td>
+<td><p><strong><code class="docutils literal notranslate"><span class="pre">YOUR-USERNAME/phys142</span></code></strong></p></td>
+</tr>
+<tr class="row-odd"><td><p>Base branch</p></td>
+<td><p><strong><code class="docutils literal notranslate"><span class="pre">main</span></code></strong></p></td>
+</tr>
+<tr class="row-even"><td><p>Head repository — supplies the change</p></td>
+<td><p><strong><code class="docutils literal notranslate"><span class="pre">YOUR-USERNAME/phys142</span></code></strong></p></td>
+</tr>
+<tr class="row-odd"><td><p>Compare branch</p></td>
+<td><p><strong><code class="docutils literal notranslate"><span class="pre">homework-setup</span></code></strong></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>GitHub may suggest the course repo as the base. <strong>Change it to your fork.</strong></p>
+<ol class="arabic simple">
+<li><p>Add a title and a sentence explaining the homework directory.</p></li>
+<li><p>Read <strong>Files changed</strong> with a partner. This is the <strong>diff</strong>.</p></li>
+<li><p>Choose <strong>Create a merge commit</strong> and confirm. Use this option to match the diagram.</p></li>
+</ol>
+<pre  class="mermaid">
+        %%{init: {&quot;theme&quot;:&quot;base&quot;,&quot;themeVariables&quot;:{&quot;fontSize&quot;:&quot;16px&quot;,&quot;primaryColor&quot;:&quot;#eff6ff&quot;,&quot;primaryTextColor&quot;:&quot;#0f172a&quot;,&quot;primaryBorderColor&quot;:&quot;#2563eb&quot;,&quot;lineColor&quot;:&quot;#718096&quot;,&quot;textColor&quot;:&quot;#0f172a&quot;,&quot;edgeLabelBackground&quot;:&quot;#f1f5f9&quot;,&quot;clusterBkg&quot;:&quot;#f8fafc&quot;,&quot;clusterBorder&quot;:&quot;#64748b&quot;,&quot;titleColor&quot;:&quot;#0f172a&quot;},&quot;flowchart&quot;:{&quot;htmlLabels&quot;:true,&quot;curve&quot;:&quot;linear&quot;,&quot;nodeSpacing&quot;:32,&quot;rankSpacing&quot;:48},&quot;fontFamily&quot;:&quot;Arial&quot;}}%%
+flowchart LR
+    accTitle: Branching and merging a README change
+    accDescr: Solid arrows follow development from A to B and M. M joins A and B. Dotted arrows show branch pointers. Git stores parent references backward.
+    A((&quot;A: Course version&quot;)) --&gt; M(((&quot;M: Reviewed change&quot;)))
+    A --&gt; B((&quot;B: Homework README&quot;))
+    B --&gt; M
+    PM[main] -. points to .-&gt; M
+    PF[homework-setup] -. points to .-&gt; B
+    class A,PM main
+    class B,PF feature
+    class M merged
+    classDef default fill:#f8fafc,stroke:#64748b,color:#0f172a,stroke-width:2px
+    classDef main fill:#dbeafe,stroke:#2563eb,color:#172554,stroke-width:2px
+    classDef feature fill:#fef3c7,stroke:#b45309,color:#451a03,stroke-width:2px
+    classDef merged fill:#ccfbf1,stroke:#0f766e,color:#134e4a,stroke-width:3px
+    classDef remote fill:#ede9fe,stroke:#7c3aed,color:#2e1065,stroke-width:2px
+    classDef other fill:#ffe4e6,stroke:#be123c,color:#4c0519,stroke-width:2px
+    linkStyle default stroke:#718096,stroke-width:2px
+
+    </pre><ul class="simple">
+<li><p>Each circle is a commit. Time runs left to right; earlier course history is omitted.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">M</span></code> joins both histories. Git stores links back to its <strong>two parents</strong>.</p></li>
+<li><p>Deleting a merged branch name leaves its commits in <code class="docutils literal notranslate"><span class="pre">main</span></code>’s history.</p></li>
+<li><p>Opening the PR doesn’t change <code class="docutils literal notranslate"><span class="pre">main</span></code>. Merging does.</p></li>
+</ul>
+<p>Check <strong>your fork’s <code class="docutils literal notranslate"><span class="pre">main</span></code></strong> for <code class="docutils literal notranslate"><span class="pre">homework/README.md</span></code> and find the merged PR.
+The course repo hasn’t changed.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Similar names</p></th>
+<th class="head"><p>Different jobs</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Pull request</p></td>
+<td><p>Propose and review a merge on GitHub</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">pull</span></code></p></td>
+<td><p>Update the local checkout</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><a class="reference external" href="https://docs.github.com/en/pull-requests/reference/pull-requests">More: pull requests</a></p>
+</section>
+</section>
+<section id="set-up-ssh-before-cloning-your-fork">
+<h2>Set up SSH before cloning your fork<a class="headerlink" href="#set-up-ssh-before-cloning-your-fork" title="Permalink to this heading">#</a></h2>
+<section id="create-an-ssh-key">
+<h3>Create an SSH key<a class="headerlink" href="#create-an-ssh-key" title="Permalink to this heading">#</a></h3>
+<p><strong>Your public key goes on GitHub. Your private key stays here.</strong></p>
+<p>Run this on <strong>the machine where you run Git</strong>: DataHub for this lab.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>-p<span class="w"> </span>~/.ssh
+chmod<span class="w"> </span><span class="m">700</span><span class="w"> </span>~/.ssh
+ls<span class="w"> </span>-la<span class="w"> </span>~/.ssh
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Already see <code class="docutils literal notranslate"><span class="pre">id_ed25519_phys142</span></code> or <code class="docutils literal notranslate"><span class="pre">id_ed25519_phys142.pub</span></code>? <strong>Don’t overwrite them. Ask me.</strong></p></li>
+<li><p>Otherwise, replace <code class="docutils literal notranslate"><span class="pre">YOUR-GITHUB-EMAIL</span></code> below and create the key:</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ssh-keygen<span class="w"> </span>-t<span class="w"> </span>ed25519<span class="w"> </span>-C<span class="w"> </span><span class="s2">"YOUR-GITHUB-EMAIL"</span><span class="w"> </span>-f<span class="w"> </span>~/.ssh/id_ed25519_phys142
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Enter a <strong>passphrase</strong> at the prompts. It protects the private key; it isn’t your GitHub password.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">id_ed25519_phys142</span></code></strong> is private. Don’t share it or put it in a repo.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">id_ed25519_phys142.pub</span></code></strong> is public. That’s the one we’ll copy to GitHub.</p></li>
+</ul>
+<p>Load the key into an agent in this terminal:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">eval</span><span class="w"> </span><span class="s2">"</span><span class="k">$(</span>ssh-agent<span class="w"> </span>-s<span class="k">)</span><span class="s2">"</span>
+ssh-add<span class="w"> </span>~/.ssh/id_ed25519_phys142
+ssh-add<span class="w"> </span>-l
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ssh-add</span></code> asks for the key’s passphrase. <code class="docutils literal notranslate"><span class="pre">ssh-add</span> <span class="pre">-l</span></code> should list the key.</p></li>
+<li><p>After a new terminal or DataHub restart, rerun the agent block. <strong>Don’t generate another key.</strong></p></li>
+</ul>
+<p><a class="reference external" href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent">More: SSH keys and the agent</a></p>
+</section>
+<section id="add-the-public-key-to-github">
+<h3>Add the public key to GitHub<a class="headerlink" href="#add-the-public-key-to-github" title="Permalink to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span>~/.ssh/id_ed25519_phys142.pub
+</pre></div>
+</div>
+<ol class="arabic simple">
+<li><p>Copy the <strong>whole line</strong>, starting with <code class="docutils literal notranslate"><span class="pre">ssh-ed25519</span></code>.</p></li>
+<li><p>Open GitHub <strong>Settings → SSH and GPG keys → New SSH key</strong>.</p></li>
+<li><p>Title: <strong>PHYS 142 DataHub</strong>. Key type: <strong>Authentication Key</strong>.</p></li>
+<li><p>Paste the <strong>public key</strong> and choose <strong>Add SSH key</strong>.</p></li>
+</ol>
+<p>Test the connection using this key:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ssh<span class="w"> </span>-T<span class="w"> </span>-i<span class="w"> </span>~/.ssh/id_ed25519_phys142<span class="w"> </span>-o<span class="w"> </span><span class="nv">IdentitiesOnly</span><span class="o">=</span>yes<span class="w"> </span>git@github.com
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>First connection? Compare the displayed fingerprint with <a class="reference external" href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints">GitHub’s published fingerprints</a>. Type <code class="docutils literal notranslate"><span class="pre">yes</span></code> only if it matches.</p></li>
+<li><p>The greeting must name <strong>your GitHub account</strong>. If it names someone else or says <code class="docutils literal notranslate"><span class="pre">Permission</span> <span class="pre">denied</span></code>, stop and ask me.</p></li>
+<li><p><strong>Successfully authenticated</strong> plus <strong>does not provide shell access</strong> is success. GitHub accepts Git operations, not an interactive shell; this test normally exits with status <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git&#64;github.com</span></code> always uses the SSH user <strong><code class="docutils literal notranslate"><span class="pre">git</span></code></strong>. The key identifies your GitHub account.</p></li>
+</ul>
+<p><a class="reference external" href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account">Add a key</a> · <a class="reference external" href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/testing-your-ssh-connection">Test the connection</a></p>
+</section>
+</section>
+<section id="get-a-local-copy-of-your-fork">
+<h2>Get a local copy of your fork<a class="headerlink" href="#get-a-local-copy-of-your-fork" title="Permalink to this heading">#</a></h2>
+<p><strong>Make a separate clone for your homework.</strong></p>
+<ul class="simple">
+<li><p>Keep the course copy opened by DataHub as your reference. Leave its remotes alone.</p></li>
+<li><p>All Git exercises below happen in <strong><code class="docutils literal notranslate"><span class="pre">~/phys142-lab04/phys142</span></code></strong>, your own clone.</p></li>
+<li><p>Replace <strong><code class="docutils literal notranslate"><span class="pre">YOUR-USERNAME</span></code></strong> with your GitHub username.</p></li>
+<li><p>Run this block once. It creates <code class="docutils literal notranslate"><span class="pre">~/phys142-lab04/phys142</span></code>.</p></li>
+<li><p>Already have <code class="docutils literal notranslate"><span class="pre">phys142-lab04</span></code>? Look inside it with me before continuing.</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">--version</span></code> fails on DataHub, ask me.</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>--version
+<span class="nb">cd</span><span class="w"> </span>~
+mkdir<span class="w"> </span>phys142-lab04
+<span class="nb">cd</span><span class="w"> </span>phys142-lab04
+git<span class="w"> </span>clone<span class="w"> </span>--config<span class="w"> </span>core.sshCommand<span class="o">=</span><span class="s2">"ssh -i ~/.ssh/id_ed25519_phys142 -o IdentitiesOnly=yes"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>git@github.com:YOUR-USERNAME/phys142.git
+<span class="nb">cd</span><span class="w"> </span>phys142
+git<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>upstream<span class="w"> </span>https://github.com/jmduarte/phys142.git
+<span class="nb">pwd</span>
+git<span class="w"> </span>status
+git<span class="w"> </span>remote<span class="w"> </span>-v
+</pre></div>
+</div>
+<p>Check the URLs:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Remote</p></th>
+<th class="head"><p>Repository</p></th>
+<th class="head"><p>We’ll use it to…</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">origin</span></code></p></td>
+<td><p><strong><code class="docutils literal notranslate"><span class="pre">YOUR-USERNAME/phys142</span></code></strong> (SSH)</p></td>
+<td><p>Fetch and push your work</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">upstream</span></code></p></td>
+<td><p><strong><code class="docutils literal notranslate"><span class="pre">jmduarte/phys142</span></code></strong> (HTTPS)</p></td>
+<td><p>Fetch course updates</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">origin</span></code> uses SSH and the key you just registered. Enter its passphrase if prompted.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--config</span> <span class="pre">core.sshCommand=...</span></code> selects that key for <strong>this new clone only</strong>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">upstream</span></code> uses HTTPS to read the public course repo.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">clone</span></code> gives us the files and <code class="docutils literal notranslate"><span class="pre">.git</span></code> history. No <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">init</span></code> needed.</p></li>
+<li><p>Use the <strong>plain clone</strong> above: no <code class="docutils literal notranslate"><span class="pre">--recurse-submodules</span></code> or submodule initialization.</p></li>
+<li><p>Leave <strong><code class="docutils literal notranslate"><span class="pre">assignments/private</span></code> uninitialized</strong>. Forking doesn’t grant access to it.</p></li>
+</ul>
+<section id="set-your-name-and-email">
+<h3>Set your name and email<a class="headerlink" href="#set-your-name-and-email" title="Permalink to this heading">#</a></h3>
+<p><strong>These identify your commits. They don’t log you in.</strong></p>
+<p>Replace both placeholders. For email privacy, copy your exact GitHub
+<strong>noreply address</strong> from <a class="reference external" href="https://github.com/settings/emails">email settings</a>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>config<span class="w"> </span>user.name<span class="w"> </span><span class="s2">"Your Name"</span>
+git<span class="w"> </span>config<span class="w"> </span>user.email<span class="w"> </span><span class="s2">"YOUR-EXACT-GITHUB-NOREPLY-ADDRESS"</span>
+git<span class="w"> </span>log<span class="w"> </span>--oneline<span class="w"> </span>--graph<span class="w"> </span>--all<span class="w"> </span>--decorate<span class="w"> </span>-6
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>No <code class="docutils literal notranslate"><span class="pre">--global</span></code>: these settings apply only to this repo.</p></li>
+<li><p>They set the commit author. They don’t grant push access.</p></li>
+<li><p>The short strings are <strong>commit IDs</strong>. Shared course commits have the same IDs in everyone’s fork.</p></li>
+<li><p>Your new commits will usually have different IDs from your partner’s.</p></li>
+<li><p>Scrolling viewer? <strong>Space</strong> moves down; <strong>q</strong> returns to the prompt.</p></li>
+</ul>
+</section>
+<section id="add-a-small-practice-calculation-to-your-workspace">
+<h3>Add a small practice calculation to your workspace<a class="headerlink" href="#add-a-small-practice-calculation-to-your-workspace" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Small text files are easy to compare.</strong></p></li>
+<li><p>Stay in <code class="docutils literal notranslate"><span class="pre">~/phys142-lab04/phys142</span></code>.</p></li>
+<li><p>Practice with die-simulation inputs. We’ll edit them, not run the simulation.</p></li>
+<li><p>Paste each whole block, including <code class="docutils literal notranslate"><span class="pre">EOF</span></code>. <code class="docutils literal notranslate"><span class="pre">cat</span> <span class="pre">&gt;</span> <span class="pre">filename</span></code> writes that text to a file.</p></li>
+<li><p>Create the files under <code class="docutils literal notranslate"><span class="pre">homework/</span></code>. Keep the course’s root README and <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code> in place.</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>homework/practice
+cat<span class="w"> </span>&gt;<span class="w"> </span>homework/practice/settings.txt<span class="w"> </span><span class="s">&lt;&lt;'EOF'</span>
+<span class="s">distribution = fair_die</span>
+<span class="s">seed = 20261008</span>
+<span class="s">samples = 100</span>
+<span class="s">EOF</span>
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span>&gt;<span class="w"> </span>homework/.gitignore<span class="w"> </span><span class="s">&lt;&lt;'EOF'</span>
+<span class="s">.ipynb_checkpoints/</span>
+<span class="s">__pycache__/</span>
+<span class="s">*.pyc</span>
+<span class="s">.venv/</span>
+<span class="s">.env</span>
+<span class="s">results/</span>
+<span class="s">EOF</span>
+git<span class="w"> </span>status
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">.gitignore</span></code>:</strong> skip untracked checkpoints, caches, environments, and generated results.</p></li>
+<li><p>These rules apply under <code class="docutils literal notranslate"><span class="pre">homework/</span></code>, alongside the course’s existing rules.</p></li>
+<li><p>It doesn’t untrack committed files or remove them from earlier commits.</p></li>
+<li><p>Keep code, small inputs, README instructions, and environment specifications in the repository.</p></li>
+<li><p>Leave large generated datasets and credentials out. Ignoring a file can’t protect a secret you’ve already shared.</p></li>
+</ul>
+<p>Git’s <a class="reference external" href="https://git-scm.com/docs/gitignore">ignore rules</a>.</p>
+</section>
+<section id="stage-the-files">
+<h3>Stage the files<a class="headerlink" href="#stage-the-files" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Look at what’s going into the commit.</strong></p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>diff
+git<span class="w"> </span>add<span class="w"> </span>homework/practice/settings.txt<span class="w"> </span>homework/.gitignore
+git<span class="w"> </span>diff<span class="w"> </span>--staged
+git<span class="w"> </span>status
+</pre></div>
+</div>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Command</p></th>
+<th class="head"><p>What we see</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">status</span></code></p></td>
+<td><p>New, untracked files and changes to tracked files</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">diff</span></code></p></td>
+<td><p>Unstaged edits to tracked files; no contents of untracked files</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">diff</span> <span class="pre">--staged</span></code></p></td>
+<td><p>The content selected for the next commit</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span></code> stages the content <strong>when you run it</strong>.</p></li>
+<li><p>Edit the file again? Run <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span></code> again to include that edit too.</p></li>
+</ul>
+<ul class="simple">
+<li><p><strong>Commit what we staged.</strong></p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"Record dice simulation settings and ignore generated files"</span>
+git<span class="w"> </span>status
+git<span class="w"> </span>log<span class="w"> </span>--oneline<span class="w"> </span>-3
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>The working tree should be <strong>clean</strong>: no changes waiting to be committed.</p></li>
+<li><p>Check GitHub. <code class="docutils literal notranslate"><span class="pre">homework/practice/settings.txt</span></code> shouldn’t be there yet; we’ve only committed locally.</p></li>
+<li><p>A clean working tree doesn’t tell us whether we’ve pushed our commits.</p></li>
+</ul>
+</section>
+</section>
+<section id="make-a-branch-from-the-terminal">
+<h2>Make a branch from the terminal<a class="headerlink" href="#make-a-branch-from-the-terminal" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Change the sample count on a new branch.</strong></p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>switch<span class="w"> </span>-c<span class="w"> </span>more-samples
+</pre></div>
+</div>
+<ol class="arabic simple">
+<li><p>Open <code class="docutils literal notranslate"><span class="pre">homework/practice/settings.txt</span></code> in JupyterLab’s file browser or your editor.</p></li>
+<li><p>Change only <code class="docutils literal notranslate"><span class="pre">samples</span> <span class="pre">=</span> <span class="pre">100</span></code> to <code class="docutils literal notranslate"><span class="pre">samples</span> <span class="pre">=</span> <span class="pre">1000</span></code> and <strong>save</strong>.</p></li>
+<li><p>Return to the terminal:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>diff
+git<span class="w"> </span>add<span class="w"> </span>homework/practice/settings.txt
+git<span class="w"> </span>diff<span class="w"> </span>--staged
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"Increase dice sample count to 1000"</span>
+git<span class="w"> </span>branch
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">switch</span> <span class="pre">-c</span></code> creates the branch and switches to it.</p></li>
+<li><p>The star in <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">branch</span></code> marks our current branch.</p></li>
+<li><p><strong>HEAD</strong> usually points to that branch. This commit moved <code class="docutils literal notranslate"><span class="pre">more-samples</span></code> forward.</p></li>
+</ul>
+<section id="switch-back-to-main">
+<h3>Switch back to main<a class="headerlink" href="#switch-back-to-main" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Same directory. Different version of the file.</strong></p></li>
+<li><p><strong>Save and close</strong> <code class="docutils literal notranslate"><span class="pre">homework/practice/settings.txt</span></code> before switching. An old editor tab could overwrite the new version.</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>switch<span class="w"> </span>main
+cat<span class="w"> </span>homework/practice/settings.txt
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>On <code class="docutils literal notranslate"><span class="pre">main</span></code>, <code class="docutils literal notranslate"><span class="pre">samples</span></code> should be <code class="docutils literal notranslate"><span class="pre">100</span></code> again. Git updated the working file.</p></li>
+<li><p>The version with 1000 samples is still on <code class="docutils literal notranslate"><span class="pre">more-samples</span></code>.</p></li>
+<li><p>Let’s make a different change on <code class="docutils literal notranslate"><span class="pre">main</span></code>:</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span>&gt;<span class="w"> </span>homework/practice/NOTES.md<span class="w"> </span><span class="s">&lt;&lt;'EOF'</span>
+<span class="s">Record the seed and sample count when comparing simulation runs.</span>
+<span class="s">EOF</span>
+git<span class="w"> </span>add<span class="w"> </span>homework/practice/NOTES.md
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"Add a reminder about reproducible comparisons"</span>
+</pre></div>
+</div>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Branch</p></th>
+<th class="head"><p>New change</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">main</span></code></p></td>
+<td><p>The note</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">more-samples</span></code></p></td>
+<td><p>The larger sample count</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Neither branch has both changes yet.</p>
+</section>
+<section id="merge-the-changes">
+<h3>Merge the changes<a class="headerlink" href="#merge-the-changes" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Merge into the branch you’re on.</strong></p></li>
+<li><p>We’re on <code class="docutils literal notranslate"><span class="pre">main</span></code>. Bring in <code class="docutils literal notranslate"><span class="pre">more-samples</span></code>:</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>status
+git<span class="w"> </span>merge<span class="w"> </span>--no-ff<span class="w"> </span>more-samples<span class="w"> </span>-m<span class="w"> </span><span class="s2">"Merge the larger-sample experiment"</span>
+cat<span class="w"> </span>homework/practice/settings.txt
+cat<span class="w"> </span>homework/practice/NOTES.md
+git<span class="w"> </span>log<span class="w"> </span>--oneline<span class="w"> </span>--graph<span class="w"> </span>--all<span class="w"> </span>--decorate<span class="w"> </span>-8
+</pre></div>
+</div>
+<pre  class="mermaid">
+        %%{init: {&quot;theme&quot;:&quot;base&quot;,&quot;themeVariables&quot;:{&quot;fontSize&quot;:&quot;16px&quot;,&quot;primaryColor&quot;:&quot;#eff6ff&quot;,&quot;primaryTextColor&quot;:&quot;#0f172a&quot;,&quot;primaryBorderColor&quot;:&quot;#2563eb&quot;,&quot;lineColor&quot;:&quot;#718096&quot;,&quot;textColor&quot;:&quot;#0f172a&quot;,&quot;edgeLabelBackground&quot;:&quot;#f1f5f9&quot;,&quot;clusterBkg&quot;:&quot;#f8fafc&quot;,&quot;clusterBorder&quot;:&quot;#64748b&quot;,&quot;titleColor&quot;:&quot;#0f172a&quot;},&quot;flowchart&quot;:{&quot;htmlLabels&quot;:true,&quot;curve&quot;:&quot;linear&quot;,&quot;nodeSpacing&quot;:32,&quot;rankSpacing&quot;:48},&quot;fontFamily&quot;:&quot;Arial&quot;}}%%
+flowchart LR
+    accTitle: Merge two lines of development
+    accDescr: Solid arrows follow development from A to B and C, then M. M combines B and C. Dotted arrows show branch pointers.
+    A((&quot;A: 100 samples&quot;)) --&gt; C((&quot;C: Add notes&quot;))
+    C --&gt; M(((&quot;M: Merge&quot;)))
+    A --&gt; B((&quot;B: 1000 samples&quot;))
+    B --&gt; M
+    PM[main] -. points to .-&gt; M
+    PF[more-samples] -. points to .-&gt; B
+    class A,C,PM main
+    class B,PF feature
+    class M merged
+    classDef default fill:#f8fafc,stroke:#64748b,color:#0f172a,stroke-width:2px
+    classDef main fill:#dbeafe,stroke:#2563eb,color:#172554,stroke-width:2px
+    classDef feature fill:#fef3c7,stroke:#b45309,color:#451a03,stroke-width:2px
+    classDef merged fill:#ccfbf1,stroke:#0f766e,color:#134e4a,stroke-width:3px
+    classDef remote fill:#ede9fe,stroke:#7c3aed,color:#2e1065,stroke-width:2px
+    classDef other fill:#ffe4e6,stroke:#be123c,color:#4c0519,stroke-width:2px
+    linkStyle default stroke:#718096,stroke-width:2px
+
+    </pre><ul class="simple">
+<li><p>The diagram starts at the settings commit. Earlier README history is omitted.</p></li>
+<li><p>Different files changed, so Git could combine the edits.</p></li>
+<li><p>Check <code class="docutils literal notranslate"><span class="pre">main</span></code>: do we have <strong>both</strong> the note and 1000 samples?</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--no-ff</span></code> requests a merge commit joining both histories. We need one anyway: both branches advanced.</p></li>
+<li><p>A merge doesn’t check the code. Inspect it and rerun the calculation or tests.</p></li>
+</ul>
+</section>
+<section id="when-git-can-fast-forward">
+<h3>When Git can fast-forward<a class="headerlink" href="#when-git-can-fast-forward" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Move the branch name to a commit that already exists.</strong></p></li>
+<li><p>Without the <code class="docutils literal notranslate"><span class="pre">homework/practice/NOTES.md</span></code> change, <code class="docutils literal notranslate"><span class="pre">main</span></code> would be an ancestor of <code class="docutils literal notranslate"><span class="pre">more-samples</span></code>.</p></li>
+<li><p>Move <code class="docutils literal notranslate"><span class="pre">main</span></code> to <code class="docutils literal notranslate"><span class="pre">B</span></code> without a new commit: that’s a <strong>fast-forward</strong>.</p></li>
+</ul>
+<pre  class="mermaid">
+        %%{init: {&quot;theme&quot;:&quot;base&quot;,&quot;themeVariables&quot;:{&quot;fontSize&quot;:&quot;16px&quot;,&quot;primaryColor&quot;:&quot;#eff6ff&quot;,&quot;primaryTextColor&quot;:&quot;#0f172a&quot;,&quot;primaryBorderColor&quot;:&quot;#2563eb&quot;,&quot;lineColor&quot;:&quot;#718096&quot;,&quot;textColor&quot;:&quot;#0f172a&quot;,&quot;edgeLabelBackground&quot;:&quot;#f1f5f9&quot;,&quot;clusterBkg&quot;:&quot;#f8fafc&quot;,&quot;clusterBorder&quot;:&quot;#64748b&quot;,&quot;titleColor&quot;:&quot;#0f172a&quot;},&quot;flowchart&quot;:{&quot;htmlLabels&quot;:true,&quot;curve&quot;:&quot;linear&quot;,&quot;nodeSpacing&quot;:32,&quot;rankSpacing&quot;:48},&quot;fontFamily&quot;:&quot;Arial&quot;}}%%
+flowchart LR
+    subgraph before[Before fast-forward]
+        A1[A] --&gt; B1[B]
+        M1[main] -. points to .-&gt; A1
+        F1[more-samples] -. points to .-&gt; B1
+    end
+    subgraph after[After fast-forward]
+        A2[A] --&gt; B2[B]
+        M2[main] -. points to .-&gt; B2
+        F2[more-samples] -. points to .-&gt; B2
+    end
+    before ~~~ after
+    class A1,B1,A2,B2 main
+    class M1,M2 main
+    class F1,F2 feature
+    style before fill:#f8fafc,stroke:#64748b,color:#0f172a
+    style after fill:#f8fafc,stroke:#64748b,color:#0f172a
+
+    classDef default fill:#f8fafc,stroke:#64748b,color:#0f172a,stroke-width:2px
+    classDef main fill:#dbeafe,stroke:#2563eb,color:#172554,stroke-width:2px
+    classDef feature fill:#fef3c7,stroke:#b45309,color:#451a03,stroke-width:2px
+    classDef merged fill:#ccfbf1,stroke:#0f766e,color:#134e4a,stroke-width:3px
+    classDef remote fill:#ede9fe,stroke:#7c3aed,color:#2e1065,stroke-width:2px
+    classDef other fill:#ffe4e6,stroke:#be123c,color:#4c0519,stroke-width:2px
+    linkStyle default stroke:#718096,stroke-width:2px
+    linkStyle 6 stroke:transparent,stroke-width:0px
+
+    </pre><ul class="simple">
+<li><p><strong>Solid arrows:</strong> order of commits.</p></li>
+<li><p><strong>Dotted arrows:</strong> which commit each branch points to.</p></li>
+<li><p>Our actual example had two lines of development. It needed a two-parent merge.</p></li>
+</ul>
+<p><a class="reference external" href="https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging">Pro Git: branching and merging</a>.</p>
+</section>
+</section>
+<section id="push-your-work-and-bring-updates-back">
+<h2>Push your work and bring updates back<a class="headerlink" href="#push-your-work-and-bring-updates-back" title="Permalink to this heading">#</a></h2>
+<section id="upload-the-committed-history">
+<h3>Upload the committed history<a class="headerlink" href="#upload-the-committed-history" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Push. Then check GitHub.</strong></p></li>
+<li><p>Run the first two commands. Check <strong>your fork’s URL</strong> and <strong><code class="docutils literal notranslate"><span class="pre">main</span></code></strong> before pushing.</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>remote<span class="w"> </span>-v
+git<span class="w"> </span>branch<span class="w"> </span>--show-current
+git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>main
+git<span class="w"> </span>rev-parse<span class="w"> </span>--short<span class="w"> </span>HEAD
+git<span class="w"> </span>status
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>We’ve pushed <code class="docutils literal notranslate"><span class="pre">main</span></code> and its history, including the merged work.</p></li>
+<li><p>This doesn’t push every local branch name.</p></li>
+</ul>
+<p>Refresh <code class="docutils literal notranslate"><span class="pre">main</span></code> on GitHub and check:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">homework/practice/settings.txt</span></code> has 1000 samples.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">homework/practice/NOTES.md</span></code> is there.</p></li>
+<li><p>The latest commit ID matches the local <code class="docutils literal notranslate"><span class="pre">HEAD</span></code> printed above.</p></li>
+</ol>
+</section>
+<section id="make-a-remote-change-then-update-the-clone">
+<h3>Make a remote change, then update the clone<a class="headerlink" href="#make-a-remote-change-then-update-the-clone" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Change it on GitHub. Check your local copy.</strong></p></li>
+</ul>
+<ol class="arabic simple">
+<li><p>On GitHub, open <code class="docutils literal notranslate"><span class="pre">homework/README.md</span></code> in <strong>your fork</strong>, on <strong><code class="docutils literal notranslate"><span class="pre">main</span></code></strong>.</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">Current</span> <span class="pre">practice</span> <span class="pre">sample</span> <span class="pre">count:</span> <span class="pre">1000.</span></code> and commit directly to <code class="docutils literal notranslate"><span class="pre">main</span></code>.</p></li>
+<li><p>Our local copy is still on the earlier commit. Fetch and compare:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>status
+git<span class="w"> </span>fetch<span class="w"> </span>origin
+git<span class="w"> </span>log<span class="w"> </span>--oneline<span class="w"> </span>main..origin/main
+git<span class="w"> </span>diff<span class="w"> </span>main<span class="w"> </span>origin/main<span class="w"> </span>--<span class="w"> </span>homework/README.md
+cat<span class="w"> </span>homework/README.md
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">origin/main</span></code> is our <strong>local record</strong> of the fork’s branch after fetching. It doesn’t watch GitHub for updates.</p></li>
+<li><p>Log and diff show the new commit; <code class="docutils literal notranslate"><span class="pre">cat</span> <span class="pre">homework/README.md</span></code> still shows the old file.</p></li>
+<li><p>Check that the working tree is <strong>clean</strong>, then bring the commit into our <code class="docutils literal notranslate"><span class="pre">main</span></code>:</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>merge<span class="w"> </span>--ff-only<span class="w"> </span>origin/main
+cat<span class="w"> </span>homework/README.md
+git<span class="w"> </span>status
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Next time: <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">pull</span> <span class="pre">--ff-only</span> <span class="pre">origin</span> <span class="pre">main</span></code> combines fetch and fast-forward.</p></li>
+<li><p>No second commit needed. We brought in the existing one.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--ff-only</span></code> stops if the local and remote histories have diverged.</p></li>
+<li><p>If it stops, run <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">log</span> <span class="pre">--oneline</span> <span class="pre">--graph</span> <span class="pre">--all</span> <span class="pre">--decorate</span></code> and show me. We’ll look at the histories before combining them.</p></li>
+<li><p>Don’t force-push or discard local work to get past the error.</p></li>
+</ul>
+<p><a class="reference external" href="https://git-scm.com/docs/git-pull">Git pull</a>.</p>
+</section>
+</section>
+<section id="bring-in-updates-from-the-course">
+<h2>Bring in updates from the course<a class="headerlink" href="#bring-in-updates-from-the-course" title="Permalink to this heading">#</a></h2>
+<p><strong>Fetch from the course. Merge locally. Push to your fork.</strong></p>
+<p>New material appears in <code class="docutils literal notranslate"><span class="pre">jmduarte/phys142</span></code>. Your fork doesn’t update itself.</p>
+<ol class="arabic simple">
+<li><p>Work in <code class="docutils literal notranslate"><span class="pre">~/phys142-lab04/phys142</span></code>.</p></li>
+<li><p>Save your files. Check for a <strong>clean working tree</strong>; commit work you want to keep before switching or merging.</p></li>
+<li><p>Update from your fork, then check the course:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>status
+git<span class="w"> </span>switch<span class="w"> </span>main
+git<span class="w"> </span>pull<span class="w"> </span>--ff-only<span class="w"> </span>origin<span class="w"> </span>main
+git<span class="w"> </span>fetch<span class="w"> </span>upstream
+git<span class="w"> </span>log<span class="w"> </span>--oneline<span class="w"> </span>main..upstream/main
+</pre></div>
+</div>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Command</p></th>
+<th class="head"><p>What it does</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pull</span> <span class="pre">--ff-only</span> <span class="pre">origin</span> <span class="pre">main</span></code></p></td>
+<td><p>Brings in changes from <strong>your GitHub fork</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">fetch</span> <span class="pre">upstream</span></code></p></td>
+<td><p>Downloads <strong>course history</strong>; leaves working files alone</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">log</span> <span class="pre">main..upstream/main</span></code></p></td>
+<td><p>Lists course commits your <code class="docutils literal notranslate"><span class="pre">main</span></code> doesn’t have</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">upstream/main</span></code> is our local record after the fetch. An empty log means no new course commits.</p>
+<ol class="arabic simple" start="4">
+<li><p>Merge the course history into <code class="docutils literal notranslate"><span class="pre">main</span></code>, then push to your fork:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>merge<span class="w"> </span>--no-edit<span class="w"> </span>upstream/main
+git<span class="w"> </span>log<span class="w"> </span>--oneline<span class="w"> </span>--graph<span class="w"> </span>--all<span class="w"> </span>--decorate<span class="w"> </span>-10
+git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>main
+git<span class="w"> </span>status
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>Already up to date?</strong> Nothing new to merge. Repeat when new material is posted.</p></li>
+<li><p><strong>Both sides have new commits?</strong> Git may make a merge commit keeping both histories.</p></li>
+<li><p>No <code class="docutils literal notranslate"><span class="pre">--ff-only</span></code> on this merge: your homework can make the histories diverge.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">--no-edit</span></code></strong> accepts Git’s generated merge message.</p></li>
+<li><p><strong>Conflict?</strong> Look at the files with me; the optional exercise below covers this. Don’t force-push or discard work.</p></li>
+</ul>
+<p><strong><code class="docutils literal notranslate"><span class="pre">origin</span></code> is your fork.</strong> Pulling from it alone won’t fetch course updates.
+After fetching <code class="docutils literal notranslate"><span class="pre">upstream</span></code>, you still need to <strong>merge</strong>, then <strong>push</strong>.</p>
+<p><a class="reference external" href="https://docs.github.com/en/pull-requests/how-tos/work-with-forks/syncing-a-fork">More: syncing a fork</a></p>
+<section id="follow-the-two-histories">
+<h3>Follow the two histories<a class="headerlink" href="#follow-the-two-histories" title="Permalink to this heading">#</a></h3>
+<p><strong>Your homework stays. The course update comes in.</strong></p>
+<pre  class="mermaid">
+        %%{init: {&quot;theme&quot;:&quot;base&quot;,&quot;themeVariables&quot;:{&quot;fontSize&quot;:&quot;16px&quot;,&quot;primaryColor&quot;:&quot;#eff6ff&quot;,&quot;primaryTextColor&quot;:&quot;#0f172a&quot;,&quot;primaryBorderColor&quot;:&quot;#2563eb&quot;,&quot;lineColor&quot;:&quot;#718096&quot;,&quot;textColor&quot;:&quot;#0f172a&quot;,&quot;edgeLabelBackground&quot;:&quot;#f1f5f9&quot;,&quot;clusterBkg&quot;:&quot;#f8fafc&quot;,&quot;clusterBorder&quot;:&quot;#64748b&quot;,&quot;titleColor&quot;:&quot;#0f172a&quot;},&quot;flowchart&quot;:{&quot;htmlLabels&quot;:true,&quot;curve&quot;:&quot;linear&quot;,&quot;nodeSpacing&quot;:32,&quot;rankSpacing&quot;:48},&quot;fontFamily&quot;:&quot;Arial&quot;}}%%
+flowchart LR
+    accTitle: Merge a course update with your homework history
+    accDescr: The course and your work share A. The course adds C and you add B. M in your local main merges both histories; pushing sends M to your fork. Upstream main stays at C.
+    A((&quot;A: Shared start&quot;)) --&gt; C((&quot;C: Course update&quot;))
+    A --&gt; B((&quot;B: Your homework&quot;))
+    C --&gt; M(((&quot;M: Keep both&quot;)))
+    B --&gt; M
+    PU[upstream/main] -. points to .-&gt; C
+    PM[main after merge] -. points to .-&gt; M
+    class A,C,PU main
+    class B feature
+    class M,PM merged
+    classDef default fill:#f8fafc,stroke:#64748b,color:#0f172a,stroke-width:2px
+    classDef main fill:#dbeafe,stroke:#2563eb,color:#172554,stroke-width:2px
+    classDef feature fill:#fef3c7,stroke:#b45309,color:#451a03,stroke-width:2px
+    classDef merged fill:#ccfbf1,stroke:#0f766e,color:#134e4a,stroke-width:3px
+    classDef remote fill:#ede9fe,stroke:#7c3aed,color:#2e1065,stroke-width:2px
+    classDef other fill:#ffe4e6,stroke:#be123c,color:#4c0519,stroke-width:2px
+    linkStyle default stroke:#718096,stroke-width:2px
+
+    </pre><ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">A</span></code>:</strong> shared starting point.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">B</span></code>:</strong> your homework commit.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">C</span></code>:</strong> new course commit.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">M</span></code>:</strong> your local merge of both histories. Push it to <strong>your fork</strong>.</p></li>
+<li><p>The course stays at <strong><code class="docutils literal notranslate"><span class="pre">C</span></code></strong>. Your homework hasn’t been sent there.</p></li>
+</ul>
+<p>Solid arrows follow development; dotted arrows show branch pointers.
+No new course commit? No <code class="docutils literal notranslate"><span class="pre">C</span></code> or <code class="docutils literal notranslate"><span class="pre">M</span></code> yet.</p>
+<ul class="simple">
+<li><p>Saving homework in your fork needs <strong>no PR to the course</strong>.</p></li>
+<li><p>A course PR proposes a change to the <strong>shared materials</strong>. Check its base repository.</p></li>
+</ul>
+<p>Which remote gets your push? Which has course updates? How do fork, clone,
+and branch differ?</p>
+</section>
+</section>
+<section id="start-your-assignment-1-directory">
+<h2>Start your Assignment 1 directory<a class="headerlink" href="#start-your-assignment-1-directory" title="Permalink to this heading">#</a></h2>
+<p><strong>Set up the files you’ll keep using.</strong></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Directory</p></th>
+<th class="head"><p>Contents</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">assignments/</span></code></p></td>
+<td><p>Course handouts</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong><code class="docutils literal notranslate"><span class="pre">homework/assignment1/</span></code></strong></p></td>
+<td><p>Your code, report, and README</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Start with a <strong>clean working tree</strong>. Make a branch and add the README:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>status
+git<span class="w"> </span>switch<span class="w"> </span>main
+git<span class="w"> </span>switch<span class="w"> </span>-c<span class="w"> </span>assignment1-setup
+mkdir<span class="w"> </span>homework/assignment1
+cat<span class="w"> </span>&gt;<span class="w"> </span>homework/assignment1/README.md<span class="w"> </span><span class="s">&lt;&lt;'EOF'</span>
+<span class="s"># Assignment 1</span>
+
+<span class="s">## Run my code</span>
+<span class="s">TODO: Add the filenames, required packages, and exact command to run the calculation.</span>
+
+<span class="s">## Reproduce a result</span>
+<span class="s">TODO: Record the inputs, random seed, result, and uncertainty.</span>
+
+<span class="s">## Check the calculation</span>
+<span class="s">TODO: Describe a comparison or test and what it tells me.</span>
+
+<span class="s">## Report</span>
+<span class="s">TODO: Include the figures, explanations, and required AI-use appendix.</span>
+<span class="s">EOF</span>
+git<span class="w"> </span>add<span class="w"> </span>homework/assignment1/README.md
+git<span class="w"> </span>diff<span class="w"> </span>--staged
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"Start my Assignment 1 workspace"</span>
+git<span class="w"> </span>push<span class="w"> </span>-u<span class="w"> </span>origin<span class="w"> </span>assignment1-setup
+</pre></div>
+</div>
+<p>On GitHub:</p>
+<ol class="arabic simple">
+<li><p>Open a PR. <strong>Base and head repositories: your fork.</strong></p></li>
+<li><p><strong>Base: <code class="docutils literal notranslate"><span class="pre">main</span></code>. Compare: <code class="docutils literal notranslate"><span class="pre">assignment1-setup</span></code>.</strong></p></li>
+<li><p>Read the diff. Choose <strong>Create a merge commit</strong>.</p></li>
+<li><p>Bring it back locally:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>switch<span class="w"> </span>main
+git<span class="w"> </span>pull<span class="w"> </span>--ff-only<span class="w"> </span>origin<span class="w"> </span>main
+git<span class="w"> </span>log<span class="w"> </span>--oneline<span class="w"> </span>-4
+git<span class="w"> </span>status
+</pre></div>
+</div>
+<p>For your next homework session:</p>
+<ul class="simple">
+<li><p>Check for course updates.</p></li>
+<li><p>Branch for the change you’re trying.</p></li>
+<li><p>Add your source files and report. Replace the README’s TODOs as you work.</p></li>
+<li><p>Commit at useful stopping points; push what you want on GitHub.</p></li>
+<li><p>For reported results, record <strong>commit + inputs + seed + environment</strong>.</p></li>
+<li><p><strong>Submit code and report on Gradescope.</strong> Saving and pushing don’t submit them.</p></li>
+</ul>
+</section>
+<section id="optional-make-and-resolve-a-merge-conflict">
+<h2>Optional: make and resolve a merge conflict<a class="headerlink" href="#optional-make-and-resolve-a-merge-conflict" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>A conflict can occur when two branches change the same line incompatibly.</p></li>
+<li><p>Use two local branches. Leave <code class="docutils literal notranslate"><span class="pre">main</span></code> unchanged; don’t push these branches.</p></li>
+<li><p>Stay in <code class="docutils literal notranslate"><span class="pre">~/phys142-lab04/phys142</span></code>. Check that <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">status</span></code> is <strong>clean</strong>.</p></li>
+</ul>
+<ol class="arabic simple">
+<li><p>Create the first branch:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>switch<span class="w"> </span>main
+git<span class="w"> </span>switch<span class="w"> </span>-c<span class="w"> </span>seed-a
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>In <code class="docutils literal notranslate"><span class="pre">homework/practice/settings.txt</span></code>, replace <code class="docutils literal notranslate"><span class="pre">seed</span> <span class="pre">=</span> <span class="pre">20261008</span></code> with <code class="docutils literal notranslate"><span class="pre">seed</span> <span class="pre">=</span> <span class="pre">11</span></code>. Save, then:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>add<span class="w"> </span>homework/practice/settings.txt
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"Try seed 11"</span>
+git<span class="w"> </span>switch<span class="w"> </span>main
+git<span class="w"> </span>switch<span class="w"> </span>-c<span class="w"> </span>seed-b
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p><code class="docutils literal notranslate"><span class="pre">seed-b</span></code> starts from <code class="docutils literal notranslate"><span class="pre">main</span></code>, where the seed is still <code class="docutils literal notranslate"><span class="pre">20261008</span></code>. In the same file, replace it with <code class="docutils literal notranslate"><span class="pre">seed</span> <span class="pre">=</span> <span class="pre">22</span></code>, save, then:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>add<span class="w"> </span>homework/practice/settings.txt
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"Try seed 22"</span>
+git<span class="w"> </span>merge<span class="w"> </span>seed-a
+</pre></div>
+</div>
+<p>The merge should stop with a conflict in <code class="docutils literal notranslate"><span class="pre">homework/practice/settings.txt</span></code>: both branches changed the same seed. We must choose what to keep.</p>
+<section id="read-the-conflict-before-editing">
+<h3>Read the conflict before editing<a class="headerlink" href="#read-the-conflict-before-editing" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Current branch: <code class="docutils literal notranslate"><span class="pre">seed-b</span></code>, seed <code class="docutils literal notranslate"><span class="pre">22</span></code>.</p></li>
+<li><p>Incoming branch: <code class="docutils literal notranslate"><span class="pre">seed-a</span></code>, seed <code class="docutils literal notranslate"><span class="pre">11</span></code>.</p></li>
+<li><p>No merge commit exists yet.</p></li>
+</ul>
+<pre  class="mermaid">
+        %%{init: {&quot;theme&quot;:&quot;base&quot;,&quot;themeVariables&quot;:{&quot;fontSize&quot;:&quot;16px&quot;,&quot;primaryColor&quot;:&quot;#eff6ff&quot;,&quot;primaryTextColor&quot;:&quot;#0f172a&quot;,&quot;primaryBorderColor&quot;:&quot;#2563eb&quot;,&quot;lineColor&quot;:&quot;#718096&quot;,&quot;textColor&quot;:&quot;#0f172a&quot;,&quot;edgeLabelBackground&quot;:&quot;#f1f5f9&quot;,&quot;clusterBkg&quot;:&quot;#f8fafc&quot;,&quot;clusterBorder&quot;:&quot;#64748b&quot;,&quot;titleColor&quot;:&quot;#0f172a&quot;},&quot;flowchart&quot;:{&quot;htmlLabels&quot;:true,&quot;curve&quot;:&quot;linear&quot;,&quot;nodeSpacing&quot;:32,&quot;rankSpacing&quot;:48},&quot;fontFamily&quot;:&quot;Arial&quot;}}%%
+flowchart LR
+    accTitle: Conflicting seed changes before the merge
+    accDescr: Main stays at A. Seed-a points to B and seed-b to C. No merge commit exists yet. Solid arrows follow development; dotted arrows show branch pointers.
+    A((&quot;A: Seed 20261008&quot;)) --&gt; B((&quot;B: Seed 11&quot;))
+    A --&gt; C((&quot;C: Seed 22&quot;))
+    PM[main] -. points to .-&gt; A
+    PA[seed-a] -. points to .-&gt; B
+    PB[&quot;seed-b: Current branch&quot;] -. points to .-&gt; C
+    class A,PM main
+    class B,PA feature
+    class C,PB other
+    classDef default fill:#f8fafc,stroke:#64748b,color:#0f172a,stroke-width:2px
+    classDef main fill:#dbeafe,stroke:#2563eb,color:#172554,stroke-width:2px
+    classDef feature fill:#fef3c7,stroke:#b45309,color:#451a03,stroke-width:2px
+    classDef merged fill:#ccfbf1,stroke:#0f766e,color:#134e4a,stroke-width:3px
+    classDef remote fill:#ede9fe,stroke:#7c3aed,color:#2e1065,stroke-width:2px
+    classDef other fill:#ffe4e6,stroke:#be123c,color:#4c0519,stroke-width:2px
+    linkStyle default stroke:#718096,stroke-width:2px
+
+    </pre><p>Run <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">status</span></code> and open <code class="docutils literal notranslate"><span class="pre">homework/practice/settings.txt</span></code>. <code class="docutils literal notranslate"><span class="pre">HEAD</span></code> marks our side; <code class="docutils literal notranslate"><span class="pre">seed-a</span></code> marks the incoming side:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+seed = 22
+=======
+seed = 11
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; seed-a
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Some configurations also show the original value in a <code class="docutils literal notranslate"><span class="pre">|||||||</span></code> block.</p></li>
+<li><p>Choose one seed. Remove the conflict markers and the version you aren’t keeping.</p></li>
+</ul>
+</section>
+<section id="resolve-inspect-then-commit">
+<h3>Resolve, inspect, then commit<a class="headerlink" href="#resolve-inspect-then-commit" title="Permalink to this heading">#</a></h3>
+<p>Keep seed <code class="docutils literal notranslate"><span class="pre">11</span></code>. The complete file should be:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>distribution = fair_die
+seed = 11
+samples = 1000
+</pre></div>
+</div>
+<p>Save, then inspect and commit:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>diff
+git<span class="w"> </span>add<span class="w"> </span>homework/practice/settings.txt
+git<span class="w"> </span>diff<span class="w"> </span>--staged
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"Resolve the seed conflict using seed 11"</span>
+git<span class="w"> </span>status
+git<span class="w"> </span>log<span class="w"> </span>--oneline<span class="w"> </span>--graph<span class="w"> </span>--all<span class="w"> </span>--decorate<span class="w"> </span>-10
+git<span class="w"> </span>switch<span class="w"> </span>main
+cat<span class="w"> </span>homework/practice/settings.txt
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Back on <code class="docutils literal notranslate"><span class="pre">main</span></code>, the seed should still be <code class="docutils literal notranslate"><span class="pre">20261008</span></code>. The merge commit is on <code class="docutils literal notranslate"><span class="pre">seed-b</span></code>.</p></li>
+<li><p>In a real simulation, changing the seed can change the result. Rerun the calculation and record the seed.</p></li>
+<li><p>To cancel a conflicted merge, run <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">merge</span> <span class="pre">--abort</span></code> <strong>before resolving and committing</strong>. Because we started clean, this restores the pre-merge state. It doesn’t undo a committed merge.</p></li>
+</ul>
+<p>Reference: <a class="reference external" href="https://git-scm.com/docs/git-merge">Git merge and conflict handling</a>.</p>
+</section>
+</section>
+<section id="keep-this-beside-your-homework">
+<h2>Keep this beside your homework<a class="headerlink" href="#keep-this-beside-your-homework" title="Permalink to this heading">#</a></h2>
+<section id="a-small-command-reference">
+<h3>A small command reference<a class="headerlink" href="#a-small-command-reference" title="Permalink to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Question or action</p></th>
+<th class="head"><p>Command</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Where am I?</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">pwd</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>What changed, and what is staged?</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">status</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>What changed in tracked files since staging?</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">diff</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>What will the next commit contain?</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">diff</span> <span class="pre">--staged</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Stage a particular file</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span> <span class="pre">filename</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Record the staged changes</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span> <span class="pre">-m</span> <span class="pre">&quot;Explain</span> <span class="pre">the</span> <span class="pre">change&quot;</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Read the history and branch labels</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">log</span> <span class="pre">--oneline</span> <span class="pre">--graph</span> <span class="pre">--all</span> <span class="pre">--decorate</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Create and switch to a branch</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">switch</span> <span class="pre">-c</span> <span class="pre">branch-name</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Switch to an existing branch</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">switch</span> <span class="pre">main</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Merge into the current branch</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">merge</span> <span class="pre">branch-name</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Check remote URLs</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">remote</span> <span class="pre">-v</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Download history from my fork</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">fetch</span> <span class="pre">origin</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Download new course history</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">fetch</span> <span class="pre">upstream</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Merge course updates into my current branch</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">merge</span> <span class="pre">--no-edit</span> <span class="pre">upstream/main</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Update from my own fork when <code class="docutils literal notranslate"><span class="pre">main</span></code> can fast-forward</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">pull</span> <span class="pre">--ff-only</span> <span class="pre">origin</span> <span class="pre">main</span></code> while on <code class="docutils literal notranslate"><span class="pre">main</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Publish <code class="docutils literal notranslate"><span class="pre">main</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">origin</span> <span class="pre">main</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Publish a new feature branch and track it</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">-u</span> <span class="pre">origin</span> <span class="pre">branch-name</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<ol class="arabic simple">
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">status</span></code> before and after a change.</p></li>
+<li><p>Read the diff. Stage the files you want, then inspect the staged diff.</p></li>
+<li><p>Commit. Push when you’re ready to share the commits.</p></li>
+<li><p>If Git stops with an error, read it before trying another command.</p></li>
+</ol>
+</section>
+<section id="when-something-stops-you">
+<h3>When something stops you<a class="headerlink" href="#when-something-stops-you" title="Permalink to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>What you see</p></th>
+<th class="head"><p>What to check</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">a</span> <span class="pre">git</span> <span class="pre">repository</span></code></p></td>
+<td><p>Run <code class="docutils literal notranslate"><span class="pre">pwd</span></code>; enter the clone, not its parent directory.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Author</span> <span class="pre">identity</span> <span class="pre">unknown</span></code></p></td>
+<td><p>Set <code class="docutils literal notranslate"><span class="pre">user.name</span></code> and <code class="docutils literal notranslate"><span class="pre">user.email</span></code> inside the repository.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">nothing</span> <span class="pre">to</span> <span class="pre">commit</span></code></p></td>
+<td><p>Save your file, then check <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">status</span></code>. Did you already commit the change?</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Permission</span> <span class="pre">denied</span> <span class="pre">(publickey)</span></code> when cloning, fetching, or pushing your fork</p></td>
+<td><p>Check your fork’s SSH URL, <code class="docutils literal notranslate"><span class="pre">ssh-add</span> <span class="pre">-l</span></code>, and that the public key is on your GitHub account. Repeat the connection test above.</p></td>
+</tr>
+<tr class="row-even"><td><p>No connection to the authentication agent</p></td>
+<td><p>Rerun the <code class="docutils literal notranslate"><span class="pre">ssh-agent</span></code> and <code class="docutils literal notranslate"><span class="pre">ssh-add</span></code> block in this terminal.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Push rejected as non-fast-forward</p></td>
+<td><p>The remote has history your branch doesn’t contain. Fetch, look at the graph, and show me before combining the changes.</p></td>
+</tr>
+<tr class="row-even"><td><p>Switching or merging would overwrite local changes</p></td>
+<td><p>Look at the changes and commit the work you want to keep before switching. Don’t discard it just to get past the error.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Conflict markers in a file</p></td>
+<td><p>Resolve the content, remove markers, stage, inspect, and complete the merge.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul class="simple">
+<li><p>Save notebooks before staging. Outputs and metadata can make diffs large; clear outputs you don’t need.</p></li>
+<li><p>Agree on who edits each notebook. Move frequently shared code into small text modules to make changes easier to compare and merge.</p></li>
+<li><p>GitHub’s notebook preview displays the file; it doesn’t run the Python code.</p></li>
+</ul>
+</section>
+<section id="final-check-ready-for-the-next-homework-session">
+<h3>Final check: ready for the next homework session<a class="headerlink" href="#final-check-ready-for-the-next-homework-session" title="Permalink to this heading">#</a></h3>
+<p>Show your partner:</p>
+<ul class="simple">
+<li><p>Your fork of <code class="docutils literal notranslate"><span class="pre">jmduarte/phys142</span></code> and <code class="docutils literal notranslate"><span class="pre">homework/assignment1/README.md</span></code>.</p></li>
+<li><p>A commit and its diff. Explain the change.</p></li>
+<li><p>A PR merged into <strong>your own fork</strong>, with the same change in local <code class="docutils literal notranslate"><span class="pre">main</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">remote</span> <span class="pre">-v</span></code>: identify <code class="docutils literal notranslate"><span class="pre">origin</span></code> and <code class="docutils literal notranslate"><span class="pre">upstream</span></code>.</p></li>
+<li><p>A clean working tree, with local <code class="docutils literal notranslate"><span class="pre">HEAD</span></code> matching your GitHub <code class="docutils literal notranslate"><span class="pre">main</span></code>.</p></li>
+</ul>
+<p>Explain:</p>
+<ul class="simple">
+<li><p>How will you bring in a new course handout without losing your homework?</p></li>
+<li><p>Why isn’t <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">pull</span> <span class="pre">origin</span> <span class="pre">main</span></code> enough when the update is only in the course repository?</p></li>
+<li><p>What comes after <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">fetch</span> <span class="pre">upstream</span></code>?</p></li>
+<li><p>How do <strong>Git and GitHub</strong> differ? What do <strong>save</strong>, <strong>commit</strong>, and <strong>push</strong> do?</p></li>
+<li><p>What does each of <strong>branch</strong>, <strong>fork</strong>, and <strong>clone</strong> create?</p></li>
+<li><p>Why is a <strong>pull request</strong> different from <strong>pull</strong>?</p></li>
+</ul>
+</section>
+<section id="optional-independent-challenge">
+<h3>Optional independent challenge<a class="headerlink" href="#optional-independent-challenge" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Create <code class="docutils literal notranslate"><span class="pre">add-run-notes</span></code>. Add a section to <code class="docutils literal notranslate"><span class="pre">homework/README.md</span></code> explaining the seed and sample count in <code class="docutils literal notranslate"><span class="pre">homework/practice/settings.txt</span></code>.</p></li>
+<li><p>Stage the change, read the diff, and commit.</p></li>
+<li><p>Push with <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">-u</span> <span class="pre">origin</span> <span class="pre">add-run-notes</span></code>.</p></li>
+<li><p>Open a PR to <strong>your fork’s</strong> <code class="docutils literal notranslate"><span class="pre">main</span></code>. Read the diff and merge.</p></li>
+<li><p>Switch your local checkout to <code class="docutils literal notranslate"><span class="pre">main</span></code>, then run <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">pull</span> <span class="pre">--ff-only</span> <span class="pre">origin</span> <span class="pre">main</span></code>.</p></li>
+</ol>
+</section>
+<section id="references-and-more-practice">
+<h3>References and more practice<a class="headerlink" href="#references-and-more-practice" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control">Pro Git: version control</a>
+and <a class="reference external" href="https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository">recording changes</a>.</p></li>
+<li><p><a class="reference external" href="https://docs.github.com/en/get-started/using-github/hello-world">GitHub: Hello World</a>,
+<a class="reference external" href="https://docs.github.com/en/pull-requests/how-tos/work-with-forks/fork-a-repo">forks</a>,
+and <a class="reference external" href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh">SSH authentication</a>.</p></li>
+<li><p><a class="reference external" href="https://learngitbranching.js.org/?NODEMO">Learn Git Branching</a>: an optional
+interactive sandbox for more branching practice.</p></li>
+</ul>
+<p>Diagrams use <a class="reference external" href="https://mermaid.js.org/">Mermaid</a>. <code class="docutils literal notranslate"><span class="pre">A</span></code> and <code class="docutils literal notranslate"><span class="pre">B</span></code> are teaching labels for commits, not actual hashes to use in Git commands.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./labs/lab04"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../lab03/lab03.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Lab 03: Random numbers, seeding, and reproducible simulation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../lab4/Lab4.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Lab 05: Free Particle Propagator (Assignment 1 Tutorial)</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-git-for">What is Git for?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-does-github-add">What does GitHub add?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#where-is-the-change-right-now">Where is the change right now?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#forks-your-copy-of-the-course-repository">Forks: your copy of the course repository</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fork-the-course-repository">Fork the course repository</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#make-a-branch-for-your-homework-setup">Make a branch for your homework setup</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#open-a-pull-request-and-merge-it">Open a pull request and merge it</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-ssh-before-cloning-your-fork">Set up SSH before cloning your fork</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-an-ssh-key">Create an SSH key</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-the-public-key-to-github">Add the public key to GitHub</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#get-a-local-copy-of-your-fork">Get a local copy of your fork</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#set-your-name-and-email">Set your name and email</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-a-small-practice-calculation-to-your-workspace">Add a small practice calculation to your workspace</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stage-the-files">Stage the files</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#make-a-branch-from-the-terminal">Make a branch from the terminal</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#switch-back-to-main">Switch back to main</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#merge-the-changes">Merge the changes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#when-git-can-fast-forward">When Git can fast-forward</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#push-your-work-and-bring-updates-back">Push your work and bring updates back</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#upload-the-committed-history">Upload the committed history</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#make-a-remote-change-then-update-the-clone">Make a remote change, then update the clone</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bring-in-updates-from-the-course">Bring in updates from the course</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#follow-the-two-histories">Follow the two histories</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#start-your-assignment-1-directory">Start your Assignment 1 directory</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-make-and-resolve-a-merge-conflict">Optional: make and resolve a merge conflict</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#read-the-conflict-before-editing">Read the conflict before editing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#resolve-inspect-then-commit">Resolve, inspect, then commit</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#keep-this-beside-your-homework">Keep this beside your homework</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-small-command-reference">A small command reference</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#when-something-stops-you">When something stops you</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#final-check-ready-for-the-next-homework-session">Final check: ready for the next homework session</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-independent-challenge">Optional independent challenge</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#references-and-more-practice">References and more practice</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Javier Duarte
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

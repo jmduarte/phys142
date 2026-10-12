@@ -1,97 +1,203 @@
 name: deploy-book
 
-# Only run this when the master branch changes
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
-    branches:
-      - main
+    branches: [main]
   workflow_dispatch:
+    inputs:
+      rebuild_site:
+        description: Rebuild HTML while reusing notebook and dependency caches
+        type: boolean
+        default: false
 
-# This job installs dependencies, build the book, and pushes it to `gh-pages`
+permissions:
+  contents: write
+
+concurrency:
+  group: deploy-book-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # Bump this to explicitly refresh all cached environments and outputs.
+  CACHE_EPOCH: '1'
+  JULIA_VERSION: '1.6.1'
+  # Same image previously used as :latest, pinned so PDF cache keys are reliable.
+  TEXLIVE_IMAGE: xucheng/texlive-full@sha256:a48669080fa2e34d73eed56442f5b96fe4810d75439b2476fc2f2569c492e7eb
+
 jobs:
   deploy-book:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
 
-      # Install dependencies
+      - name: Test build selection and release rules
+        run: python3 -m unittest discover -s ci -p 'test_*.py' -v
+
+      - name: Fingerprint build inputs
+        id: keys
+        run: python3 ci/build_cache.py --texlive-image "$TEXLIVE_IMAGE"
+
+      # This cache contains HTML only, before the release-gated PDFs are added.
+      # A PDF-only change can skip the entire Python/Julia toolchain.
+      - name: Restore unchanged website
+        id: site
+        uses: actions/cache/restore@v4
+        with:
+          path: _build/html
+          key: site-${{ runner.os }}-${{ runner.arch }}-${{ env.CACHE_EPOCH }}-${{ steps.keys.outputs.site }}
+
       - name: Setup Miniconda
+        if: steps.site.outputs.cache-hit != 'true' || inputs.rebuild_site
         uses: conda-incubator/setup-miniconda@v3
         with:
           miniforge-version: latest
-          use-mamba: true
+          installation-dir: /home/runner/miniforge3
           channels: conda-forge
-          activate-environment: phys142
-          environment-file: environment.yml
-          python-version: 3.10.10
+          activate-environment: ''
           auto-activate-base: false
+          allow-softlinks: false
 
-      # Check dependencies
-      - name: Check Miniconda
+      - name: Restore Python environment
+        if: steps.site.outputs.cache-hit != 'true' || inputs.rebuild_site
+        id: python-env
+        uses: actions/cache@v4
+        with:
+          path: /home/runner/miniforge3/envs/phys142
+          key: conda-ubuntu24-${{ runner.arch }}-${{ env.CACHE_EPOCH }}-${{ hashFiles('environment.yml') }}
+
+      - name: Install Python dependencies on cache miss
+        if: (steps.site.outputs.cache-hit != 'true' || inputs.rebuild_site) && steps.python-env.outputs.cache-hit != 'true'
         shell: bash -l {0}
-        run: |
-          conda info
-          conda list
-          conda config --show-sources
-          conda config --show
-          printenv | sort
+        run: conda env create --name phys142 --file environment.yml
 
       - name: Setup Julia
-        uses: julia-actions/setup-julia@v1
+        if: steps.site.outputs.cache-hit != 'true' || inputs.rebuild_site
+        uses: julia-actions/setup-julia@v2
         with:
-          version: "1.6.1"
+          version: ${{ env.JULIA_VERSION }}
 
-      - name: Add IJulia
-        run: julia -e 'using Pkg; Pkg.add("IJulia")'
+      - name: Restore Julia environment and kernel
+        if: steps.site.outputs.cache-hit != 'true' || inputs.rebuild_site
+        id: julia-env
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.julia
+            ~/.local/share/jupyter/kernels
+          key: julia-ubuntu24-${{ runner.arch }}-${{ env.CACHE_EPOCH }}-${{ env.JULIA_VERSION }}-${{ hashFiles('environment.yml') }}
 
-      - name: Build the book
+      - name: Install IJulia on cache miss
+        if: (steps.site.outputs.cache-hit != 'true' || inputs.rebuild_site) && steps.julia-env.outputs.cache-hit != 'true'
         shell: bash -l {0}
         run: |
-          jupyter-book build .
+          conda activate phys142
+          export JUPYTER="$CONDA_PREFIX/bin/jupyter"
+          julia -e 'using Pkg; Pkg.add("IJulia")'
 
-      - name: Copy lab images and preserve the QR link
+      - name: Fingerprint installed execution dependencies
+        if: steps.site.outputs.cache-hit != 'true' || inputs.rebuild_site
+        id: runtime
+        shell: bash -l {0}
         run: |
-          # The QR image uses a relative HTML image path inside the notebook.
+          conda activate phys142
+          # An evicted environment can resolve new versions from environment.yml.
+          {
+            conda list --explicit
+            python -m pip freeze
+            cat "$HOME/.julia/environments/v1.6/Manifest.toml"
+          } > "$RUNNER_TEMP/phys142-execution-dependencies.txt"
+          digest=$(sha256sum "$RUNNER_TEMP/phys142-execution-dependencies.txt" | cut -d ' ' -f 1)
+          echo "digest=$digest" >> "$GITHUB_OUTPUT"
+
+      - name: Restore notebook executions
+        if: steps.site.outputs.cache-hit != 'true' || inputs.rebuild_site
+        uses: actions/cache@v4
+        with:
+          path: _build/.jupyter_cache
+          key: notebooks-${{ runner.os }}-${{ runner.arch }}-${{ env.CACHE_EPOCH }}-${{ steps.runtime.outputs.digest }}-${{ steps.keys.outputs.execution_context }}-${{ steps.keys.outputs.notebooks }}
+          # Reuse unaffected notebooks only within the same runtime/data/config.
+          restore-keys: |
+            notebooks-${{ runner.os }}-${{ runner.arch }}-${{ env.CACHE_EPOCH }}-${{ steps.runtime.outputs.digest }}-${{ steps.keys.outputs.execution_context }}-
+
+      - name: Build changed website
+        if: steps.site.outputs.cache-hit != 'true' || inputs.rebuild_site
+        shell: bash -l {0}
+        run: |
+          conda activate phys142
+          # Fresh HTML removes stale pages and updates shared navigation;
+          # expensive notebook executions are independently cached above.
+          rm -rf _build/html
+          jupyter-book build .
           cp -R labs/lab01/assets _build/html/labs/lab01/
           cp redirects/lab01_lab02.html _build/html/labs/lab01_lab02.html
 
-      - name: Compile LaTeX
-        uses: docker://xucheng/texlive-full:latest
+      - name: Cache website before adding released PDFs
+        if: steps.site.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
         with:
-          entrypoint: /bin/sh
-          args: |
-            -c "\
-            cd syllabus && \
-            latexmk -pdf && \
-            cd ../assignments/assignment1 && \
-            latexmk -pdf && \
-            cd ../assignment2 && \
-            latexmk -pdf && \
-            cd ../assignment3 && \
-            latexmk -pdf && \
-            cd ../final_projects && \
-            latexmk -pdf"
+          path: _build/html
+          key: ${{ steps.site.outputs.cache-primary-key }}
 
-      - name: Copy syllabus and released handouts for deployment
+      - name: Syllabus PDF
+        uses: ./.github/actions/cached-latex
+        with:
+          name: syllabus
+          directory: syllabus
+          source-key: ${{ steps.keys.outputs.syllabus }}
+          texlive-image: ${{ env.TEXLIVE_IMAGE }}
+
+      - name: Assignment 1 PDF
+        uses: ./.github/actions/cached-latex
+        with:
+          name: assignment1
+          directory: assignments/assignment1
+          source-key: ${{ steps.keys.outputs.assignment1 }}
+          texlive-image: ${{ env.TEXLIVE_IMAGE }}
+
+      - name: Assignment 2 PDF
+        uses: ./.github/actions/cached-latex
+        with:
+          name: assignment2
+          directory: assignments/assignment2
+          source-key: ${{ steps.keys.outputs.assignment2 }}
+          texlive-image: ${{ env.TEXLIVE_IMAGE }}
+
+      - name: Assignment 3 PDF
+        uses: ./.github/actions/cached-latex
+        with:
+          name: assignment3
+          directory: assignments/assignment3
+          source-key: ${{ steps.keys.outputs.assignment3 }}
+          texlive-image: ${{ env.TEXLIVE_IMAGE }}
+
+      - name: Final projects PDF
+        uses: ./.github/actions/cached-latex
+        with:
+          name: final_projects
+          directory: assignments/final_projects
+          source-key: ${{ steps.keys.outputs.final_projects }}
+          texlive-image: ${{ env.TEXLIVE_IMAGE }}
+
+      - name: Assemble syllabus and released handouts
+        run: python3 ci/assemble_site.py
+
+      - name: Record website result
+        env:
+          SITE_HIT: ${{ steps.site.outputs.cache-hit }}
+          REBUILD_SITE: ${{ inputs.rebuild_site }}
         run: |
-          cp syllabus/syllabus.pdf _build/html/syllabus.pdf
-          # A handout is released when its "- url:" line in _toc.yml is uncommented.
-          # All of them are still compiled above, so LaTeX errors show up before release.
-          for doc in assignment1 assignment2 assignment3 final_projects; do
-            if grep -Eq "^[[:space:]]*- url: .*/${doc}\.pdf" _toc.yml; then
-              cp "assignments/${doc}/${doc}.pdf" "_build/html/${doc}.pdf"
-              echo "released:     ${doc}"
-            else
-              echo "not released: ${doc}"
-            fi
-          done
+          if [ "$SITE_HIT" = true ] && [ "$REBUILD_SITE" != true ]; then
+            echo '- Website: reused HTML; Python and Julia setup skipped' >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo '- Website: rebuilt HTML using the notebook execution cache' >> "$GITHUB_STEP_SUMMARY"
+          fi
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
+          name: course-site
           path: _build/html
 
       - name: GitHub Pages action
@@ -101,12 +207,10 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: _build/html
           force_orphan: true
-          user_name: "github-actions[bot]"
-          user_email: "github-actions[bot]@users.noreply.github.com"
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
 
-      # Deploys the built site to the department web server (jduarte.physics.ucsd.edu).
-      # Additive on purpose: no --delete, so files uploaded by hand (e.g. lecture PDFs,
-      # labs/lab1/01_DataHub.pdf) are preserved. Skips silently until secrets are set.
+      # Preserve manually uploaded lecture PDFs. Delete only unreleased handouts.
       - name: Deploy to users.physics.ucsd.edu
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         env:
@@ -116,20 +220,17 @@ jobs:
         run: |
           set -euo pipefail
           if [ -z "${SSH_KEY:-}" ] || [ -z "${DEST:-}" ]; then
-            echo "PHYSICS_SSH_KEY / PHYSICS_DEST not set - skipping web server deploy."
+            echo 'PHYSICS_SSH_KEY / PHYSICS_DEST not set - skipping web server deploy.'
             exit 0
           fi
           mkdir -p ~/.ssh && chmod 700 ~/.ssh
           printf '%s\n' "$SSH_KEY" > ~/.ssh/id_deploy && chmod 600 ~/.ssh/id_deploy
           printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts && chmod 644 ~/.ssh/known_hosts
-          # LC_ALL/LANG=C: the server (CentOS 7) lacks C.UTF-8, which ssh would otherwise forward.
-          LC_ALL=C LANG=C rsync -rlvz --chmod=D755,F644 \
+          # Compare content: fresh HTML and copied PDFs have fresh timestamps.
+          LC_ALL=C LANG=C rsync -rlvzc --chmod=D755,F644 \
             -e "ssh -i ~/.ssh/id_deploy -o IdentitiesOnly=yes" \
             _build/html/ "$DEST"
-          # Handouts follow _toc.yml: delete any that are not released. The filters scope
-          # this to exactly these four files, and --max-delete caps it, so nothing else
-          # on the server can be removed.
-          LC_ALL=C LANG=C rsync -rlvz --delete --max-delete=4 \
+          LC_ALL=C LANG=C rsync -rlvzc --delete --max-delete=4 \
             --include='/assignment1.pdf' --include='/assignment2.pdf' \
             --include='/assignment3.pdf' --include='/final_projects.pdf' \
             --exclude='*' \

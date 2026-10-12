@@ -17,6 +17,15 @@ parts:
     chapters:
     - url: https://jduarte.physics.ucsd.edu/phys142/lectures/02_QuantumMechRecap.pdf
       title: "Lecture 02: Quantum mechanics refresher: states, operators, and the propagator"
+    - url: https://jduarte.physics.ucsd.edu/phys142/labs/lab1/01_DataHub.pdf
+      title: "Lab 01: Python, Jupyter, and DataHub (Slides)"
+    - file: labs/lab1/Lab1.ipynb
+      title: "Lab 01: Python, Jupyter, and DataHub (Notebook)"
+    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/03_FeynmanPathIntegral.pdf
+      title: "Lecture 03: Feynman path integral"
+    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/04_FeynmanPathIntegralContinued.pdf
+      title: "Lecture 04: Feynman path integral (continued)"
+    - file: labs/lab2/Lab2.md
     - file: labs/lab01/lab01.ipynb
       title: "Lab 01: Python, Jupyter, and DataHub"
     - file: labs/lab02/lab02.ipynb
@@ -33,6 +42,10 @@ parts:
     #   - file: labs/lab2/Lab2_ffmpeg.ipynb
   - caption: Week 2
     chapters:
+    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/05_FreeParticle.pdf
+      title: "Lecture 05: Free particle"
+    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/06_HarmonicOscillator.pdf
+      title: "Lecture 06: Harmonic oscillator"
     - file: labs/lab03/lab03.ipynb
       title: "Lab 03: Random Numbers, Seeding, and Reproducible Simulation"
     - file: labs/lab04/lab04.ipynb

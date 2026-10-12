@@ -69,7 +69,7 @@ jobs:
 
       - name: Install Python dependencies on cache miss
         if: (steps.site.outputs.cache-hit != 'true' || inputs.rebuild_site) && steps.python-env.outputs.cache-hit != 'true'
-        shell: bash -l {0}
+        shell: bash -el -o pipefail {0}
         run: conda env create --name phys142 --file environment.yml
 
       - name: Setup Julia
@@ -90,7 +90,7 @@ jobs:
 
       - name: Install IJulia on cache miss
         if: (steps.site.outputs.cache-hit != 'true' || inputs.rebuild_site) && steps.julia-env.outputs.cache-hit != 'true'
-        shell: bash -l {0}
+        shell: bash -el -o pipefail {0}
         run: |
           conda activate phys142
           export JUPYTER="$CONDA_PREFIX/bin/jupyter"
@@ -99,7 +99,7 @@ jobs:
       - name: Fingerprint installed execution dependencies
         if: steps.site.outputs.cache-hit != 'true' || inputs.rebuild_site
         id: runtime
-        shell: bash -l {0}
+        shell: bash -el -o pipefail {0}
         run: |
           conda activate phys142
           # An evicted environment can resolve new versions from environment.yml.
@@ -123,7 +123,7 @@ jobs:
 
       - name: Build changed website
         if: steps.site.outputs.cache-hit != 'true' || inputs.rebuild_site
-        shell: bash -l {0}
+        shell: bash -el -o pipefail {0}
         run: |
           conda activate phys142
           # Fresh HTML removes stale pages and updates shared navigation;

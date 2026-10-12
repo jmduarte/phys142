@@ -4,6 +4,8 @@ channels:
 dependencies:
     - python=3.10.10
     - jupyter_contrib_nbextensions==0.7.0
+    # The declared nbextensions require the classic Notebook APIs removed in 7.
+    - notebook<7
     - jupyter-book==0.15.1
     - numpy
     - scipy

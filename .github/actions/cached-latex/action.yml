@@ -1,0 +1,57 @@
+name: Cached LaTeX document
+description: Reuse a PDF when its tracked sources and TeX toolchain are unchanged.
+inputs:
+  name:
+    description: Document basename without the .tex suffix
+    required: true
+  directory:
+    description: Repository-relative source directory
+    required: true
+  source-key:
+    description: Content fingerprint including shared inputs and the TeX image
+    required: true
+  texlive-image:
+    description: Digest-pinned TeX Live image
+    required: true
+outputs:
+  cache-hit:
+    description: Whether compilation was skipped
+    value: ${{ steps.pdf.outputs.cache-hit }}
+runs:
+  using: composite
+  steps:
+    - name: Restore compiled PDF
+      id: pdf
+      uses: actions/cache@v4
+      with:
+        path: ${{ inputs.directory }}/${{ inputs.name }}.pdf
+        key: pdf-${{ runner.os }}-${{ runner.arch }}-${{ env.CACHE_EPOCH }}-${{ inputs.name }}-${{ inputs.source-key }}
+
+    # A docker:// action pulls its image during job setup, even when its step
+    # will be skipped. Starting Docker here avoids that cost on a cache hit.
+    - name: Compile changed document
+      if: steps.pdf.outputs.cache-hit != 'true'
+      shell: bash
+      env:
+        DOC_DIRECTORY: ${{ inputs.directory }}
+        DOC_NAME: ${{ inputs.name }}
+        TEXLIVE_IMAGE: ${{ inputs.texlive-image }}
+      run: |
+        set -euo pipefail
+        docker run --rm --user "$(id -u):$(id -g)" --env HOME=/tmp \
+          --volume "$GITHUB_WORKSPACE:/work" --workdir "/work/$DOC_DIRECTORY" \
+          --entrypoint latexmk "$TEXLIVE_IMAGE" \
+          -pdf -interaction=nonstopmode -halt-on-error -file-line-error "$DOC_NAME.tex"
+        test -s "$DOC_DIRECTORY/$DOC_NAME.pdf"
+
+    - name: Record document result
+      shell: bash
+      env:
+        DOC_NAME: ${{ inputs.name }}
+        CACHE_HIT: ${{ steps.pdf.outputs.cache-hit }}
+      run: |
+        if [ "$CACHE_HIT" = true ]; then
+          echo "- $DOC_NAME: reused PDF" >> "$GITHUB_STEP_SUMMARY"
+        else
+          echo "- $DOC_NAME: compiled PDF" >> "$GITHUB_STEP_SUMMARY"
+        fi

@@ -50,6 +50,8 @@ parts:
       title: "Lab 03: Random Numbers, Seeding, and Reproducible Simulation"
     - file: labs/lab04/lab04.ipynb
       title: "Lab 04: Git and GitHub"
+    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/07_SchrodingerEquation.pdf
+      title: "Lecture 07: Schrödinger equation"
   - caption: Week 3
     chapters:
     # UNRELEASED: uncomment the next two lines to publish Assignment 1.

@@ -54,9 +54,8 @@ parts:
       title: "Lecture 07: Schrödinger equation"
   - caption: Week 3
     chapters:
-    # UNRELEASED: uncomment the next two lines to publish Assignment 1.
-    # - url: https://jduarte.physics.ucsd.edu/phys142/assignment1.pdf
-    #   title: "Assignment 01 (Due Mon 10/19)"
+    - url: https://jduarte.physics.ucsd.edu/phys142/assignment1.pdf
+      title: "Assignment 01 (Due Mon 10/19)"
     - file: labs/lab4/Lab4.ipynb
       title: "Lab 05: Assignment 1 Tutorial"
   - caption: Week 4

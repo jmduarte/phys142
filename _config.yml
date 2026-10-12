@@ -10,11 +10,24 @@ favicon: images/favicon.ico
 # (e.g., *_sol.ipynb solutions, materials/) out of local builds that get uploaded.
 only_build_toc_files: true
 
-# Force re-execution of notebooks on each build.
+# Re-execute notebooks except the handouts used for live coding.
 # See https://jupyterbook.org/content/execute.html
 execute:
   execute_notebooks: force
   timeout: -1
+  exclude_patterns:
+    - labs/lab01_lab02/lab01_lab02.ipynb
+    - labs/lab01/lab01.ipynb
+    - labs/lab02/lab02.ipynb
+    - labs/lab03/lab03.ipynb
+    - labs/lab04/lab04.ipynb
+
+# Render standard Mermaid fences in notebooks with the pinned MyST parser.
+sphinx:
+  local_extensions:
+    mermaid_fences: _ext
+  config:
+    mermaid_height: auto
 
 # Define the name of the latex output file for PDF builds
 latex:

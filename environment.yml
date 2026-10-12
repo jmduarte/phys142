@@ -6,6 +6,7 @@ dependencies:
     - jupyter_contrib_nbextensions==0.7.0
     - jupyter-book==0.15.1
     - numpy
+    - scipy
     - ffmpeg
     - imagemagick
     - scikit-learn
@@ -18,3 +19,4 @@ dependencies:
       - requests
       - ipywidgets
       - widgetsnbextension
+      - sphinxcontrib-mermaid==2.0.2

@@ -52,6 +52,12 @@ jobs:
         run: |
           jupyter-book build .
 
+      - name: Copy lab images and preserve the QR link
+        run: |
+          # The QR image uses a relative HTML image path inside the notebook.
+          cp -R labs/lab01/assets _build/html/labs/lab01/
+          cp redirects/lab01_lab02.html _build/html/labs/lab01_lab02.html
+
       - name: Compile LaTeX
         uses: docker://xucheng/texlive-full:latest
         with:

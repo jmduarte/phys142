@@ -19,27 +19,22 @@ parts:
       title: "Lecture 02: Quantum mechanics refresher: states, operators, and the propagator"
     - url: https://jduarte.physics.ucsd.edu/phys142/labs/lab1/01_DataHub.pdf
       title: "Lab 01: Python, Jupyter, and DataHub (Slides)"
-    - file: labs/lab1/Lab1.ipynb
-      title: "Lab 01: Python, Jupyter, and DataHub (Notebook)"
+    - file: labs/reference/python_intro/python_intro.ipynb
+      title: "Python Introduction (Reference Notebook)"
     - url: https://jduarte.physics.ucsd.edu/phys142/lectures/03_FeynmanPathIntegral.pdf
       title: "Lecture 03: Feynman path integral"
     - url: https://jduarte.physics.ucsd.edu/phys142/lectures/04_FeynmanPathIntegralContinued.pdf
       title: "Lecture 04: Feynman path integral (continued)"
-    - file: labs/lab2/Lab2.md
+    - file: labs/reference/numba_ffmpeg/index.md
+      title: "Numba and ffmpeg (Reference Materials)"
     - file: labs/lab01/lab01.ipynb
       title: "Lab 01: Python, Jupyter, and DataHub"
     - file: labs/lab02/lab02.ipynb
       title: "Lab 02: NumPy, SciPy, and Matplotlib"
-    # Previous Week 1 lab materials: preserved, but hidden from the website TOC.
-    # - url: https://jduarte.physics.ucsd.edu/phys142/labs/lab1/01_DataHub.pdf
-    #   title: "Lab 01: Python, Jupyter, and DataHub (Slides)"
-    # - file: labs/lab1/Lab1.ipynb
-    #   title: "Lab 01: Python, Jupyter, and DataHub (Notebook)"
-    # - file: labs/lab2/Lab2.md
-    #   title: "Lab 02: NumPy, SciPy, and Matplotlib"
+    # Supplemental notebooks are linked from the reference index above.
     #   sections:
-    #   - file: labs/lab2/Lab2_Numba.ipynb
-    #   - file: labs/lab2/Lab2_ffmpeg.ipynb
+    #   - file: labs/reference/numba_ffmpeg/numba.ipynb
+    #   - file: labs/reference/numba_ffmpeg/ffmpeg.ipynb
   - caption: Week 2
     chapters:
     - url: https://jduarte.physics.ucsd.edu/phys142/lectures/05_FreeParticle.pdf
@@ -56,23 +51,23 @@ parts:
     chapters:
     - url: https://jduarte.physics.ucsd.edu/phys142/assignment1.pdf
       title: "Assignment 01 (Due Mon 10/19)"
-    - file: labs/lab4/Lab4.ipynb
+    - file: labs/lab05/lab05.ipynb
       title: "Lab 05: Assignment 1 Tutorial"
   - caption: Week 4
     chapters:
-    - file: labs/lab3/Lab3.ipynb
+    - file: labs/lab08/lab08.ipynb
       title: "Lab 08: Compiled Code and Python Interop"
   - caption: Week 5
     chapters:
     # UNRELEASED: uncomment the next two lines to publish Assignment 2.
     # - url: https://jduarte.physics.ucsd.edu/phys142/assignment2.pdf
     #   title: "Assignment 02 (Due Mon 11/2)"
-    - file: labs/lab8/Lab8.ipynb
+    - file: labs/lab09/lab09.ipynb
       title: "Lab 09: Assignment 2 Tutorial"
     # TODO Thu 10/29 Lab 10: Auditing AI-Generated Numerical Code (no materials yet)
   - caption: Week 6
     chapters:
-    - file: labs/lab12/Lab12.ipynb
+    - file: labs/lab11/lab11.ipynb
       title: "Lab 11: MCMC and the 2D Ising Model"
   - caption: Week 7
     chapters:
@@ -80,14 +75,14 @@ parts:
     # - url: https://jduarte.physics.ucsd.edu/phys142/assignment3.pdf
     #   title: "Assignment 03 (Due Mon 11/16)"
     # TODO Tue 11/10 Lab 13: Statistical Error Estimation (no materials yet)
-    - file: labs/lab15/Lab15.ipynb
+    - file: labs/lab14/lab14.ipynb
       title: "Lab 14: Path-Integral MCMC Tutorial"
   - caption: Week 8
     chapters:
     # UNRELEASED: uncomment the next two lines (and Week 10 below) to publish the final projects.
     # - url: https://jduarte.physics.ucsd.edu/phys142/final_projects.pdf
     #   title: "Final Projects"
-    - file: labs/lab17/lab17.ipynb
+    - file: labs/lab16/lab16.ipynb
       title: "Lab 16: VEGAS Tutorial"
   # Week 9 has no linked materials yet (Lecture 25, Lab 17 project help).
   # Jupyter Book rejects a part with no chapters, so the week is omitted until then.

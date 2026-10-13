@@ -1,0 +1,1573 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Lab 05: Assignment 1 tutorial &#8212; UCSD PHYS 142/242</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'labs/lab05/lab05';</script>
+    <link rel="canonical" href="https://jduarte.physics.ucsd.edu/phys142/labs/lab05/lab05.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Lab 08: Introduction to Julia" href="../lab08/lab08.html" />
+    <link rel="prev" title="Lab 04: Git and GitHub" href="../lab04/lab04.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/pathintegral_logo.png" class="logo__image only-light" alt="UCSD PHYS 142/242 - Home"/>
+    <script>document.write(`<img src="../../_static/pathintegral_logo.png" class="logo__image only-dark" alt="UCSD PHYS 142/242 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../README.html">
+                    UCSD PHYS 142/242: Computational Physics — Stochastic Methods and Path Integrals (Fall 2026)
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 0</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/syllabus.pdf">Syllabus</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/01_Introduction.pdf">Lecture 01: Course overview, the double-slit experiment, and how this course handles AI</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/02_QuantumMechRecap.pdf">Lecture 02: Quantum mechanics refresher: states, operators, and the propagator</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/labs/lab1/01_DataHub.pdf">Lab 01: Python, Jupyter, and DataHub (Slides)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/python_intro/python_intro.html">Python Introduction (Reference Notebook)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/03_FeynmanPathIntegral.pdf">Lecture 03: Feynman path integral</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/04_FeynmanPathIntegralContinued.pdf">Lecture 04: Feynman path integral (continued)</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../reference/numba_ffmpeg/index.html">Numba and ffmpeg (Reference Materials)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/numba_ffmpeg/numba.html">Lab 02: Numba</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/numba_ffmpeg/ffmpeg.html">Lab 02: ffmpeg</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab01/lab01.html">Lab 01: Python, Jupyter, and DataHub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab02/lab02.html">Lab 02: NumPy, SciPy, and Matplotlib</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/05_FreeParticle.pdf">Lecture 05: Free particle</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/06_HarmonicOscillator.pdf">Lecture 06: Harmonic oscillator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab03/lab03.html">Lab 03: Random Numbers, Seeding, and Reproducible Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab04/lab04.html">Lab 04: Git and GitHub</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/07_SchrodingerEquation.pdf">Lecture 07: Schrödinger equation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 3</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/assignment1.pdf">Assignment 01 (Due Mon 10/19)</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Lab 05: Assignment 1 Tutorial</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 4</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../lab08/lab08.html">Lab 08: Compiled Code and Python Interop</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 5</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../lab09/lab09.html">Lab 09: Assignment 2 Tutorial</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 6</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../lab11/lab11.html">Lab 11: MCMC and the 2D Ising Model</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 7</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../lab14/lab14.html">Lab 14: Path-Integral MCMC Tutorial</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 8</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../lab16/lab16.html">Lab 16: VEGAS Tutorial</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/jmduarte/phys142/main?urlpath=tree/labs/lab05/lab05.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://datahub.ucsd.edu/hub/user-redirect/git-pull?repo=https%3A//github.com/jmduarte/phys142&urlpath=tree/phys142/labs/lab05/lab05.ipynb&branch=main" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onJupyterHub"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="btn__text-container">JupyterHub</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/jmduarte/phys142/blob/main/labs/lab05/lab05.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jmduarte/phys142" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jmduarte/phys142/issues/new?title=Issue%20on%20page%20%2Flabs/lab05/lab05.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/labs/lab05/lab05.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Lab 05: Assignment 1 tutorial</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-are-we-trying-to-predict">What are we trying to predict?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#where-do-the-paths-enter">Where do the paths enter?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-does-a-propagator-move-a-whole-packet">How does a propagator move a whole packet?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-will-the-computer-do">What will the computer do?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-practice-with-a-free-particle">Why practice with a free particle?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-we-ll-practice">What we’ll practice</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#get-the-packages-ready">Get the packages ready</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-the-grid">Set up the grid</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#start-with-a-gaussian">Start with a Gaussian</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#get-your-assignment-parameter-from-your-tsn">Get your assignment parameter from your TSN</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-build-the-propagator">A: Build the propagator</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#where-does-delta-x-go">Where does <span class="math notranslate nohighlight">\(\Delta x\)</span> go?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#b-evolve-the-state-and-measure-position">B: Evolve the state and measure position</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#c-calculate-energy">C: Calculate energy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#d-select-snapshot-times">D: Select snapshot times</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#e-save-an-animation">E: Save an animation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#check-normalization-before-trusting-a-result">Check normalization before trusting a result</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#keep-going-when-the-grid-stops-working">Keep going: when the grid stops working</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-prepare-for-the-bonus">Optional: prepare for the bonus</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#write-the-assignment-results">Write the assignment results</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#use-this-in-your-assignment-notebook">Use this in your assignment notebook</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#before-you-submit">Before you submit</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="lab-05-assignment-1-tutorial">
+<h1>Lab 05: Assignment 1 tutorial<a class="headerlink" href="#lab-05-assignment-1-tutorial" title="Permalink to this heading">#</a></h1>
+<p><strong>Follow a wave packet through time.</strong></p>
+<p>Open <a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/assignment1.pdf">Assignment 1</a> beside this notebook.
+We’ll use a <strong>free particle</strong> to practice the calculation, then you’ll apply it to the
+<strong>harmonic oscillator</strong> in the assignment.</p>
+<p>Open your own copy through the rocket menu: DataHub or Colab. In Colab, choose
+<strong>File → Save a copy in Drive</strong>, then <strong>Connect</strong>. Run the cells from the top.</p>
+<section id="what-are-we-trying-to-predict">
+<h2>What are we trying to predict?<a class="headerlink" href="#what-are-we-trying-to-predict" title="Permalink to this heading">#</a></h2>
+<p><strong>Start with the wavefunction. Predict what it becomes.</strong></p>
+<p>Imagine a particle prepared in a localized Gaussian packet. We know its initial
+wavefunction <span class="math notranslate nohighlight">\(\psi(x,0)\)</span>. We want to know how it changes with time and what that
+predicts for measurements of position and energy.</p>
+<p>The wavefunction assigns a <strong>complex amplitude</strong> to each position. Both its magnitude
+and phase matter. Its absolute square gives the probability density:</p>
+<div class="math notranslate nohighlight">
+\[P(x,t)=|\psi(x,t)|^2.\]</div>
+<p>The probability of finding the particle in a small interval of width <span class="math notranslate nohighlight">\(\Delta x\)</span> is
+approximately <span class="math notranslate nohighlight">\(P(x,t)\Delta x\)</span>. Our notebook stores the amplitude at every grid point,
+evolves those amplitudes, then calculates the density and expectation values.</p>
+<p><strong>Lecture reference:</strong> <a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/02_QuantumMechRecap.pdf#page=3">Lecture 02, slide 3: states and probabilities</a>,
+and <a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/02_QuantumMechRecap.pdf#page=5">slide 5: expectation values</a>.</p>
+</section>
+<section id="where-do-the-paths-enter">
+<h2>Where do the paths enter?<a class="headerlink" href="#where-do-the-paths-enter" title="Permalink to this heading">#</a></h2>
+<p><strong>Add amplitudes before taking the absolute square.</strong></p>
+<p>In the double-slit discussion, different routes contributed amplitudes to the same
+destination. The path integral extends that idea to all paths between the endpoints.
+Each path contributes an amplitude proportional to <span class="math notranslate nohighlight">\(e^{iS/\hbar}\)</span>, where <span class="math notranslate nohighlight">\(S\)</span> is its action.
+Those complex contributions can reinforce or cancel.</p>
+<p>The <strong>propagator</strong> <span class="math notranslate nohighlight">\(\mathcal K(x_b,t_b;x_a,t_a)\)</span> packages that path sum into the
+amplitude for propagation between a starting point and a destination. Lecture already
+gave us its formula for the free particle and the oscillator. We’ll use those formulas
+to evolve a whole wave packet.</p>
+<p><strong>Lecture reference:</strong> <a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/03_FeynmanPathIntegral.pdf#page=4">Lecture 03, slides 4–6: routes become a path sum</a>,
+and <a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/03_FeynmanPathIntegral.pdf#page=14">slide 14: action and phase</a>.</p>
+</section>
+<section id="how-does-a-propagator-move-a-whole-packet">
+<h2>How does a propagator move a whole packet?<a class="headerlink" href="#how-does-a-propagator-move-a-whole-packet" title="Permalink to this heading">#</a></h2>
+<p><strong>Pick a destination. Add the contributions from every starting position.</strong></p>
+<p>The initial packet has amplitude across many positions. At a chosen destination
+<span class="math notranslate nohighlight">\(x_b\)</span>, weight each starting amplitude by the propagator and integrate:</p>
+<div class="math notranslate nohighlight">
+\[\psi(x_b,t+\epsilon)=\int
+\mathcal K_\epsilon(x_b,x_a)\,\psi(x_a,t)\,dx_a.\]</div>
+<p>Do that for every destination and you have the entire new wavefunction.
+The kernel carries the dynamics. The wavefunction tells us which initial state we’re evolving.</p>
+<details>
+<summary>Aside: the same transformation in ket and vector notation</summary>
+<p><strong>Same linear map. Two ways to write it.</strong></p>
+<p>Take an arbitrary linear operator <span class="math notranslate nohighlight">\(\hat T\)</span>. Call the input state <span class="math notranslate nohighlight">\(\psi\)</span> and the output <span class="math notranslate nohighlight">\(\phi\)</span>.</p>
+<p><strong>1. Ket notation: act on the whole state.</strong></p>
+<div class="math notranslate nohighlight">
+\[|\psi\rangle \xrightarrow{\ \hat T\ } |\phi\rangle,
+\qquad |\phi\rangle=\hat T|\psi\rangle.\]</div>
+<p>The ket names the state without choosing a basis for its components.</p>
+<p><strong>2. Vector notation: choose a basis and multiply by a matrix.</strong></p>
+<div class="math notranslate nohighlight">
+\[\boldsymbol\psi \xrightarrow{\ T\ } \boldsymbol\phi,
+\qquad \boldsymbol\phi=T\boldsymbol\psi.\]</div>
+<p>In an orthonormal basis, <span class="math notranslate nohighlight">\(\psi_i=\langle i|\psi\rangle\)</span> and
+<span class="math notranslate nohighlight">\(T_{ji}=\langle j|\hat T|i\rangle\)</span>. For a two-component example,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{pmatrix}\phi_1\\\phi_2\end{pmatrix}
+=\begin{pmatrix}T_{11}&amp;T_{12}\\T_{21}&amp;T_{22}\end{pmatrix}
+\begin{pmatrix}\psi_1\\\psi_2\end{pmatrix}
+=\begin{pmatrix}T_{11}\psi_1+T_{12}\psi_2\\T_{21}\psi_1+T_{22}\psi_2\end{pmatrix}.\end{split}\]</div>
+<p>Each output component adds contributions from every input component:
+<span class="math notranslate nohighlight">\(\phi_j=\sum_i T_{ji}\psi_i\)</span>. The entries can be complex.</p>
+<p><strong>For this lab, the transformation advances time.</strong></p>
+<p>Choose <span class="math notranslate nohighlight">\(\hat T=\hat U(\epsilon)\)</span>, the time-evolution operator. The input is
+<span class="math notranslate nohighlight">\(|\psi(t)\rangle\)</span> and the output is <span class="math notranslate nohighlight">\(|\psi(t+\epsilon)\rangle\)</span>.
+Its matrix elements in the position basis are the propagator:</p>
+<div class="math notranslate nohighlight">
+\[\mathcal K_\epsilon(x_b,x_a)=\langle x_b|\hat U(\epsilon)|x_a\rangle.\]</div>
+<p>On our uniform grid, the vector stores sampled values <span class="math notranslate nohighlight">\(\psi_i=\psi(x_i,t)\)</span>.
+Set <span class="math notranslate nohighlight">\(T_{ji}=\Delta x\,\mathcal K_\epsilon(x_j,x_i)\)</span>; then
+<span class="math notranslate nohighlight">\(\boldsymbol\psi(t+\epsilon)\approx T\boldsymbol\psi(t)\)</span> approximates the integral above.
+The <span class="math notranslate nohighlight">\(\Delta x\)</span> is the integration weight. Our normalization check is
+<span class="math notranslate nohighlight">\(\Delta x\sum_i|\psi_i|^2\approx1\)</span>.</p>
+<p>An arbitrary linear map need not preserve the norm. Exact quantum time evolution does;
+we’ll check how well our grid calculation preserves it.</p>
+</details>
+<p><strong>Lecture reference:</strong> <a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/06_HarmonicOscillator.pdf#page=4">Lecture 06, slide 4: propagating a wavefunction</a>.
+This is the propagator description of the same time evolution discussed in
+<a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/07_SchrodingerEquation.pdf#page=17">Lecture 07, slide 17: the Schrödinger equation</a>.</p>
+</section>
+<section id="what-will-the-computer-do">
+<h2>What will the computer do?<a class="headerlink" href="#what-will-the-computer-do" title="Permalink to this heading">#</a></h2>
+<p><strong>Replace the position integral with a grid sum.</strong></p>
+<p><img alt="Lecture 6 slide 6: a propagator connects a sampled amplitude at the current time to an amplitude one time step later." src="../../_images/lecture06-discretization.png" /></p>
+<p><em>Javier Duarte, <a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/06_HarmonicOscillator.pdf#page=6">Lecture 06, slide 6: Discretization</a>.
+The arrow shows one contribution. The full update sums contributions from every
+starting position. The bars are schematic amplitudes; our arrays are complex.</em></p>
+<p>Writing the sum explicitly,</p>
+<div class="math notranslate nohighlight">
+\[\psi(x_j,t+\epsilon)\approx\Delta x\sum_i
+\mathcal K_\epsilon(x_j,x_i)\,\psi(x_i,t).\]</div>
+<ul class="simple">
+<li><p><strong>Wavefunction vector:</strong> one complex amplitude per position.</p></li>
+<li><p><strong>Propagator matrix:</strong> one entry for each destination–source pair.</p></li>
+<li><p><strong>Matrix–vector product:</strong> the sums for every destination at once.</p></li>
+</ul>
+<details>
+<summary>Aside: one matrix multiplication, three new amplitudes</summary>
+<p><strong>One row. One destination.</strong></p>
+<p>Suppose our grid has three positions, with current complex amplitudes <span class="math notranslate nohighlight">\(a\)</span>, <span class="math notranslate nohighlight">\(b\)</span>, and <span class="math notranslate nohighlight">\(c\)</span>.
+Include the grid spacing in the matrix: <span class="math notranslate nohighlight">\(M_{ji}=\Delta x\,\mathcal K_\epsilon(x_j,x_i)\)</span>.
+One update is</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\underbrace{\begin{pmatrix}
+M_{11}&amp;M_{12}&amp;M_{13}\\
+M_{21}&amp;M_{22}&amp;M_{23}\\
+M_{31}&amp;M_{32}&amp;M_{33}
+\end{pmatrix}}_{\text{update matrix}}
+\underbrace{\begin{pmatrix}a\\b\\c\end{pmatrix}}_{\text{current vector}}
+=\underbrace{\begin{pmatrix}a_{\rm new}\\b_{\rm new}\\c_{\rm new}\end{pmatrix}}_{\text{new vector}}.\end{split}\]</div>
+<p>For example, the middle row gives</p>
+<div class="math notranslate nohighlight">
+\[b_{\rm new}=M_{21}a+M_{22}b+M_{23}c.\]</div>
+<p>Each <strong>row</strong> collects contributions from all three source positions for one destination.
+Each <strong>column</strong> tells us how one source contributes to the different destinations.
+The new vector is our grid approximation to the wavefunction one time step later.
+A larger grid does the same multiplication with more rows and columns.</p>
+</details>
+<p>Repeating the multiplication advances another time step. Multiplying two kernels
+sums over an intermediate position. Further products sum over further intermediate
+positions, so we can account for the paths through the grid without listing each path.
+This notebook evaluates those sums deterministically.</p>
+<p><strong>Lecture reference:</strong> <a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/06_HarmonicOscillator.pdf#page=5">Lecture 06, slides 5–6: chaining and discretization</a>.
+For the picture of a path divided into time slices, revisit
+<a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/03_FeynmanPathIntegral.pdf#page=18">Lecture 03, slide 18</a>.</p>
+</section>
+<section id="why-practice-with-a-free-particle">
+<h2>Why practice with a free particle?<a class="headerlink" href="#why-practice-with-a-free-particle" title="Permalink to this heading">#</a></h2>
+<p><strong>Keep the calculation structure. Change the physical system.</strong></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>Today’s free particle</p></th>
+<th class="head"><p>Assignment 1 oscillator</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Potential</p></td>
+<td><p><span class="math notranslate nohighlight">\(V(x)=0\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(V(x)=x^2/2\)</span> in the assignment’s units</p></td>
+</tr>
+<tr class="row-odd"><td><p>Packet motion</p></td>
+<td><p>A Gaussian spreads; its center drifts if it has mean momentum</p></td>
+<td><p>The displaced packet’s center oscillates in the confining potential</p></td>
+</tr>
+<tr class="row-even"><td><p>Propagator</p></td>
+<td><p><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/05_FreeParticle.pdf#page=3">Lecture 05, slide 3</a></p></td>
+<td><p><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/06_HarmonicOscillator.pdf#page=12">Lecture 06, slide 12</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>We’ll first check motion we can predict for the free particle. For the assignment,
+use the kernel, potential, initial state, <strong>grid, and time interval</strong> specified in the
+handout. The grid sums, storage of successive states, and plotting tools carry over.</p>
+<p>Each saved state lets us calculate <span class="math notranslate nohighlight">\(|\psi|^2\)</span>, mean position, and energy. Those are the
+quantities we’ll compare with our expectations before trusting the animation.</p>
+<p><strong>Before we code:</strong> if a packet’s center stays still, can its probability density
+still change? Keep that question in mind when we vary its initial momentum.</p>
+</section>
+<section id="what-we-ll-practice">
+<h2>What we’ll practice<a class="headerlink" href="#what-we-ll-practice" title="Permalink to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Assignment</p></th>
+<th class="head"><p>What we’ll practice</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>A</p></td>
+<td><p>Build a complex propagator and compose eight steps</p></td>
+</tr>
+<tr class="row-odd"><td><p>B</p></td>
+<td><p>Evolve the state and calculate mean position</p></td>
+</tr>
+<tr class="row-even"><td><p>C</p></td>
+<td><p>Calculate kinetic, potential, and total energy</p></td>
+</tr>
+<tr class="row-odd"><td><p>D</p></td>
+<td><p>Select the requested times and distinguish amplitude from density</p></td>
+</tr>
+<tr class="row-even"><td><p>E</p></td>
+<td><p>Save a 17-frame demo; use 129 frames for the assignment</p></td>
+</tr>
+<tr class="row-odd"><td><p>Bonus</p></td>
+<td><p>Track normalization and diagnose a bad grid</p></td>
+</tr>
+<tr class="row-even"><td><p>Submission</p></td>
+<td><p>Use your TSN and write the required <code class="docutils literal notranslate"><span class="pre">results.json</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="get-the-packages-ready">
+<h2>Get the packages ready<a class="headerlink" href="#get-the-packages-ready" title="Permalink to this heading">#</a></h2>
+<p><strong>Imports first.</strong></p>
+<p>On DataHub, use the course environment. If a package is missing there, ask me.
+In Colab or your local environment, uncomment the install cell if needed, run it,
+then comment it again. Restart the kernel if prompted and rerun the imports.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># %pip install numpy matplotlib pillow</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.animation</span><span class="w"> </span><span class="kn">import</span> <span class="n">FuncAnimation</span><span class="p">,</span> <span class="n">PillowWriter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span><span class="p">,</span> <span class="n">display</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="set-up-the-grid">
+<h2>Set up the grid<a class="headerlink" href="#set-up-the-grid" title="Permalink to this heading">#</a></h2>
+<p><strong>400 intervals. 401 positions. 16 steps. 17 states.</strong></p>
+<p>We’ll use a short free-particle run that shows motion and spreading while keeping
+almost all of the packet inside the grid. Both endpoints count. So does the initial
+state at <span class="math notranslate nohighlight">\(t=0\)</span>. We use <span class="math notranslate nohighlight">\(m=\hbar=1\)</span>.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>Today’s free-particle demo</p></th>
+<th class="head"><p>Assignment 1 oscillator</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Position range</p></td>
+<td><p><span class="math notranslate nohighlight">\([-6,9]\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([-4,4]\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Spatial intervals</p></td>
+<td><p><span class="math notranslate nohighlight">\(N_D=400\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(N_D=600\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Final time</p></td>
+<td><p><span class="math notranslate nohighlight">\(T_{\rm end}=1.5\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(T_0=2\pi\)</span>, one oscillator period</p></td>
+</tr>
+<tr class="row-odd"><td><p>Time steps</p></td>
+<td><p>16</p></td>
+<td><p>128</p></td>
+</tr>
+<tr class="row-even"><td><p>Step size</p></td>
+<td><p><span class="math notranslate nohighlight">\(\Delta t=0.09375\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\epsilon=T_0/128\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Stored states</p></td>
+<td><p>17</p></td>
+<td><p>129</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The free particle has no oscillation period. We’ll keep going later to see when this
+finite grid stops giving a reliable answer. Use the <strong>assignment column</strong> when you
+build your oscillator calculation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">T_end</span> <span class="o">=</span> <span class="mf">1.5</span>
+<span class="n">NT</span> <span class="o">=</span> <span class="mi">16</span>
+<span class="n">ND</span> <span class="o">=</span> <span class="mi">400</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="n">ND</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">T_end</span><span class="p">,</span> <span class="n">NT</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">dx</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="n">T_end</span> <span class="o">/</span> <span class="n">NT</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Positions:"</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="s2">"dx:"</span><span class="p">,</span> <span class="n">dx</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Times:"</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="s2">"dt:"</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="start-with-a-gaussian">
+<h2>Start with a Gaussian<a class="headerlink" href="#start-with-a-gaussian" title="Permalink to this heading">#</a></h2>
+<p><strong>The wavefunction is complex. Probability density is real.</strong></p>
+<p>We’ll give the packet mean momentum <span class="math notranslate nohighlight">\(k_0=1\)</span> so we can see its center move:</p>
+<div class="math notranslate nohighlight">
+\[\psi_0(x)=\left(\frac{\alpha}{\pi}\right)^{1/4}
+\exp\left[-\frac{\alpha}{2}(x-x_{\rm start})^2+ik_0(x-x_{\rm start})\right].\]</div>
+<p>Use <span class="math notranslate nohighlight">\(\alpha=2\)</span> and <span class="math notranslate nohighlight">\(x_{\rm start}=0\)</span> for this walkthrough. The phase shifts the
+<strong>mean</strong> momentum; the packet still has a spread of momenta.
+For Assignment 1, use your TSN-derived center and <strong><span class="math notranslate nohighlight">\(k_0=0\)</span></strong>, as in the handout.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">gaussian</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">k0</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">alpha</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">**</span><span class="mf">0.25</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span>
+        <span class="o">-</span><span class="n">alpha</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">center</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">k0</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">center</span><span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="n">alpha</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">center</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="n">k0</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">psi0</span> <span class="o">=</span> <span class="n">gaussian</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">k0</span><span class="p">)</span>
+<span class="n">P0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">psi0</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">norm0</span> <span class="o">=</span> <span class="n">dx</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">P0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Initial norm:"</span><span class="p">,</span> <span class="n">norm0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Use the absolute square.</strong></p>
+<p><span class="math notranslate nohighlight">\(P(x)=|\psi(x)|^2=\psi(x)\psi^*(x)\)</span>.
+Multiplying by a transpose does <strong>not</strong> conjugate a complex array.
+Plot the real and imaginary parts separately when you want to show amplitude.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">))</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">psi0</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Re psi"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">psi0</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Im psi"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"x"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Amplitude"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Initial wavefunction"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">P0</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"x"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Probability density"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Absolute square"</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="get-your-assignment-parameter-from-your-tsn">
+<h3>Get your assignment parameter from your TSN<a class="headerlink" href="#get-your-assignment-parameter-from-your-tsn" title="Permalink to this heading">#</a></h3>
+<p><strong>Use all nine digits as text.</strong></p>
+<p>Your Triton Student Number starts with <code class="docutils literal notranslate"><span class="pre">2</span></code>. Let <span class="math notranslate nohighlight">\(d\)</span> be its last two digits and <span class="math notranslate nohighlight">\(s\)</span>
+its third-to-last digit. The assignment uses</p>
+<div class="math notranslate nohighlight">
+\[x_{\rm start}=(-1)^s\left(0.5+\frac{d}{200}\right).\]</div>
+<p>These are the handout’s example numbers. Keep them for today’s practice. Use your
+own TSN in your assignment copy and state its <span class="math notranslate nohighlight">\(x_{\rm start}\)</span> in your report.
+This cell computes the parameter; it does not change our free-particle initial state.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">center_from_tsn</span><span class="p">(</span><span class="n">tsn</span><span class="p">):</span>
+    <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tsn</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">tsn</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">9</span>
+            <span class="ow">or</span> <span class="ow">not</span> <span class="n">tsn</span><span class="o">.</span><span class="n">isascii</span><span class="p">()</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">tsn</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">tsn</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"2"</span><span class="p">)):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"TSN must be a string of nine digits starting with 2."</span><span class="p">)</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">tsn</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:])</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">tsn</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">])</span>
+    <span class="k">return</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="n">s</span> <span class="o">*</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">+</span> <span class="n">d</span> <span class="o">/</span> <span class="mi">200</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">example_tsn</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"212345678"</span><span class="p">,</span> <span class="s2">"212345123"</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">example_tsn</span><span class="p">,</span> <span class="s2">"-&gt;"</span><span class="p">,</span> <span class="n">center_from_tsn</span><span class="p">(</span><span class="n">example_tsn</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="a-build-the-propagator">
+<h2>A: Build the propagator<a class="headerlink" href="#a-build-the-propagator" title="Permalink to this heading">#</a></h2>
+<p><strong>A row is the destination. A column is the source.</strong></p>
+<p>For a free particle,</p>
+<div class="math notranslate nohighlight">
+\[K_\epsilon(x_b,x_a)=\frac{1}{\sqrt{2\pi i\epsilon}}
+\exp\left[\frac{i(x_b-x_a)^2}{2\epsilon}\right].\]</div>
+<p><code class="docutils literal notranslate"><span class="pre">x[:,</span> <span class="pre">None]</span></code> is a column of destinations; <code class="docutils literal notranslate"><span class="pre">x[None,</span> <span class="pre">:]</span></code> is a row of sources.
+NumPy broadcasts them into a <span class="math notranslate nohighlight">\(401\times401\)</span> matrix. Check those shapes before
+working with a full matrix.</p>
+<p>For the assignment, implement the <strong>harmonic-oscillator kernel printed in Problem A</strong>
+in place of this free-particle kernel, on the assignment’s grid and time step.
+Keep the row/column convention.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">free_kernel</span><span class="p">(</span><span class="n">x_destination</span><span class="p">,</span> <span class="n">x_source</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="p">(</span><span class="n">x_destination</span> <span class="o">-</span> <span class="n">x_source</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">step</span><span class="p">))</span>
+        <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">step</span><span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="n">K_step</span> <span class="o">=</span> <span class="n">free_kernel</span><span class="p">(</span><span class="n">x</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:],</span> <span class="n">dt</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Destination column:"</span><span class="p">,</span> <span class="n">x</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Source row:"</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Kernel:"</span><span class="p">,</span> <span class="n">K_step</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">K_step</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="where-does-delta-x-go">
+<h3>Where does <span class="math notranslate nohighlight">\(\Delta x\)</span> go?<a class="headerlink" href="#where-does-delta-x-go" title="Permalink to this heading">#</a></h3>
+<p><strong>Each integral contributes one grid spacing.</strong></p>
+<div class="math notranslate nohighlight">
+\[\psi_{n+1}(x_b)\approx\Delta x\sum_a K_\epsilon(x_b,x_a)\psi_n(x_a).\]</div>
+<p>Define the one-step evolution matrix <span class="math notranslate nohighlight">\(U=\Delta x K_\epsilon\)</span>. Then
+<span class="math notranslate nohighlight">\(\psi_{n+1}=U\psi_n\)</span>.
+The same composition used in A gives the sampled eight-step kernel:</p>
+<div class="math notranslate nohighlight">
+\[K_{8\epsilon}=(\Delta x)^7 K_\epsilon^8=U^8/\Delta x.\]</div>
+<p>Here eight steps span <span class="math notranslate nohighlight">\(8\Delta t=0.75\)</span>. For Assignment 1, rebuild the oscillator
+matrix on its prescribed grid so that eight steps span <span class="math notranslate nohighlight">\(8\epsilon=T_0/16\)</span>.</p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">np.linalg.matrix_power</span></code>, which composes matrices. <code class="docutils literal notranslate"><span class="pre">K_step**8</span></code> takes an
+<strong>elementwise</strong> power and does something different.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">U</span> <span class="o">=</span> <span class="n">dx</span> <span class="o">*</span> <span class="n">K_step</span>
+<span class="n">K8_free</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">matrix_power</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span> <span class="o">/</span> <span class="n">dx</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">K8_free</span><span class="p">)</span>  <span class="c1"># NumPy truncates large arrays automatically.</span>
+
+<span class="c1"># These must be the same evolution of the initial state.</span>
+<span class="n">psi_after_8</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">matrix_power</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span> <span class="o">@</span> <span class="n">psi0</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Eight-step forms agree:"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">dx</span> <span class="o">*</span> <span class="n">K8_free</span> <span class="o">@</span> <span class="n">psi0</span><span class="p">,</span> <span class="n">psi_after_8</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="b-evolve-the-state-and-measure-position">
+<h2>B: Evolve the state and measure position<a class="headerlink" href="#b-evolve-the-state-and-measure-position" title="Permalink to this heading">#</a></h2>
+<p><strong>Store the initial state, then take 16 steps.</strong></p>
+<p>Rows will index time. Columns will index position: a <span class="math notranslate nohighlight">\((17,401)\)</span> array for this demo.
+Keep the complex amplitudes; we’ll need their spatial derivatives for energy.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">evolve</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">initial_state</span><span class="p">,</span> <span class="n">steps</span><span class="p">):</span>
+    <span class="n">states</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">initial_state</span><span class="o">.</span><span class="n">size</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+    <span class="n">states</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">initial_state</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">steps</span><span class="p">):</span>
+        <span class="n">states</span><span class="p">[</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">U</span> <span class="o">@</span> <span class="n">states</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">states</span>
+
+<span class="n">psi</span> <span class="o">=</span> <span class="n">evolve</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">psi0</span><span class="p">,</span> <span class="n">NT</span><span class="p">)</span>
+<span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">psi</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">norm</span> <span class="o">=</span> <span class="n">dx</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">x_mean</span> <span class="o">=</span> <span class="n">dx</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">P</span> <span class="o">*</span> <span class="n">x</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"States:"</span><span class="p">,</span> <span class="n">psi</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="s2">"Mean positions:"</span><span class="p">,</span> <span class="n">x_mean</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Sum over position. Keep time.</strong></p>
+<p><span class="math notranslate nohighlight">\(\langle x\rangle\approx\Delta x\sum_i x_i|\psi(x_i)|^2\)</span>.
+For arrays shaped <code class="docutils literal notranslate"><span class="pre">(time,</span> <span class="pre">position)</span></code>, that’s <code class="docutils literal notranslate"><span class="pre">axis=1</span></code>.</p>
+<p>Before looking: a free particle with mean momentum <span class="math notranslate nohighlight">\(k_0\)</span> should have
+<span class="math notranslate nohighlight">\(\langle x\rangle=x_{\rm start}+k_0t\)</span> while our finite grid captures the packet.
+Compare all 17 states over <span class="math notranslate nohighlight">\(0\leq t\leq1.5\)</span>.
+For the assignment’s oscillator and initial state, compare with
+<span class="math notranslate nohighlight">\(x_{\rm start}\cos t\)</span> over the full period.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">x_mean</span><span class="p">,</span> <span class="s2">"o"</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Grid calculation"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">center</span> <span class="o">+</span> <span class="n">k0</span> <span class="o">*</span> <span class="n">t</span><span class="p">,</span> <span class="s2">"--"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Free-particle prediction"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"t"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Mean position"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Try it:</strong> change <code class="docutils literal notranslate"><span class="pre">k0</span></code> to <code class="docutils literal notranslate"><span class="pre">0</span></code>, then rerun from the Gaussian through this plot.
+Predict the mean position first. Change it back to <code class="docutils literal notranslate"><span class="pre">1</span></code> and rerun before continuing.</p>
+<p><strong>For B:</strong> keep all 129 times when you plot the oscillator’s mean position.
+A short free-particle comparison does not replace the full-period assignment plot.</p>
+</section>
+<section id="c-calculate-energy">
+<h2>C: Calculate energy<a class="headerlink" href="#c-calculate-energy" title="Permalink to this heading">#</a></h2>
+<p><strong>Differentiate along position. Include the grid spacing.</strong></p>
+<p>With <span class="math notranslate nohighlight">\(m=\hbar=1\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\langle K\rangle\approx\frac12\Delta x\sum_i
+\left|\frac{\partial\psi}{\partial x}(x_i)\right|^2,\qquad
+\langle V\rangle\approx\Delta x\sum_i V(x_i)|\psi(x_i)|^2.\]</div>
+<p><code class="docutils literal notranslate"><span class="pre">np.gradient(psi,</span> <span class="pre">dx,</span> <span class="pre">axis=1)</span></code> approximates the spatial derivative.
+Leaving out <code class="docutils literal notranslate"><span class="pre">dx</span></code> changes its units and numerical value.
+The kinetic-energy expression assumes the wavefunction is negligible at the boundaries.</p>
+<p>The free particle has <span class="math notranslate nohighlight">\(V(x)=0\)</span>. For the assignment, use <span class="math notranslate nohighlight">\(V(x)=x^2/2\)</span> and the
+<strong>oscillator</strong> states when you evaluate these same expressions.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dpsi_dx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">psi</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">edge_order</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">V_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">K_mean</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">dx</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">dpsi_dx</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">V_mean</span> <span class="o">=</span> <span class="n">dx</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">P</span> <span class="o">*</span> <span class="n">V_grid</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">E_mean</span> <span class="o">=</span> <span class="n">K_mean</span> <span class="o">+</span> <span class="n">V_mean</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">K_mean</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Kinetic"</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">V_mean</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Potential"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">E_mean</span><span class="p">,</span> <span class="s2">"--"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Total"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"t"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Mean energy"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Check a value, not just a curve.</strong></p>
+<p>For our initial Gaussian, the free-particle energy is
+<span class="math notranslate nohighlight">\(\langle K\rangle=\alpha/4+k_0^2/2=1\)</span>.
+Kinetic and total energy overlap because the potential is zero.
+Finite differences introduce a small error even before the packet reaches the edges.</p>
+<p><strong>For C:</strong> plot all three oscillator energies over the full period.
+Kinetic and potential energy can exchange while the total stays approximately constant.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"Initial kinetic energy, numerical:"</span><span class="p">,</span> <span class="n">K_mean</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Initial kinetic energy, analytic:"</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">/</span> <span class="mi">4</span> <span class="o">+</span> <span class="n">k0</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Largest demo norm error:"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">norm</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="d-select-snapshot-times">
+<h2>D: Select snapshot times<a class="headerlink" href="#d-select-snapshot-times" title="Permalink to this heading">#</a></h2>
+<p><strong>Convert times into indices. Use the time step of your calculation.</strong></p>
+<p>We’ll take nine snapshots across today’s short demo. With 16 steps, the indices are
+<strong>0, 2, 4, …, 16</strong>, giving a <span class="math notranslate nohighlight">\((9,401)\)</span> density array.</p>
+<p><strong>For Assignment 1:</strong> the requested times are <span class="math notranslate nohighlight">\(t=mT_0/16\)</span>, with <span class="math notranslate nohighlight">\(m=1,\ldots,8\)</span>,
+plus the initial state. With <span class="math notranslate nohighlight">\(\epsilon=T_0/128\)</span>, use indices <strong>0, 8, 16, …, 64</strong>.
+The assignment’s <code class="docutils literal notranslate"><span class="pre">P</span></code> field uses those nine oscillator densities, each with <strong>601</strong> values.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">snapshot_indices</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
+<span class="n">snapshot_times</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="n">snapshot_indices</span><span class="p">]</span>
+<span class="n">P_snapshots</span> <span class="o">=</span> <span class="n">P</span><span class="p">[</span><span class="n">snapshot_indices</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Indices:"</span><span class="p">,</span> <span class="n">snapshot_indices</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Times:"</span><span class="p">,</span> <span class="n">snapshot_times</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Density snapshots:"</span><span class="p">,</span> <span class="n">P_snapshots</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Label what you’re plotting.</strong></p>
+<p>A complex amplitude has real and imaginary parts. Probability density is its absolute square.
+For the report’s amplitude figure, use both components, clearly labeled.
+This figure shows the nine free-particle demo times. Use your oscillator states and the
+assignment’s requested times for the report.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">viridis</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">snapshot_indices</span><span class="p">)))</span>
+<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">snapshot_indices</span><span class="p">,</span> <span class="n">colors</span><span class="p">):</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"t = </span><span class="si">{</span><span class="n">t</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">psi</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">psi</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"x"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Real amplitude"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"x"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Imaginary amplitude"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">"Free particle: motion and spreading over the short demo"</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="e-save-an-animation">
+<h2>E: Save an animation<a class="headerlink" href="#e-save-an-animation" title="Permalink to this heading">#</a></h2>
+<p><strong>One state per frame. Include <span class="math notranslate nohighlight">\(t=0\)</span>.</strong></p>
+<p>We’ll animate both parts of the amplitude and the density for context.
+<code class="docutils literal notranslate"><span class="pre">frames=len(t)</span></code> gives <strong>17 frames</strong> for our demo. Set fixed vertical limits so the
+scale stays consistent. GIF output uses Pillow, so this cell doesn’t need an external
+video encoder. Six frames per second gives us time to follow the short sequence.</p>
+<p>The cell writes <code class="docutils literal notranslate"><span class="pre">free_particle_demo.gif</span></code> in the notebook’s working directory.
+Open it from the file browser or display it below.</p>
+<p><strong>For Assignment 1 E:</strong> animate all <strong>129 oscillator states</strong> over <span class="math notranslate nohighlight">\(T_0=2\pi\)</span>,
+with one frame per <span class="math notranslate nohighlight">\(\epsilon=T_0/128\)</span>, and save that GIF or MP4 with your work.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">))</span>
+<span class="n">real_line</span><span class="p">,</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">psi</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Re psi"</span><span class="p">)</span>
+<span class="n">imag_line</span><span class="p">,</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">psi</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Im psi"</span><span class="p">)</span>
+<span class="n">density_line</span><span class="p">,</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">P</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">amplitude_limit</span> <span class="o">=</span> <span class="mf">1.1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">psi</span><span class="p">))</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="n">amplitude_limit</span><span class="p">,</span> <span class="n">amplitude_limit</span><span class="p">),</span>
+            <span class="n">xlabel</span><span class="o">=</span><span class="s2">"x"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Amplitude"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper right"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.1</span> <span class="o">*</span> <span class="n">P</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span>
+            <span class="n">xlabel</span><span class="o">=</span><span class="s2">"x"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Probability density"</span><span class="p">)</span>
+<span class="n">time_label</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">""</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">(</span><span class="n">rect</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">))</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">update_frame</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">real_line</span><span class="o">.</span><span class="n">set_ydata</span><span class="p">(</span><span class="n">psi</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">.</span><span class="n">real</span><span class="p">)</span>
+    <span class="n">imag_line</span><span class="o">.</span><span class="n">set_ydata</span><span class="p">(</span><span class="n">psi</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">.</span><span class="n">imag</span><span class="p">)</span>
+    <span class="n">density_line</span><span class="o">.</span><span class="n">set_ydata</span><span class="p">(</span><span class="n">P</span><span class="p">[</span><span class="n">n</span><span class="p">])</span>
+    <span class="n">time_label</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Free particle: t = </span><span class="si">{</span><span class="n">t</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">; norm = </span><span class="si">{</span><span class="n">norm</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">real_line</span><span class="p">,</span> <span class="n">imag_line</span><span class="p">,</span> <span class="n">density_line</span><span class="p">,</span> <span class="n">time_label</span>
+
+<span class="n">animation</span> <span class="o">=</span> <span class="n">FuncAnimation</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">update_frame</span><span class="p">,</span> <span class="n">frames</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="n">interval</span><span class="o">=</span><span class="mi">1000</span> <span class="o">/</span> <span class="mi">6</span><span class="p">)</span>
+<span class="n">gif_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"free_particle_demo.gif"</span><span class="p">)</span>
+<span class="n">animation</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">gif_path</span><span class="p">,</span> <span class="n">writer</span><span class="o">=</span><span class="n">PillowWriter</span><span class="p">(</span><span class="n">fps</span><span class="o">=</span><span class="mi">6</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Saved:"</span><span class="p">,</span> <span class="n">gif_path</span><span class="o">.</span><span class="n">resolve</span><span class="p">(),</span> <span class="s2">"with"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="s2">"frames"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">gif_path</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="check-normalization-before-trusting-a-result">
+<h2>Check normalization before trusting a result<a class="headerlink" href="#check-normalization-before-trusting-a-result" title="Permalink to this heading">#</a></h2>
+<p><strong>A smooth curve can still be wrong.</strong></p>
+<p>We already computed <span class="math notranslate nohighlight">\(\mathcal N(t)=\Delta x\sum_i|\psi_t(x_i)|^2\)</span>.
+Plot it for every step. Don’t divide each state by its norm to hide drift.
+The main demo should stay close to one. The next section tests what happens when we
+keep using the same grid for longer.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">norm</span><span class="p">,</span> <span class="s2">"o-"</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Free-particle grid calculation"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"black"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Exact full-line norm"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"t"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Norm"</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="mf">0.99</span><span class="p">,</span> <span class="mf">1.01</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="keep-going-when-the-grid-stops-working">
+<h2>Keep going: when the grid stops working<a class="headerlink" href="#keep-going-when-the-grid-stops-working" title="Permalink to this heading">#</a></h2>
+<p><strong>Same matrix. Same spacing. More steps.</strong></p>
+<p>Predict first: should a free Gaussian develop extra peaks in its probability density?
+It should move and spread while remaining Gaussian. We’ll take <strong>32 more steps</strong>,
+starting from the last demo state, to reach <span class="math notranslate nohighlight">\(t=4.5\)</span>.</p>
+<p>The extra history goes in separate arrays. We keep every raw amplitude and do not
+renormalize. The exact free-particle solution gives us a reference at the same positions
+and times; it is not used to advance the numerical state.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">extra_steps</span> <span class="o">=</span> <span class="mi">32</span>
+<span class="n">continued</span> <span class="o">=</span> <span class="n">evolve</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">psi</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">extra_steps</span><span class="p">)</span>
+<span class="n">psi_long</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">psi</span><span class="p">,</span> <span class="n">continued</span><span class="p">[</span><span class="mi">1</span><span class="p">:]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">t_long</span> <span class="o">=</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">psi_long</span><span class="p">))</span>
+<span class="n">P_long</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">psi_long</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">norm_long</span> <span class="o">=</span> <span class="n">dx</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">P_long</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">exact_free_gaussian</span><span class="p">(</span><span class="n">positions</span><span class="p">,</span> <span class="n">times</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">k0</span><span class="p">):</span>
+    <span class="n">width</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">times</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">alpha</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">**</span><span class="mf">0.25</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">width</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span>
+        <span class="o">-</span><span class="n">alpha</span> <span class="o">*</span> <span class="p">(</span><span class="n">positions</span> <span class="o">-</span> <span class="n">center</span> <span class="o">-</span> <span class="n">k0</span> <span class="o">*</span> <span class="n">times</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">width</span><span class="p">)</span>
+        <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">k0</span> <span class="o">*</span> <span class="p">(</span><span class="n">positions</span> <span class="o">-</span> <span class="n">center</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span><span class="n">j</span> <span class="o">*</span> <span class="n">k0</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">times</span>
+    <span class="p">)</span>
+
+<span class="n">psi_exact</span> <span class="o">=</span> <span class="n">exact_free_gaussian</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:],</span> <span class="n">t_long</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">],</span> <span class="n">center</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">k0</span><span class="p">)</span>
+<span class="n">P_exact</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">psi_exact</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">norm_exact_window</span> <span class="o">=</span> <span class="n">dx</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">P_exact</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">density_error</span> <span class="o">=</span> <span class="n">dx</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">P_long</span> <span class="o">-</span> <span class="n">P_exact</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Extended states:"</span><span class="p">,</span> <span class="n">psi_long</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="s2">"Final time:"</span><span class="p">,</span> <span class="n">t_long</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Compare the shape, not just the norm.</strong></p>
+<p>The exact packet also loses probability <strong>inside this window</strong> as it spreads beyond
+the edges. Its total probability on the whole line stays one. We’ll plot both the
+numerical and exact in-window probabilities, then measure their density difference:</p>
+<div class="math notranslate nohighlight">
+\[E_P(t)=\Delta x\sum_i\left|P_{\rm grid}(x_i,t)-P_{\rm exact}(x_i,t)\right|.\]</div>
+<p>The dotted vertical line marks the end of our short demo. Look for where the numerical
+curves start departing from the exact solution.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mf">3.8</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="n">NT</span><span class="p">,</span> <span class="n">NT</span> <span class="o">+</span> <span class="mi">16</span><span class="p">,</span> <span class="n">NT</span> <span class="o">+</span> <span class="mi">32</span><span class="p">],</span> <span class="p">[</span><span class="s2">"C0"</span><span class="p">,</span> <span class="s2">"C1"</span><span class="p">,</span> <span class="s2">"C2"</span><span class="p">]):</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">P_long</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">"t = </span><span class="si">{</span><span class="n">t_long</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">P_exact</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="s2">"--"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"x"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Probability density"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Solid: grid; dashed: exact"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_long</span><span class="p">,</span> <span class="n">norm_long</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Grid calculation"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_long</span><span class="p">,</span> <span class="n">norm_exact_window</span><span class="p">,</span> <span class="s2">"--"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Exact, inside this window"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"black"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">":"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Exact, whole line"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"t"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Probability in the window"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">t_long</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">density_error</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"t"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Integrated absolute density error"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">T_end</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"gray"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">":"</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>The extra peaks are numerical artifacts.</strong></p>
+<p>Repeatedly cutting the state off at the grid edges changes its subsequent evolution.
+Finite spatial sampling adds error too. The free particle has no physical wall here,
+so the distorted late curves are not the motion we’re trying to model.</p>
+<ul class="simple">
+<li><p><strong>Ask yourself:</strong> can the norm stay near one while the shape is already wrong?</p></li>
+<li><p><strong>Try it:</strong> increase <code class="docutils literal notranslate"><span class="pre">ND</span></code> while keeping the window and <code class="docutils literal notranslate"><span class="pre">dt</span></code> fixed, then rerun. Which
+errors shrink? Which remain because the window is still too small?</p></li>
+<li><p><strong>Next check:</strong> a larger window also needs enough spatial points to sample the
+oscillatory kernel. Check against the exact curve again; changing one parameter
+does not automatically make the calculation accurate.</p></li>
+</ul>
+<section id="optional-prepare-for-the-bonus">
+<h3>Optional: prepare for the bonus<a class="headerlink" href="#optional-prepare-for-the-bonus" title="Permalink to this heading">#</a></h3>
+<p><strong>A smaller time step can make an oscillatory kernel harder to sample.</strong></p>
+<p>For the free kernel, its phase changes faster across <span class="math notranslate nohighlight">\(x_a\)</span> when <span class="math notranslate nohighlight">\(\epsilon\)</span> decreases.
+A grid that misses those oscillations can fail even though the continuous kernel is exact.
+This is a different issue from the packet leaving the window.</p>
+<p>For the assignment’s bonus, use the <strong>oscillator kernel</strong>, <span class="math notranslate nohighlight">\(T_0=2\pi\)</span>, the assignment’s
+<span class="math notranslate nohighlight">\([-4,4]\)</span> window, and your TSN-derived initial state. Before running, predict the norm behavior for:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Time step</p></th>
+<th class="head"><p>Spatial intervals</p></th>
+<th class="head"><p>Steps over <span class="math notranslate nohighlight">\(T_0\)</span></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(T_0/16\)</span></p></td>
+<td><p>600</p></td>
+<td><p>16</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(T_0/512\)</span></p></td>
+<td><p>600</p></td>
+<td><p>512</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(T_0/128\)</span></p></td>
+<td><p>150</p></td>
+<td><p>128</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Rebuild <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">dx</span></code>, <code class="docutils literal notranslate"><span class="pre">t</span></code>, the initial state, and the propagator for <strong>each</strong> case.
+Record each case’s raw norm and plot it against its own time array with <code class="docutils literal notranslate"><span class="pre">ax.semilogy</span></code>.
+Don’t renormalize. Relate the results to the kernel’s phase change between neighboring
+positions, then investigate the smallest usable time step and what doubling <span class="math notranslate nohighlight">\(N_D\)</span> changes.</p>
+</section>
+</section>
+<section id="write-the-assignment-results">
+<h2>Write the assignment results<a class="headerlink" href="#write-the-assignment-results" title="Permalink to this heading">#</a></h2>
+<p><strong>Save numbers from your calculation. Check their shapes.</strong></p>
+<p>Assignment 1’s code submission includes <strong><code class="docutils literal notranslate"><span class="pre">results.json</span></code></strong>. The autograded results
+are worth <strong>20 of 50 points</strong>; the report supplies the remaining 30.
+Use the exact names below. JSON needs ordinary numbers and lists, not NumPy arrays
+or complex numbers. Split the complex kernel row into real and imaginary lists.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Required content</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">tsn</span></code></p></td>
+<td><p>Your nine-digit TSN as a string</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">x_start</span></code></p></td>
+<td><p>The corresponding initial center</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">K8eps_row.re</span></code>, <code class="docutils literal notranslate"><span class="pre">K8eps_row.im</span></code></p></td>
+<td><p>Row 300 of the eight-step <strong>kernel</strong>, 601 values in each list</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">x_mean</span></code></p></td>
+<td><p>Mean position at all 129 times</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">V</span></code>, <code class="docutils literal notranslate"><span class="pre">K</span></code>, <code class="docutils literal notranslate"><span class="pre">E</span></code></p></td>
+<td><p>Each energy at all 129 times</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">P</span></code></p></td>
+<td><p>Nine density snapshots, each with 601 values, at indices 0, 8, …, 64</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>On the <strong>assignment grid</strong>, row 300 is the destination <span class="math notranslate nohighlight">\(x_b=0\)</span>. Export <code class="docutils literal notranslate"><span class="pre">K8eps</span></code>, not <code class="docutils literal notranslate"><span class="pre">U**8</span></code> or the one-step kernel.
+The helper below expects <strong>oscillator results on the assignment grid</strong>, not the
+smaller demo arrays. It checks parameters, array sizes, and finite values. Those checks do
+<strong>not</strong> establish that the physics is right.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">assignment_results</span><span class="p">(</span><span class="n">tsn</span><span class="p">,</span> <span class="n">x_start</span><span class="p">,</span> <span class="n">K8eps</span><span class="p">,</span> <span class="n">x_mean</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">P_snapshots</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">x_start</span><span class="p">,</span> <span class="n">center_from_tsn</span><span class="p">(</span><span class="n">tsn</span><span class="p">),</span> <span class="n">rtol</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-12</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"x_start does not match the TSN."</span><span class="p">)</span>
+    <span class="n">expected</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">"K8eps"</span><span class="p">:</span> <span class="p">(</span><span class="n">K8eps</span><span class="p">,</span> <span class="p">(</span><span class="mi">601</span><span class="p">,</span> <span class="mi">601</span><span class="p">)),</span>
+        <span class="s2">"x_mean"</span><span class="p">:</span> <span class="p">(</span><span class="n">x_mean</span><span class="p">,</span> <span class="p">(</span><span class="mi">129</span><span class="p">,)),</span>
+        <span class="s2">"V"</span><span class="p">:</span> <span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="p">(</span><span class="mi">129</span><span class="p">,)),</span> <span class="s2">"K"</span><span class="p">:</span> <span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="p">(</span><span class="mi">129</span><span class="p">,)),</span> <span class="s2">"E"</span><span class="p">:</span> <span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="p">(</span><span class="mi">129</span><span class="p">,)),</span>
+        <span class="s2">"P"</span><span class="p">:</span> <span class="p">(</span><span class="n">P_snapshots</span><span class="p">,</span> <span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">601</span><span class="p">)),</span>
+    <span class="p">}</span>
+    <span class="n">arrays</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span> <span class="ow">in</span> <span class="n">expected</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">values</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">shape</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">values</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> must have shape </span><span class="si">{</span><span class="n">shape</span><span class="si">}</span><span class="s2"> and contain finite values."</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="o">!=</span> <span class="s2">"K8eps"</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">iscomplexobj</span><span class="p">(</span><span class="n">values</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> must contain real values."</span><span class="p">)</span>
+        <span class="n">arrays</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">values</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">arrays</span><span class="p">[</span><span class="s2">"P"</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"P must be a nonnegative probability density."</span><span class="p">)</span>
+    <span class="n">row</span> <span class="o">=</span> <span class="n">arrays</span><span class="p">[</span><span class="s2">"K8eps"</span><span class="p">][</span><span class="mi">300</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">"tsn"</span><span class="p">:</span> <span class="n">tsn</span><span class="p">,</span> <span class="s2">"x_start"</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">x_start</span><span class="p">),</span>
+        <span class="s2">"K8eps_row"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"re"</span><span class="p">:</span> <span class="n">row</span><span class="o">.</span><span class="n">real</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="s2">"im"</span><span class="p">:</span> <span class="n">row</span><span class="o">.</span><span class="n">imag</span><span class="o">.</span><span class="n">tolist</span><span class="p">()},</span>
+        <span class="s2">"x_mean"</span><span class="p">:</span> <span class="n">arrays</span><span class="p">[</span><span class="s2">"x_mean"</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
+        <span class="s2">"V"</span><span class="p">:</span> <span class="n">arrays</span><span class="p">[</span><span class="s2">"V"</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="s2">"K"</span><span class="p">:</span> <span class="n">arrays</span><span class="p">[</span><span class="s2">"K"</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="s2">"E"</span><span class="p">:</span> <span class="n">arrays</span><span class="p">[</span><span class="s2">"E"</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
+        <span class="s2">"P"</span><span class="p">:</span> <span class="n">arrays</span><span class="p">[</span><span class="s2">"P"</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Practice saving first.</strong></p>
+<p>This small file teaches JSON writing and reading using our free-particle data.
+It is named <code class="docutils literal notranslate"><span class="pre">free_particle_practice.json</span></code> and does <strong>not</strong> use the submission schema.
+That keeps the practice file distinct from your oscillator results.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">practice</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"model"</span><span class="p">:</span> <span class="s2">"free particle"</span><span class="p">,</span> <span class="s2">"t"</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="s2">"norm"</span><span class="p">:</span> <span class="n">norm</span><span class="o">.</span><span class="n">tolist</span><span class="p">()}</span>
+<span class="n">practice_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"free_particle_practice.json"</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">practice_path</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">"w"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">practice</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">allow_nan</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">practice_path</span><span class="o">.</span><span class="n">open</span><span class="p">()</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">loaded_practice</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">loaded_practice</span><span class="p">[</span><span class="s2">"model"</span><span class="p">],</span> <span class="s2">"saved times:"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">loaded_practice</span><span class="p">[</span><span class="s2">"t"</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="use-this-in-your-assignment-notebook">
+<h3>Use this in your assignment notebook<a class="headerlink" href="#use-this-in-your-assignment-notebook" title="Permalink to this heading">#</a></h3>
+<p><strong>Run this after calculating the oscillator results.</strong></p>
+<p>Copy this block into your assignment notebook along with <code class="docutils literal notranslate"><span class="pre">center_from_tsn</span></code> and
+<code class="docutils literal notranslate"><span class="pre">assignment_results</span></code>. Replace <code class="docutils literal notranslate"><span class="pre">YOUR_TSN</span></code> and connect each <code class="docutils literal notranslate"><span class="pre">ho_...</span></code> name to the
+corresponding array from <strong>your oscillator calculation on the assignment grid</strong>. The <code class="docutils literal notranslate"><span class="pre">ho_P</span></code> array contains
+the full density history. This is a template, not a cell to run on our free-particle data.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tsn</span> <span class="o">=</span> <span class="s2">"YOUR_TSN"</span>
+<span class="n">x_start</span> <span class="o">=</span> <span class="n">center_from_tsn</span><span class="p">(</span><span class="n">tsn</span><span class="p">)</span>
+<span class="c1"># Build your initial state with this x_start before propagating it.</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="n">assignment_results</span><span class="p">(</span>
+    <span class="n">tsn</span><span class="p">,</span> <span class="n">x_start</span><span class="p">,</span> <span class="n">ho_K8eps</span><span class="p">,</span> <span class="n">ho_x_mean</span><span class="p">,</span>
+    <span class="n">ho_V</span><span class="p">,</span> <span class="n">ho_K</span><span class="p">,</span> <span class="n">ho_E</span><span class="p">,</span> <span class="n">ho_P</span><span class="p">[</span><span class="mi">8</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">9</span><span class="p">)],</span>
+<span class="p">)</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">"results.json"</span><span class="p">,</span> <span class="s2">"w"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">allow_nan</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">"results.json"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">saved</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Saved TSN:"</span><span class="p">,</span> <span class="n">saved</span><span class="p">[</span><span class="s2">"tsn"</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Snapshot dimensions:"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">saved</span><span class="p">[</span><span class="s2">"P"</span><span class="p">])</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>A file that parses successfully can still contain the wrong calculation.
+Use your norm, mean-position, and energy checks before exporting.
+Gradescope immediately reports whether it can read the file and whether its parameters
+match your TSN. The autograded score appears after the deadline; you can resubmit before it.</p>
+</section>
+</section>
+<section id="before-you-submit">
+<h2>Before you submit<a class="headerlink" href="#before-you-submit" title="Permalink to this heading">#</a></h2>
+<p><strong>Restart. Run all. Open the saved files.</strong></p>
+<ul class="simple">
+<li><p><strong>A:</strong> include the truncated eight-step oscillator matrix in your report.</p></li>
+<li><p><strong>B–C:</strong> label the full-period position and energy plots; include the energy legend.</p></li>
+<li><p><strong>D:</strong> show the initial amplitude and the eight requested times. Label real and imaginary parts.</p></li>
+<li><p><strong>E:</strong> open your saved GIF or MP4 and check that it covers all 129 states.</p></li>
+<li><p><strong>Code:</strong> upload your source and <code class="docutils literal notranslate"><span class="pre">results.json</span></code> under <strong>Assignment 1 Code</strong>.</p></li>
+<li><p><strong>Report:</strong> upload one PDF under <strong>Assignment 1</strong>, including the AI use appendix.</p></li>
+<li><p><strong>Bonus:</strong> include your predictions and raw norm plots if you attempt it.</p></li>
+</ul>
+<p><strong>Due Monday, October 19 at 8:00 PM.</strong> Thursday’s Lab 06 is for Assignment 1 help.
+Bring runnable code to <strong>Lab 07 on Tuesday, October 20</strong> for your oral checkpoint.
+Be ready to explain a time step, a grid sum, and one check on your result.</p>
+<p>If a result looks wrong, bring me the smallest calculation that shows it.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./labs/lab05"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../lab04/lab04.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Lab 04: Git and GitHub</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../lab08/lab08.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Lab 08: Introduction to Julia</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-are-we-trying-to-predict">What are we trying to predict?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#where-do-the-paths-enter">Where do the paths enter?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-does-a-propagator-move-a-whole-packet">How does a propagator move a whole packet?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-will-the-computer-do">What will the computer do?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-practice-with-a-free-particle">Why practice with a free particle?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-we-ll-practice">What we’ll practice</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#get-the-packages-ready">Get the packages ready</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-the-grid">Set up the grid</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#start-with-a-gaussian">Start with a Gaussian</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#get-your-assignment-parameter-from-your-tsn">Get your assignment parameter from your TSN</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-build-the-propagator">A: Build the propagator</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#where-does-delta-x-go">Where does <span class="math notranslate nohighlight">\(\Delta x\)</span> go?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#b-evolve-the-state-and-measure-position">B: Evolve the state and measure position</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#c-calculate-energy">C: Calculate energy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#d-select-snapshot-times">D: Select snapshot times</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#e-save-an-animation">E: Save an animation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#check-normalization-before-trusting-a-result">Check normalization before trusting a result</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#keep-going-when-the-grid-stops-working">Keep going: when the grid stops working</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-prepare-for-the-bonus">Optional: prepare for the bonus</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#write-the-assignment-results">Write the assignment results</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#use-this-in-your-assignment-notebook">Use this in your assignment notebook</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#before-you-submit">Before you submit</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Javier Duarte
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

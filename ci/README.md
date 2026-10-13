@@ -27,6 +27,14 @@ assembled site. Pages receives the complete site. Department deployment compares
 file checksums and preserves manually uploaded files; deletion remains limited
 to the four controlled assignment/final-project PDFs.
 
+Lab renames are recorded in `redirects/lab_pages.json`. After the book is built,
+`relocate_labs.py` replaces the old published pages with redirects to the current
+pages. This overwrites stale department-server HTML whose launch buttons would
+otherwise point to deleted notebook filenames, while preserving uploaded PDFs.
+Every destination must exist in the new build. `check_lab_links.py` then checks
+rendered lab navigation, notebook downloads, and notebook launch paths before
+either website is published.
+
 The Actions summary reports which PDFs and HTML were reused. Manual dispatch
 with `rebuild_site=true` checks HTML rebuilding with the cached environments and
 notebook results, without publishing (as with the previous manual workflow).

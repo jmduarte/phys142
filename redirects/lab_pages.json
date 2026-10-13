@@ -1,0 +1,13 @@
+{
+  "labs/lab1/Lab1.html": "labs/reference/python_intro/python_intro.html",
+  "labs/lab2/Lab2.html": "labs/reference/numba_ffmpeg/index.html",
+  "labs/lab2/Lab2_Numba.html": "labs/reference/numba_ffmpeg/numba.html",
+  "labs/lab2/Lab2_ffmpeg.html": "labs/reference/numba_ffmpeg/ffmpeg.html",
+  "labs/lab3/Lab3.html": "labs/lab08/lab08.html",
+  "labs/lab4/Lab4.html": "labs/lab05/lab05.html",
+  "labs/lab5/lab05.html": "labs/lab04/lab04.html",
+  "labs/lab8/Lab8.html": "labs/lab09/lab09.html",
+  "labs/lab12/Lab12.html": "labs/lab11/lab11.html",
+  "labs/lab15/Lab15.html": "labs/lab14/lab14.html",
+  "labs/lab17/lab17.html": "labs/lab16/lab16.html"
+}

@@ -23,7 +23,8 @@ HASH_HELPER = "ci/build_cache.py"
 ASSEMBLY_HELPER = "ci/assemble_site.py"
 DEPLOY_WORKFLOW = ".github/workflows/deploy.yml"
 LATEX_ACTION = ".github/actions/cached-latex/action.yml"
-SITE_BUILD_LOGIC = {HASH_HELPER, ASSEMBLY_HELPER, DEPLOY_WORKFLOW}
+SITE_ONLY_LOGIC = {ASSEMBLY_HELPER, "ci/relocate_labs.py", "ci/check_lab_links.py"}
+SITE_BUILD_LOGIC = {HASH_HELPER, DEPLOY_WORKFLOW} | SITE_ONLY_LOGIC
 PDF_BUILD_LOGIC = {HASH_HELPER, LATEX_ACTION}
 PROSE_SUFFIXES = {".md", ".rst"}
 EXECUTION_METADATA = {"kernelspec", "language_info", "execution", "mystnb", "tags"}
@@ -84,7 +85,7 @@ def site_input(name: str) -> bool:
 def execution_input(name: str) -> bool:
     return (
         site_input(name)
-        and name not in {"_toc.yml", ASSEMBLY_HELPER, "syllabus/syllabus.bib"}
+        and name not in {"_toc.yml", "syllabus/syllabus.bib"} | SITE_ONLY_LOGIC
         and PurePosixPath(name).suffix not in PROSE_SUFFIXES | {".ipynb"}
     )
 

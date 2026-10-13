@@ -27,14 +27,13 @@ parts:
       title: "Lecture 04: Feynman path integral (continued)"
     - file: labs/reference/numba_ffmpeg/index.md
       title: "Numba and ffmpeg (Reference Materials)"
+      sections:
+      - file: labs/reference/numba_ffmpeg/numba.ipynb
+      - file: labs/reference/numba_ffmpeg/ffmpeg.ipynb
     - file: labs/lab01/lab01.ipynb
       title: "Lab 01: Python, Jupyter, and DataHub"
     - file: labs/lab02/lab02.ipynb
       title: "Lab 02: NumPy, SciPy, and Matplotlib"
-    # Supplemental notebooks are linked from the reference index above.
-    #   sections:
-    #   - file: labs/reference/numba_ffmpeg/numba.ipynb
-    #   - file: labs/reference/numba_ffmpeg/ffmpeg.ipynb
   - caption: Week 2
     chapters:
     - url: https://jduarte.physics.ucsd.edu/phys142/lectures/05_FreeParticle.pdf

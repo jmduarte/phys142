@@ -50,10 +50,17 @@ parts:
     chapters:
     - url: https://jduarte.physics.ucsd.edu/phys142/assignment1.pdf
       title: "Assignment 01 (Due Mon 10/19)"
+    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/08_UnitarityPropagatorTrace.pdf
+      title: "Lecture 08: Unitarity and the propagator trace"
     - file: labs/lab05/lab05.ipynb
       title: "Lab 05: Assignment 1 Tutorial"
+    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/10_DoubleWellTunneling.pdf
+      title: "Lecture 10: Double well potential"
   - caption: Week 4
     chapters:
+    - url: https://jduarte.physics.ucsd.edu/phys142/lectures/11_EigenvalueProblem.pdf
+      title: "Lecture 11: The eigenvalue problem as a validation tool (with demo)"
+    - file: lectures/11_EigenvalueProblem.ipynb
     - file: labs/lab08/lab08.ipynb
       title: "Lab 08: Compiled Code and Python Interop"
   - caption: Week 5

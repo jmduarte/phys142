@@ -15,7 +15,6 @@ dependencies:
     - matplotlib
     - tqdm
     - numba
-    - cupy
     - pip
     - pip:
       - requests

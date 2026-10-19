@@ -60,7 +60,7 @@ parts:
     chapters:
     - url: https://jduarte.physics.ucsd.edu/phys142/lectures/11_EigenvalueProblem.pdf
       title: "Lecture 11: The eigenvalue problem as a validation tool (with demo)"
-    - file: lectures/11_EigenvalueProblem.ipynb
+    - file: lectures/11_EigenvalueProblemDemo.ipynb
     - file: labs/lab08/lab08.ipynb
       title: "Lab 08: Compiled Code and Python Interop"
   - caption: Week 5

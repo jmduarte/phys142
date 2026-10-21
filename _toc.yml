@@ -65,9 +65,8 @@ parts:
       title: "Lab 08: Compiled Code and Python Interop"
   - caption: Week 5
     chapters:
-    # UNRELEASED: uncomment the next two lines to publish Assignment 2.
-    # - url: https://jduarte.physics.ucsd.edu/phys142/assignment2.pdf
-    #   title: "Assignment 02 (Due Mon 11/2)"
+    - url: https://jduarte.physics.ucsd.edu/phys142/assignment2.pdf
+      title: "Assignment 02 (Due Wed 11/4)"
     - file: labs/lab09/lab09.ipynb
       title: "Lab 09: Assignment 2 Tutorial"
     # TODO Thu 10/29 Lab 10: Auditing AI-Generated Numerical Code (no materials yet)

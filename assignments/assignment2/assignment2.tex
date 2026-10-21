@@ -76,9 +76,12 @@ and the symmetric and antisymmetric combinations
 \end{equation}
 approximate the ground state $\phi_0$ and the first excited state $\phi_1$.
 The energy gap between them is $\Delta E = E_1 - E_0$.
-We define the tunneling time $t_\mathrm{tunnel}$ as the time it takes a particle that starts in the right well to reach the left well.
+We estimate the tunneling time $t_\mathrm{tunnel}$ as the time of the first major minimum of $\langle x\rangle(t)$ in the slow oscillation from the right well to the left well.
+This is the first maximum leftward displacement of the slow oscillation, not the first crossing of $\langle x\rangle=0$ or a small local minimum caused by faster oscillations.
 
-Use the same discretization throughout: $N_D + 1$ grid points $x_0 = -4, x_1, \ldots, x_{N_D} = +4$ with $N_D = 600$ (so $\Delta x = 8/600$), and time step $\epsilon = \Delta t = \pi/128$.
+Use $N_D + 1$ grid points $x_0 = -4, x_1, \ldots, x_{N_D} = +4$ with $N_D = 600$ (so $\Delta x = 8/600$), and time step $\epsilon = \Delta t = \pi/128$.
+Use this grid throughout except for the convergence checks in Problem B(ii); all results saved to \texttt{results.json} must use the original grid.
+Approximate spatial integrals by $\Delta x\sum_{i=0}^{N_D}$, including both endpoints, and use this convention for propagation, normalization, expectation values, and overlaps.
 
 \begin{problem}[10]
   Demonstrate tunneling with the Feynman path integral.
@@ -93,9 +96,10 @@ Use the same discretization throughout: $N_D + 1$ grid points $x_0 = -4, x_1, \l
     \psi(x, t) \leftarrow \frac{\psi(x, t)}{\sqrt{\int |\psi(x, t)|^2\, dx}}.
   \end{equation}
 
-  Evolve long enough for the particle to reach the left well and come back.
-  Plot the mean position $\langle x \rangle$ as a function of time $t$, and estimate $t_\mathrm{tunnel}$ from the plot.
-  Explain how you read it off, and why $\langle x \rangle(t)$ is not a perfectly smooth oscillation.
+  Evolve long enough to observe one full slow oscillation: transfer to the left well and return to the right.
+  Plot $\langle x \rangle(t)$ and mark your estimate of $t_\mathrm{tunnel}$ using the definition above.
+  Explain how you distinguish the major minimum from any faster oscillations, and why $\langle x \rangle(t)$ is not a single sinusoid.
+  You may use $2\pi/\Delta E$ from Problem B as an initial estimate of the required run duration, but measure $t_\mathrm{tunnel}$ from your evolution rather than assigning it the value $\pi/\Delta E$.
 \end{problem}
 
 \begin{solution}
@@ -103,6 +107,14 @@ Use the same discretization throughout: $N_D + 1$ grid points $x_0 = -4, x_1, \l
 
 \begin{problem}[10]
   Find the two lowest energy eigenvalues $E_0$, $E_1$ and eigenfunctions $\phi_0(x)$, $\phi_1(x)$ of the discrete $(N_D+1)\times(N_D+1)$ Hamiltonian matrix for $\hat H = -\frac{1}{2}\frac{\partial^2}{\partial x^2} + V(x)$ (Lecture 11).
+  Use the centered three-point finite difference,
+  \begin{equation}
+    H_{ii}=\frac{1}{\Delta x^2}+V(x_i), \qquad
+    H_{i,i+1}=H_{i+1,i}=-\frac{1}{2\Delta x^2},
+  \end{equation}
+  with all other entries zero.
+  Keep all $N_D+1$ grid values as unknowns, including $x_0$ and $x_{N_D}$.
+  The first and last rows omit the neighbor outside the grid; equivalently, set the wave function to zero at the two extra points $x_0-\Delta x$ and $x_{N_D}+\Delta x$, not at $x_0$ and $x_{N_D}$ themselves.
   Use shift-invert, either \texttt{scipy.sparse.linalg.eigsh} with a shift \texttt{sigma} or your own shifted inverse power iteration.
   Since $V(x) \geq 0$, every $E_n > 0$, so a shift $\sigma = 0$ finds the lowest states.
 
@@ -111,10 +123,12 @@ Use the same discretization throughout: $N_D + 1$ grid points $x_0 = -4, x_1, \l
           Table I of \href{http://doi.org/10.1103/PhysRevD.18.4767}{K. Banerjee and S. P. Bhatnagar, ``Two-well oscillator'', Phys. Rev. D 18, 4767 (1978)} (shown in Lecture 11) lists $E_0$ and $E_1$ for this potential, with their $\lambda$ equal to our $\alpha/4$.
           Compute $E_0$ and $E_1$ for $\alpha = 0.4$ and $\alpha = 0.6$ ($\lambda = 0.10$ and $0.15$) and compare.
           How many digits agree, and what limits the agreement?
-    \item \textbf{Your $\alpha$.} Report $E_0$, $E_1$, and $\Delta E$.
-          Show that $\Delta E$ is converged: report how it changes when you halve $\Delta x$, and when you enlarge the box to $-6 \leq x \leq 6$ at fixed $\Delta x$.
-    \item Normalize the eigenfunctions so that $\int |\phi_n(x)|^2\, dx = 1$, and choose their signs so that $\phi_0(x) > 0$ and $\phi_1(x) > 0$ for $x > 0$.
-          Plot them together with $V(x)$.
+    \item \textbf{Your $\alpha$ and convergence.} Report $E_0$, $E_1$, and $\Delta E$ on the original grid.
+          Then perform two separate checks: halve $\Delta x$ on $[-4,4]$ ($N_D=1200$), and enlarge the box to $[-6,6]$ at the original $\Delta x$ ($N_D=900$).
+          Tabulate $\Delta E$ for all three grids and its change relative to the original result.
+          State how many digits of the gap these checks support; use the original-grid values in subsequent problems and in \texttt{results.json}.
+    \item \textbf{Eigenfunctions.} Normalize them so that $\Delta x\sum_i |\phi_n(x_i)|^2 = 1$, and choose their signs so that $\phi_0$ is positive and the right-hand lobe of $\phi_1$ is positive.
+          Plot $\phi_0$ and $\phi_1$ together, with $V(x)$ in a separate panel sharing the same position axis.
   \end{enumerate}
 \end{problem}
 
@@ -128,10 +142,15 @@ Use the same discretization throughout: $N_D + 1$ grid points $x_0 = -4, x_1, \l
     E_\mathrm{A} = \frac{\int \psi_\mathrm{A}^*(x)\, \hat H \psi_\mathrm{A}(x)\, dx}{\int |\psi_\mathrm{A}(x)|^2\, dx}.
   \end{equation}
   Keep the denominators: $\psi_+$ and $\psi_-$ overlap slightly, so $\psi_\mathrm{S}$ and $\psi_\mathrm{A}$ are not exactly normalized, and at this precision it matters.
+  Evaluate these expressions with the Hamiltonian matrix from Problem B and the same grid sums.
 
   Compare $E_\mathrm{S}$, $E_\mathrm{A}$, and $E_\mathrm{A} - E_\mathrm{S}$ with $E_0$, $E_1$, and $\Delta E$ from Problem B.
-  Which is more accurate, the individual energies or the gap, and by what factor is the gap off?
-  Plot $|\phi_0(x)|$ and $|\psi_\mathrm{S}(x)|$ on a logarithmic scale, and use the plot to explain why the harmonic approximation gets the gap so wrong.
+  Report the relative error $|E_\mathrm{S}-E_0|/|E_0|$, the analogous relative errors for $E_\mathrm{A}$ and the gap, and the ratio $(E_\mathrm{A}-E_\mathrm{S})/\Delta E$.
+  Are the individual energies or the gap more accurate in relative terms?
+
+  Normalize $\psi_\mathrm{S}$ before comparing its shape with $\phi_0$.
+  Plot their absolute values on the same axes with a logarithmic vertical scale.
+  Describe where the two wave functions differ, especially in the barrier region between the wells, and explain why small relative errors in the energies need not imply a small relative error in their difference.
 \end{problem}
 
 \begin{solution}
@@ -145,11 +164,20 @@ Use the same discretization throughout: $N_D + 1$ grid points $x_0 = -4, x_1, \l
             \psi(x, t) = \frac{1}{\sqrt{2}}\left(e^{-iE_0t/\hbar}\, \phi_0(x) + e^{-iE_1t/\hbar}\, \phi_1(x)\right).
           \end{equation}
           Show that $\langle x \rangle(t) = x_{01}\cos(\Delta E\, t/\hbar)$ with $x_{01} = \int \phi_0(x)\, x\, \phi_1(x)\, dx$, and hence that $t_\mathrm{tunnel} = \pi\hbar/\Delta E$ for this initial state.
-    \item \textbf{With the path integral}, using your code from Problem A.
+    \item \textbf{With the path integral}, using your code from Problem A but the same two-state initial wave function as in part (i).
   \end{enumerate}
-  Animate $|\psi(x, t)|^2$ from both methods on the same axes over one full oscillation, $T = 2t_\mathrm{tunnel}$, and save it as a \texttt{.gif} or \texttt{.mp4} file.
-  Label the two methods.
-  How large are the differences, and where do they come from?
+  Use one full two-state oscillation, $T = 2\pi/\Delta E$, and evolve to the first time step at or after $T$.
+  Plot $\langle x\rangle(t)$ from both methods on the same axes and report
+  \begin{equation}
+    \max_{0\leq n\epsilon\leq T}
+      \left|\langle x\rangle_\mathrm{PI}(n\epsilon)-\langle x\rangle_\mathrm{eig}(n\epsilon)\right|,
+  \end{equation}
+  evaluating both methods at every time step.
+  Include overlaid probability-density snapshots from the two methods at the start, near $t_\mathrm{tunnel}$, and near $T$; use the nearest time steps and label the actual times and the two methods.
+  Discuss the numerical approximations that could account for the differences.
+
+  \emph{Problem D optional visualization (no additional points):} you may also save an animation of the two probability densities as a \texttt{.gif} or \texttt{.mp4} file.
+  The animation is not required for full credit.
 \end{problem}
 
 \begin{solution}
@@ -159,11 +187,13 @@ Use the same discretization throughout: $N_D + 1$ grid points $x_0 = -4, x_1, \l
   \emph{Optional for bonus points.}
   Problem D predicts $t_\mathrm{tunnel} = \pi/\Delta E$ for a particle that starts in $\frac{1}{\sqrt{2}}(\phi_0 + \phi_1)$.
   A particle localized in one well, like $\psi_+$, is not exactly in that state, so test the prediction.
-  For $\alpha = 0.30, 0.35, 0.40, 0.45, 0.50$, compute $\Delta E$ with your code from Problem B and measure $t_\mathrm{tunnel}$ with the path integral starting from $\psi_+$, as in Problem A.
+  For $\alpha = 0.30, 0.35, 0.40, 0.45, 0.50$, compute $\Delta E$ with your code from Problem B and measure $t_\mathrm{tunnel}$ with the path integral starting from $\psi_+$, using the same major-minimum definition as in Problem A.
   Plot $t_\mathrm{tunnel}$ against $\Delta E$ on logarithmic axes together with the prediction $\pi/\Delta E$.
 
   How well does the prediction hold?
-  To explain the deviations, compute the fraction of $\psi_+$ in the two lowest states, $|\langle\phi_0|\psi_+\rangle|^2 + |\langle\phi_1|\psi_+\rangle|^2$, for each $\alpha$, and describe how the rest of $\psi_+$ affects $\langle x \rangle(t)$ and your estimate of $t_\mathrm{tunnel}$.
+  Normalize $\psi_+$ on the grid and compute its fraction in the two lowest states, $|\langle\phi_0|\psi_+\rangle|^2 + |\langle\phi_1|\psi_+\rangle|^2$, for each $\alpha$.
+  Discuss whether contributions from higher states help explain the deviations and the faster oscillations in $\langle x\rangle(t)$.
+  Also consider the numerical errors seen in Problem D and the uncertainty in locating the major minimum; do not assume that higher states account for every deviation.
 \end{problem}
 
 \begin{solution}
@@ -173,6 +203,10 @@ Use the same discretization throughout: $N_D + 1$ grid points $x_0 = -4, x_1, \l
 Your code should write a file \texttt{results.json} containing the following fields, and you should upload it with your code.
 Any language can write JSON; the Python snippet below shows the format.
 All quantities are for your own $\alpha$ on the $N_D = 600$ grid, except the two lists for Problem E, which you can leave out if you skip that problem.
+The 33 required sample times extend through $2048\epsilon=16\pi$; they are an export requirement, not the duration of a full tunneling oscillation.
+Run Problem A through at least this time and extend it as needed to observe the full slow oscillation.
+For Problem D, evaluate the eigenstate formula at all 33 export times even if they extend beyond the oscillation you plotted.
+Keep \texttt{x\_mean\_pi} for Problem A's Gaussian initial state; the path-integral curve with Problem D's two-state initial state belongs in your report and does not replace that field.
 
 \begin{center}
   \begin{tabular}{@{}lp{0.68\textwidth}@{}}

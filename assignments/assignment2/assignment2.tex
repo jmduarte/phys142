@@ -12,7 +12,7 @@
       Computational Physics: Stochastic Methods and Path Integrals \hfill
       UCSD PHYS 142/242 \hfill \\[1pt]
       Assignment 2\hfill
-      Due: Monday, November 2, 2026, 8:00pm\\
+      Due: Wednesday, November 4, 2026, 8:00pm\\
     }
   }
 }
@@ -127,11 +127,11 @@ Use the same discretization throughout: $N_D + 1$ grid points $x_0 = -4, x_1, \l
     E_\mathrm{S} = \frac{\int \psi_\mathrm{S}^*(x)\, \hat H \psi_\mathrm{S}(x)\, dx}{\int |\psi_\mathrm{S}(x)|^2\, dx}, \qquad
     E_\mathrm{A} = \frac{\int \psi_\mathrm{A}^*(x)\, \hat H \psi_\mathrm{A}(x)\, dx}{\int |\psi_\mathrm{A}(x)|^2\, dx}.
   \end{equation}
-  Keep the denominators: $\psi_+$ and $\psi_-$ overlap slightly, so $\psi_\mathrm{S}$ and $\psi_\mathrm{A}$ are not exactly normalized, and at this precision it matters.
+  Note the denominators: $\psi_+$ and $\psi_-$ are not completely orthogonal, so $\psi_\mathrm{S}$ and $\psi_\mathrm{A}$ are not perfectly normalized.
 
   Compare $E_\mathrm{S}$, $E_\mathrm{A}$, and $E_\mathrm{A} - E_\mathrm{S}$ with $E_0$, $E_1$, and $\Delta E$ from Problem B.
-  Which is more accurate, the individual energies or the gap, and by what factor is the gap off?
-  Plot $|\phi_0(x)|$ and $|\psi_\mathrm{S}(x)|$ on a logarithmic scale, and use the plot to explain why the harmonic approximation gets the gap so wrong.
+  Which is more accurate, the individual energies or the gap?
+  Plot $|\phi_0(x)|$ and $|\psi_\mathrm{S}(x)|$ with a logarithmic y-axis, and use this to explain why the approximation gets the gap so wrong.
 \end{problem}
 
 \begin{solution}

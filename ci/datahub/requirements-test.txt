@@ -1,0 +1,4 @@
+# Isolated regression-test dependencies, not a DataHub upgrade command.
+jupyter_server==2.14.2
+jupyter_core==5.7.2
+traitlets==5.14.2

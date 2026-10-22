@@ -63,6 +63,9 @@ parts:
     - file: lectures/11_EigenvalueProblemDemo.ipynb
     - file: labs/lab08/lab08.ipynb
       title: "Lab 08: Compiled Code and Python Interop"
+      sections:
+      - file: labs/reference/julia_intro/julia_intro.ipynb
+        title: "Julia Introduction (Reference Notebook)"
   - caption: Week 5
     chapters:
     - url: https://jduarte.physics.ucsd.edu/phys142/assignment2.pdf

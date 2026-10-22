@@ -22,6 +22,8 @@ execute:
     - labs/lab03/lab03.ipynb
     - labs/lab04/lab04.ipynb
     - labs/lab05/lab05.ipynb
+    - labs/lab08/lab08.ipynb
+    - labs/reference/julia_intro/julia_intro.ipynb
 
 # Render standard Mermaid fences in notebooks with the pinned MyST parser.
 sphinx:

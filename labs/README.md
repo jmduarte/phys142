@@ -27,6 +27,13 @@ headings do not assign lab numbers in the Fall 2026 schedule.
 - [Numba and ffmpeg](reference/numba_ffmpeg/index.md)
 - [Earlier Git/GitHub tutorial](reference/git_github/git_github.ipynb)
 - [Eigenvalue problem demonstration](reference/eigenvalue_problem/eigenvalue_problem.ipynb)
+- [Earlier Julia introduction](reference/julia_intro/julia_intro.ipynb)
+
+Lab 08 uses a Python kernel, NumPy, Matplotlib, and Numba. Its C++ demo also
+requires Linux and `g++`. Julia examples are reference material, with an optional
+JuliaCall example for a separately prepared environment. The handout and archived
+Julia reference are excluded from automatic execution; Lab 08 is validated in a
+fresh kernel before release and saved without outputs.
 
 The DataHub slide PDF linked by `_toc.yml` is hosted separately on the department
 website. Its existing URL is unchanged.

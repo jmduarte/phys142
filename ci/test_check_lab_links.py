@@ -45,7 +45,7 @@ class PublishedLabLinkTests(unittest.TestCase):
             "https://mybinder.org/v2/gh/jmduarte/phys142/main?" + urlencode({"urlpath": "tree/" + notebook}),
             "https://colab.research.google.com/github/jmduarte/phys142/blob/main/" + quote(notebook),
             "https://datahub.ucsd.edu/hub/user-redirect/git-pull?" + urlencode({
-                "repo": "https://github.com/jmduarte/phys142", "urlpath": "tree/phys142/" + notebook, "branch": "main"}),
+                "repo": "https://github.com/jmduarte/phys142", "urlpath": "lab/tree/phys142/" + notebook, "branch": "main"}),
         ]
         return "".join(f'<a href="{escape(url, quote=True)}">Launch</a>' for url in urls)
 
@@ -118,6 +118,23 @@ class PublishedLabLinkTests(unittest.TestCase):
         report = audit_site(self.root, self.site)
         self.assertEqual(len(report.errors), 1)
         self.assertIn("launch link must have one urlpath", report.errors[0])
+
+    def test_classic_datahub_interface_is_rejected(self):
+        url = "https://datahub.ucsd.edu/hub/user-redirect/git-pull?" + urlencode({
+            "repo": "https://github.com/jmduarte/phys142",
+            "urlpath": "tree/phys142/" + self.notebook,
+            "branch": "main",
+        })
+        self.write_site("labs/lab05/lab05.html", f'<a href="{escape(url, quote=True)}">DataHub</a>')
+        report = audit_site(self.root, self.site)
+        self.assertEqual(len(report.errors), 1)
+        self.assertIn("lab/tree/phys142/", report.errors[0])
+
+    def test_lecture_notebook_launches_are_checked(self):
+        self.write_site("lectures/example.html", self.launches("lectures/deleted.ipynb"))
+        report = audit_site(self.root, self.site)
+        self.assertEqual(len(report.errors), 3)
+        self.assertTrue(all("lectures/example.html" in error for error in report.errors))
 
 
 if __name__ == "__main__":

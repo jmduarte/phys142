@@ -51,7 +51,7 @@ def launch_notebook(url):
         repo = query.get("repo", [""])[0].removesuffix(".git").rstrip("/")
         if repo != f"https://github.com/{REPOSITORY}":
             return None
-        prefix = f"tree/{REPOSITORY.split('/')[-1]}/"
+        prefix = f"lab/tree/{REPOSITORY.split('/')[-1]}/"
     else:
         return None
     targets = query.get("urlpath", [])
@@ -99,10 +99,10 @@ def audit_site(root: Path, site: Path) -> AuditReport:
         target = Path(source.strip().strip("\"' ")).with_suffix(".html")
         if not (site / target).is_file():
             report.errors.append(f"_toc.yml: missing rendered page: {target.as_posix()}")
-    pages = sorted((site / "labs").rglob("*.html"))
-    if not pages:
+    if not any((site / "labs").rglob("*.html")):
         report.errors.append("labs/: no rendered lab pages found")
-    pages += [site / name for name in ("index.html", "README.html") if (site / name).is_file()]
+    # Lecture notebooks have the same launch menu as lab notebooks.
+    pages = sorted(site.rglob("*.html"))
     for page in pages:
         report.pages += 1
         parser = PageLinks()

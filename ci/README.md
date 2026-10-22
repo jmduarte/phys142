@@ -35,6 +35,23 @@ Every destination must exist in the new build. `check_lab_links.py` then checks
 rendered lab navigation, notebook downloads, and notebook launch paths before
 either website is published.
 
+DataHub launch links are finalized by `relocate_labs.py` to open each notebook
+in JupyterLab (`lab/tree/phys142/...`) after the normal container selection and
+repository update. Binder links keep their existing interface. The link check
+covers lecture notebooks as well as labs and rejects classic DataHub links.
+This presentation change is a site-only input; execution and PDF cache keys
+stay unchanged.
+
+The manual `Update DataHub links without rebuilding` workflow migrates the
+successful Lab 08 release at `33c7d8b`. It requires that exact artifact and its
+file-content manifest, rejects intervening course-content changes, and edits
+only affected HTML link attributes. It never renders pages, executes notebooks,
+or compiles PDFs. It also saves the resulting HTML under the current site cache
+key, with released PDFs kept outside that cache as usual. An unavailable or
+altered source artifact stops the migration. The migration commit uses
+`[skip ci]` to avoid the ordinary build; dispatch this dedicated workflow for
+publication. Future normal builds apply the same DataHub link transformation.
+
 The Actions summary reports which PDFs and HTML were reused. Manual dispatch
 with `rebuild_site=true` checks HTML rebuilding with the cached environments and
 notebook results, without publishing (as with the previous manual workflow).

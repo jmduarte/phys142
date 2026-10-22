@@ -1,0 +1,144 @@
+name: Update DataHub links without rebuilding
+
+on:
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: write
+
+concurrency:
+  group: deploy-book-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CACHE_EPOCH: '1'
+  TEXLIVE_IMAGE: xucheng/texlive-full@sha256:a48669080fa2e34d73eed56442f5b96fe4810d75439b2476fc2f2569c492e7eb
+
+jobs:
+  update-links:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # This is a scoped migration of the successful Lab 08 release, not a
+      # substitute for building changed course content. A stale base must fail.
+      - name: Verify that only launch-link publishing changed
+        run: |
+          python3 - <<'PY'
+          import subprocess
+          allowed = {
+              '.github/workflows/update-datahub-links.yml',
+              'ci/README.md',
+              'ci/relocate_labs.py',
+              'ci/migrate_launch_links.py',
+              'ci/test_migrate_launch_links.py',
+              'ci/check_lab_links.py',
+              'ci/test_check_lab_links.py',
+          }
+          changed = set(subprocess.check_output([
+              'git', 'diff', '--name-only',
+              '33c7d8b72e4f6b603c772da63bb0e6aa8b24d0f7', 'HEAD',
+          ], text=True).splitlines())
+          unexpected = changed - allowed
+          if unexpected:
+              raise SystemExit('Release content changed; refusing to reuse this artifact: '
+                               + ', '.join(sorted(unexpected)))
+          PY
+
+      - name: Test launch updates and publication checks
+        run: python3 -m unittest discover -s ci -p 'test_*.py' -v
+
+      - name: Download and verify the successful release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh api repos/jmduarte/phys142/actions/artifacts/12440324859/zip > "$RUNNER_TEMP/course-site.zip"
+          printf '%s  %s\n' '2f609211ff638debcc6952e36c3e469488e3701a3712462b311134d426b70d6d' "$RUNNER_TEMP/course-site.zip" | sha256sum --check
+          python3 -m zipfile -e "$RUNNER_TEMP/course-site.zip" _build/html
+
+      - name: Update only DataHub launch links
+        run: |
+          python3 ci/migrate_launch_links.py --site _build/html \
+            --expected-manifest ee9d7a7e242dd05cdfc5682f2b9f1b2028def78a466e33f4dea792446ac68503 \
+            > "$RUNNER_TEMP/datahub-link-report.json"
+          cat "$RUNNER_TEMP/datahub-link-report.json"
+          python3 ci/check_lab_links.py
+
+      - name: Fingerprint the updated website sources
+        id: keys
+        run: python3 ci/build_cache.py --texlive-image "$TEXLIVE_IMAGE"
+
+      # Match the regular workflow's HTML-only cache format, so the next run
+      # can reuse this migrated site. Released PDFs are restored byte-for-byte.
+      - name: Set aside released PDFs before caching HTML
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/release-pdfs"
+          for document in syllabus assignment1 assignment2 assignment3 final_projects; do
+            if [ -f "_build/html/$document.pdf" ]; then
+              mv "_build/html/$document.pdf" "$RUNNER_TEMP/release-pdfs/"
+            fi
+          done
+
+      - name: Preserve the updated HTML for ordinary deployments
+        uses: actions/cache/save@v4
+        with:
+          path: _build/html
+          key: site-${{ runner.os }}-${{ runner.arch }}-${{ env.CACHE_EPOCH }}-${{ steps.keys.outputs.site }}
+
+      - name: Restore the released PDFs
+        run: |
+          set -euo pipefail
+          for document in syllabus assignment1 assignment2 assignment3 final_projects; do
+            if [ -f "$RUNNER_TEMP/release-pdfs/$document.pdf" ]; then
+              mv "$RUNNER_TEMP/release-pdfs/$document.pdf" _build/html/
+            fi
+          done
+
+      - name: Upload the updated release
+        uses: actions/upload-artifact@v4
+        with:
+          name: course-site
+          path: _build/html
+
+      - name: Publish GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3.9.3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: _build/html
+          force_orphan: true
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Deploy to users.physics.ucsd.edu
+        env:
+          SSH_KEY: ${{ secrets.PHYSICS_SSH_KEY }}
+          KNOWN_HOSTS: ${{ secrets.PHYSICS_KNOWN_HOSTS }}
+          DEST: ${{ secrets.PHYSICS_DEST }}
+        run: |
+          set -euo pipefail
+          test -n "$SSH_KEY"
+          test -n "$KNOWN_HOSTS"
+          test -n "$DEST"
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/id_deploy && chmod 600 ~/.ssh/id_deploy
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts && chmod 644 ~/.ssh/known_hosts
+          LC_ALL=C LANG=C rsync -rlvzc --chmod=D755,F644 \
+            -e "ssh -i ~/.ssh/id_deploy -o IdentitiesOnly=yes" \
+            _build/html/ "$DEST"
+          LC_ALL=C LANG=C rsync -rlvzc --delete --max-delete=4 \
+            --include='/assignment1.pdf' --include='/assignment2.pdf' \
+            --include='/assignment3.pdf' --include='/final_projects.pdf' \
+            --exclude='*' \
+            -e "ssh -i ~/.ssh/id_deploy -o IdentitiesOnly=yes" \
+            _build/html/ "$DEST"
+
+      - name: Record the link-only publication
+        run: |
+          echo '- Updated DataHub launch links in the verified existing release.' >> "$GITHUB_STEP_SUMMARY"
+          echo '- No pages rendered, notebooks executed, or PDFs compiled.' >> "$GITHUB_STEP_SUMMARY"

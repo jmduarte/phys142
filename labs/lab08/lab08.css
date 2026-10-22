@@ -115,8 +115,14 @@
   font-size: 17px;
 }
 
+.reveal #rise-footer {
+  bottom: 12px !important;
+  left: 25px;
+  line-height: 20px;
+}
+
 .lab08-footer {
+  display: block;
   color: #526579;
   font: 16px system-ui, sans-serif;
-  padding-left: 25px;
 }

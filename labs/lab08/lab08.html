@@ -1,0 +1,1425 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Which points count? &#8212; UCSD PHYS 142/242</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'labs/lab08/lab08';</script>
+    <link rel="canonical" href="https://jduarte.physics.ucsd.edu/phys142/labs/lab08/lab08.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Lab 08: Introduction to Julia" href="../reference/julia_intro/julia_intro.html" />
+    <link rel="prev" title="Lecture 11: Eigenvalue Problem Demo" href="../../lectures/11_EigenvalueProblemDemo.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/pathintegral_logo.png" class="logo__image only-light" alt="UCSD PHYS 142/242 - Home"/>
+    <script>document.write(`<img src="../../_static/pathintegral_logo.png" class="logo__image only-dark" alt="UCSD PHYS 142/242 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../README.html">
+                    UCSD PHYS 142/242: Computational Physics — Stochastic Methods and Path Integrals (Fall 2026)
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 0</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/syllabus.pdf">Syllabus</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/01_Introduction.pdf">Lecture 01: Course overview, the double-slit experiment, and how this course handles AI</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/02_QuantumMechRecap.pdf">Lecture 02: Quantum mechanics refresher: states, operators, and the propagator</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/labs/lab1/01_DataHub.pdf">Lab 01: Python, Jupyter, and DataHub (Slides)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/python_intro/python_intro.html">Python Introduction (Reference Notebook)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/03_FeynmanPathIntegral.pdf">Lecture 03: Feynman path integral</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/04_FeynmanPathIntegralContinued.pdf">Lecture 04: Feynman path integral (continued)</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../reference/numba_ffmpeg/index.html">Numba and ffmpeg (Reference Materials)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/numba_ffmpeg/numba.html">Lab 02: Numba</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/numba_ffmpeg/ffmpeg.html">Lab 02: ffmpeg</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab01/lab01.html">Lab 01: Python, Jupyter, and DataHub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab02/lab02.html">Lab 02: NumPy, SciPy, and Matplotlib</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/05_FreeParticle.pdf">Lecture 05: Free particle</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/06_HarmonicOscillator.pdf">Lecture 06: Harmonic oscillator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab03/lab03.html">Lab 03: Random Numbers, Seeding, and Reproducible Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab04/lab04.html">Lab 04: Git and GitHub</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/07_SchrodingerEquation.pdf">Lecture 07: Schrödinger equation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 3</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/assignment1.pdf">Assignment 01 (Due Mon 10/19)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/08_UnitarityPropagatorTrace.pdf">Lecture 08: Unitarity and the propagator trace</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab05/lab05.html">Lab 05: Assignment 1 Tutorial</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/10_DoubleWellTunneling.pdf">Lecture 10: Double well potential</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 4</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/11_EigenvalueProblem.pdf">Lecture 11: The eigenvalue problem as a validation tool (with demo)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../lectures/11_EigenvalueProblemDemo.html">Lecture 11: Eigenvalue Problem Demo</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Which points count?</a></li>
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 5</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/assignment2.pdf">Assignment 02 (Due Wed 11/4)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab09/lab09.html">Lab 09: Assignment 2 Tutorial</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 6</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../lab11/lab11.html">Lab 11: MCMC and the 2D Ising Model</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 7</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../lab14/lab14.html">Lab 14: Path-Integral MCMC Tutorial</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 8</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../lab16/lab16.html">Lab 16: VEGAS Tutorial</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/jmduarte/phys142/main?urlpath=tree/labs/lab08/lab08.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://datahub.ucsd.edu/hub/user-redirect/git-pull?repo=https%3A//github.com/jmduarte/phys142&urlpath=lab/tree/phys142/labs/lab08/lab08.ipynb&branch=main" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onJupyterHub"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="btn__text-container">JupyterHub</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/jmduarte/phys142/blob/main/labs/lab08/lab08.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jmduarte/phys142" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jmduarte/phys142/issues/new?title=Issue%20on%20page%20%2Flabs/lab08/lab08.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/labs/lab08/lab08.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Which points count?</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Which points count?</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-behind-the-opening-picture">Code behind the opening picture</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#make-the-slow-part-faster">Make the slow part faster</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compiled-code-and-python-interop">Compiled code and Python interop</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#presenting-this-notebook">Presenting this notebook</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-we-ll-do">What we’ll do</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#start-here">Start here</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setup-note">Setup note</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#where-does-the-numerical-work-happen">Where does the numerical work happen?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#one-small-calculation">One small calculation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#predict-the-count">Predict the count</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lists-and-tuples">Lists and tuples</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#count-with-python">Count with Python</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-the-sample-once">Generate the sample once</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-note-list-comprehensions">Reading note: list comprehensions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estimate">Estimate π</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#two-different-checks">Two different checks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#put-the-same-points-in-an-array">Put the same points in an array</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#choose-storage-that-matches-the-physics">Choose storage that matches the physics</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-check-dtype-here">Why check dtype here?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#count-with-numpy">Count with NumPy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compile-the-loop-with-numba">Compile the loop with Numba</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-belongs-inside-the-compiled-function">What belongs inside the compiled function?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-first-call-includes-compilation">The first call includes compilation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#now-compile-the-same-loop-ourselves">Now compile the same loop ourselves</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#write-the-c-counter">1. Write the C++ counter</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#writing-the-library-source">Writing the library source</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compile-then-load">2. Compile, then load</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#declare-the-interface">3. Declare the interface</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-these-checks-matter">Why these checks matter</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#check-the-c-answer">4. Check the C++ answer</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compare-all-four-implementations">Compare all four implementations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-did-we-actually-measure">What did we actually measure?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#before-changing-your-homework-code">Before changing your homework code</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#checking-an-optimization">Checking an optimization</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#which-tool-is-worth-the-setup">Which tool is worth the setup?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-same-loop-in-julia">The same loop in Julia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#where-julia-fits">Where Julia fits</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#julia-reference-a-known-answer">Julia reference: a known answer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-reference-juliacall">Optional reference: JuliaCall</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#your-turn-change-the-region">Your turn: change the region</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#another-experiment-to-try">Another experiment to try</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#before-you-keep-an-optimization">Before you keep an optimization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-reference">Quick reference</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#more-detail-when-you-need-it">More detail when you need it</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="which-points-count">
+<h1>Which points count?<a class="headerlink" href="#which-points-count" title="Permalink to this heading">#</a></h1>
+<p><img alt="Points inside and outside a unit quarter circle" src="labs/lab08/attachment:quarter-circle.png" /></p>
+<p><strong>Random points in a square. Count the ones inside the curve.</strong></p>
+<section id="code-behind-the-opening-picture">
+<h2>Code behind the opening picture<a class="headerlink" href="#code-behind-the-opening-picture" title="Permalink to this heading">#</a></h2>
+<p>This uses Python lists, <code class="docutils literal notranslate"><span class="pre">random</span></code>, and <code class="docutils literal notranslate"><span class="pre">math</span></code>, with Matplotlib for drawing; there are no NumPy array operations. The opening image is embedded so it appears immediately. Run the code below and then <code class="docutils literal notranslate"><span class="pre">display(circle_fig)</span></code> to redraw it. These are the same first 1,500 seeded points used later.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">cos</span><span class="p">,</span> <span class="n">sin</span><span class="p">,</span> <span class="n">pi</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">preview_rng</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">Random</span><span class="p">(</span><span class="mi">142</span><span class="p">)</span>
+<span class="n">preview_points</span> <span class="o">=</span> <span class="p">[(</span><span class="n">preview_rng</span><span class="o">.</span><span class="n">random</span><span class="p">(),</span> <span class="n">preview_rng</span><span class="o">.</span><span class="n">random</span><span class="p">())</span>
+                  <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1_500</span><span class="p">)]</span>
+<span class="n">inside_x</span><span class="p">,</span> <span class="n">inside_y</span><span class="p">,</span> <span class="n">outside_x</span><span class="p">,</span> <span class="n">outside_y</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">preview_points</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="o">*</span><span class="n">y</span> <span class="o">&lt;</span> <span class="mf">1.0</span><span class="p">:</span>
+        <span class="n">inside_x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">inside_y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">outside_x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">outside_y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="n">angles</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">/</span> <span class="mi">400</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">201</span><span class="p">)]</span>
+<span class="n">circle_fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">6.4</span><span class="p">,</span> <span class="mf">4.3</span><span class="p">),</span> <span class="n">layout</span><span class="o">=</span><span class="s2">"constrained"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">inside_x</span><span class="p">,</span> <span class="n">inside_y</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"#007c91"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Counted"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">outside_x</span><span class="p">,</span> <span class="n">outside_y</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">"x"</span><span class="p">,</span>
+           <span class="n">color</span><span class="o">=</span><span class="s2">"#b64f22"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Not counted"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">cos</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">angles</span><span class="p">],</span> <span class="p">[</span><span class="n">sin</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">angles</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">"#172b4d"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"x"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"y"</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">aspect</span><span class="o">=</span><span class="s2">"equal"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"lower left"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">circle_fig</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="make-the-slow-part-faster">
+<h1>Make the slow part faster<a class="headerlink" href="#make-the-slow-part-faster" title="Permalink to this heading">#</a></h1>
+<section id="compiled-code-and-python-interop">
+<h2>Compiled code and Python interop<a class="headerlink" href="#compiled-code-and-python-interop" title="Permalink to this heading">#</a></h2>
+<p><strong>Same calculation. Same inputs. Check the answer.</strong></p>
+<p>PHYS 142/242 · Lab 08</p>
+<section id="presenting-this-notebook">
+<h3>Presenting this notebook<a class="headerlink" href="#presenting-this-notebook" title="Permalink to this heading">#</a></h3>
+<p>Open <strong>Reveal Slideshow</strong> in DataHub. Use the right arrow to move through the slides. Click a code cell and press <strong>Shift+Enter</strong> to run it. Run the code in order; each demo uses earlier definitions. <strong>Ctrl+Enter</strong> runs a selected cell while keeping it selected.</p>
+<p>This notebook starts with empty outputs for live teaching. For a rehearsal, restart the kernel and run all cells in ordinary notebook view, then open the slideshow. Clear outputs before saving the handout again. The notebook includes its presentation styling in the RISE metadata.</p>
+<p>Cells marked <strong>Skip</strong> contain reading notes and optional reference material. They remain available in notebook view. The Julia and JuliaCall examples are fenced Markdown, not Python cells, so Run All does not install or launch Julia.</p>
+<p>Suggested pacing for the 80-minute lab: Python and NumPy 20 minutes; Numba and timing 20; C++ and Julia 20; student experiments and discussion 20. Adjust to the room.</p>
+</section>
+</section>
+<section id="what-we-ll-do">
+<h2>What we’ll do<a class="headerlink" href="#what-we-ll-do" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Check a small answer by hand.</strong></p></li>
+<li><p><strong>Run the same calculation</strong> in Python, NumPy, Numba, and C++.</p></li>
+<li><p><strong>Measure the work</strong> and decide what is worth compiling.</p></li>
+</ol>
+<p>We’ll also read the Julia version, then try a change of our own.</p>
+<p><a id="setup"></a></p>
+</section>
+<section id="start-here">
+<h2>Start here<a class="headerlink" href="#start-here" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Python 3 on DataHub.</strong> Run the code in order.</p></li>
+<li><p><strong>NumPy, Matplotlib, Numba.</strong> We’ll import them when we use them.</p></li>
+<li><p><strong>C++ needs <code class="docutils literal notranslate"><span class="pre">g++</span></code>.</strong> Julia is a read-through today.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">sqrt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">statistics</span><span class="w"> </span><span class="kn">import</span> <span class="n">median</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">time</span><span class="w"> </span><span class="kn">import</span> <span class="n">perf_counter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">timeit</span><span class="w"> </span><span class="kn">import</span> <span class="n">repeat</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Python:"</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">version</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="setup-note">
+<h3>Setup note<a class="headerlink" href="#setup-note" title="Permalink to this heading">#</a></h3>
+<p>The Python examples also work in Colab; the C++ example requires Linux with <code class="docutils literal notranslate"><span class="pre">g++</span></code>. If a Python import is missing, install the needed packages before presenting, then restart the kernel:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="n">numpy</span> <span class="n">matplotlib</span> <span class="n">numba</span>
+</pre></div>
+</div>
+<p>If the compiler is missing, ask me before changing your runtime during the walkthrough.</p>
+</section>
+</section>
+<section id="where-does-the-numerical-work-happen">
+<h2>Where does the numerical work happen?<a class="headerlink" href="#where-does-the-numerical-work-happen" title="Permalink to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>What we write</p></th>
+<th class="head text-left"><p>What runs the work</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Python loop</p></td>
+<td class="text-left"><p>Python handles each iteration</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>NumPy expression</p></td>
+<td class="text-left"><p>Compiled array routines</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>Numba <code class="docutils literal notranslate"><span class="pre">&#64;njit</span></code> function</p></td>
+<td class="text-left"><p>Compiled numerical loop</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>C++ function called from Python</p></td>
+<td class="text-left"><p>A library we compile first</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Using NumPy already means using compiled code.</strong></p>
+<p><a id="a-small-calculation"></a></p>
+</section>
+<section id="one-small-calculation">
+<h2>One small calculation<a class="headerlink" href="#one-small-calculation" title="Permalink to this heading">#</a></h2>
+<p>Draw points uniformly in the unit square. Count the ones inside the quarter circle:</p>
+<div class="math notranslate nohighlight">
+\[
+x^2 + y^2 &lt; 1, \qquad \widehat{\pi} = 4\,\frac{N_{\mathrm{inside}}}{N}.
+\]</div>
+<ul class="simple">
+<li><p><strong>Keep the points fixed</strong> when comparing implementations.</p></li>
+<li><p><strong>Exclude the boundary:</strong> we chose <code class="docutils literal notranslate"><span class="pre">&lt;</span></code>, not <code class="docutils literal notranslate"><span class="pre">&lt;=</span></code>.</p></li>
+</ul>
+</section>
+<section id="predict-the-count">
+<h2>Predict the count<a class="headerlink" href="#predict-the-count" title="Permalink to this heading">#</a></h2>
+<p><strong>Which of these four points count?</strong></p>
+<p>The outer list holds the points. Each tuple holds one <code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y)</span></code> pair.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">small_python</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+    <span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">),</span>
+    <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+    <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="lists-and-tuples">
+<h3>Lists and tuples<a class="headerlink" href="#lists-and-tuples" title="Permalink to this heading">#</a></h3>
+<p>Lists are mutable: we can append, remove, or replace entries. Tuples are immutable: we cannot replace their entries. Here each tuple is one coordinate pair, and the list collects the pairs. In <code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">x,</span> <span class="pre">y</span> <span class="pre">in</span> <span class="pre">points</span></code>, Python unpacks each pair into <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>.</p>
+</section>
+</section>
+<section id="count-with-python">
+<h2>Count with Python<a class="headerlink" href="#count-with-python" title="Permalink to this heading">#</a></h2>
+<p><strong>Read the loop, then check your prediction.</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">count_python</span><span class="p">(</span><span class="n">points</span><span class="p">):</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">points</span><span class="p">:</span>       <span class="c1"># unpack one coordinate pair</span>
+        <span class="k">if</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="o">*</span><span class="n">y</span> <span class="o">&lt;</span> <span class="mf">1.0</span><span class="p">:</span>
+            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>       <span class="c1"># count only points inside</span>
+    <span class="k">return</span> <span class="n">count</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">assert</span> <span class="n">count_python</span><span class="p">(</span><span class="n">small_python</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Points inside:"</span><span class="p">,</span> <span class="n">count_python</span><span class="p">(</span><span class="n">small_python</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="generate-the-sample-once">
+<h2>Generate the sample once<a class="headerlink" href="#generate-the-sample-once" title="Permalink to this heading">#</a></h2>
+<p><strong>Same seed. Same stored points for every implementation.</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seed</span> <span class="o">=</span> <span class="mi">142</span>
+<span class="n">rng</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">Random</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+<span class="n">points_python</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100_000</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+    <span class="n">points_python</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">points_python</span><span class="p">[:</span><span class="mi">3</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="reading-note-list-comprehensions">
+<h3>Reading note: list comprehensions<a class="headerlink" href="#reading-note-list-comprehensions" title="Permalink to this heading">#</a></h3>
+<p>The explicit loop can also be written as a list comprehension:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rng</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">Random</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+<span class="n">points_python</span> <span class="o">=</span> <span class="p">[(</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(),</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">())</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100_000</span><span class="p">)]</span>
+</pre></div>
+</div>
+<p>Read it as: “for each repetition, make a coordinate pair and put it in the list.” The expression that makes each entry comes first. The <code class="docutils literal notranslate"><span class="pre">_</span></code> means we do not need the loop counter; underscores inside <code class="docutils literal notranslate"><span class="pre">100_000</span></code> only make the number easier to read.</p>
+<p>Both versions draw two random numbers per point. Reset <code class="docutils literal notranslate"><span class="pre">rng</span> <span class="pre">=</span> <span class="pre">random.Random(seed)</span></code> before each version if you want to compare their lists exactly. Use whichever form makes your code easier to read.</p>
+</section>
+</section>
+<section id="estimate">
+<h2>Estimate π<a class="headerlink" href="#estimate" title="Permalink to this heading">#</a></h2>
+<p><strong>How close should 100,000 random points get us?</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">count</span> <span class="o">=</span> <span class="n">count_python</span><span class="p">(</span><span class="n">points_python</span><span class="p">)</span>
+<span class="n">p_inside</span> <span class="o">=</span> <span class="n">count</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">points_python</span><span class="p">)</span>
+<span class="n">pi_estimate</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">p_inside</span>
+<span class="n">pi_stderr</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">p_inside</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">p_inside</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">points_python</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"N = </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">points_python</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">, seed = </span><span class="si">{</span><span class="n">seed</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"pi estimate = </span><span class="si">{</span><span class="n">pi_estimate</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2"> +/- </span><span class="si">{</span><span class="n">pi_stderr</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This is an estimated <strong>standard error for independent points</strong>.</p>
+<p>That uncertainty is an estimated <strong>standard error</strong> from counting independent hits and misses. It describes the sampling noise in this example. It isn’t an error formula to copy into a correlated simulation.</p>
+</section>
+<section id="two-different-checks">
+<h2>Two different checks<a class="headerlink" href="#two-different-checks" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Physics/statistics check:</strong> is the estimate reasonable given its sampling noise?</p></li>
+<li><p><strong>Implementation check:</strong> do the functions return the exact same count on the exact same points?</p></li>
+</ul>
+<p><strong>A plausible estimate of π is not enough to prove the implementations agree.</strong></p>
+<p><a id="numpy-already-uses-compiled-code"></a></p>
+</section>
+<section id="put-the-same-points-in-an-array">
+<h2>Put the same points in an array<a class="headerlink" href="#put-the-same-points-in-an-array" title="Permalink to this heading">#</a></h2>
+<p><strong>Convert the coordinates. Don’t draw a new sample.</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">points_python</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+<span class="n">small</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">small_python</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Shape:"</span><span class="p">,</span> <span class="n">points</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="s2">"| dtype:"</span><span class="p">,</span> <span class="n">points</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"First point:"</span><span class="p">,</span> <span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="choose-storage-that-matches-the-physics">
+<h2>Choose storage that matches the physics<a class="headerlink" href="#choose-storage-that-matches-the-physics" title="Permalink to this heading">#</a></h2>
+<p><strong>Our coordinates are real, so we chose <code class="docutils literal notranslate"><span class="pre">float64</span></code>. A wavefunction is complex.</strong></p>
+<p>Before compiling or passing an array to C++, check what its dtype can represent.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"Coordinate storage:"</span><span class="p">,</span> <span class="n">points</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span><span class="n">j</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="n">j</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">)</span>
+<span class="n">rotated</span> <span class="o">=</span> <span class="n">z</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mf">0.4</span><span class="n">j</span><span class="p">)</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_allclose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">rotated</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">z</span><span class="p">),</span>
+                           <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-12</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-12</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Complex input:"</span><span class="p">,</span> <span class="n">z</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="s2">"| Output:"</span><span class="p">,</span> <span class="n">rotated</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="why-check-dtype-here">
+<h3>Why check dtype here?<a class="headerlink" href="#why-check-dtype-here" title="Permalink to this heading">#</a></h3>
+<p>We just chose the array storage used by the compiled routines. Real coordinates fit in <code class="docutils literal notranslate"><span class="pre">float64</span></code>; a complex wavefunction needs <code class="docutils literal notranslate"><span class="pre">complex128</span></code> (or another appropriate complex dtype). Using only the real part would change the state. A phase rotation is a small independent check: its magnitude should be unchanged.</p>
+<p><code class="docutils literal notranslate"><span class="pre">np.zeros(n)</span></code> allocates real storage; <code class="docutils literal notranslate"><span class="pre">np.zeros(n,</span> <span class="pre">dtype=np.complex128)</span></code> can store complex values. Later, our C++ interface explicitly requires <code class="docutils literal notranslate"><span class="pre">float64</span></code> for the coordinate array. Matching its argument declarations to the data is part of correctness.</p>
+<p><code class="docutils literal notranslate"><span class="pre">assert_allclose</span></code> allows small rounding differences. The tolerances here are for this tiny check. For the circle example we compare integer counts on fixed inputs, so we use exact equality.</p>
+</section>
+</section>
+<section id="count-with-numpy">
+<h2>Count with NumPy<a class="headerlink" href="#count-with-numpy" title="Permalink to this heading">#</a></h2>
+<p><strong>The comparison makes a Boolean array. Count its <code class="docutils literal notranslate"><span class="pre">True</span></code> entries.</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">count_numpy</span><span class="p">(</span><span class="n">points</span><span class="p">):</span>
+    <span class="n">radius_squared</span> <span class="o">=</span> <span class="n">points</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">points</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">radius_squared</span> <span class="o">&lt;</span> <span class="mf">1.0</span><span class="p">)</span>
+
+<span class="k">assert</span> <span class="n">count_numpy</span><span class="p">(</span><span class="n">small</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+<span class="k">assert</span> <span class="n">count_numpy</span><span class="p">(</span><span class="n">points</span><span class="p">)</span> <span class="o">==</span> <span class="n">count</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Python and NumPy agree:"</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Short code; compiled array operations; some temporary arrays.</p>
+<p>This is short and readable. It also creates intermediate arrays for the squares, sum, and comparison. That can matter for larger inputs. A compiled loop can do the arithmetic and counting in one pass without keeping those arrays.</p>
+<p>That doesn’t tell us which version is faster on this machine. We still need to measure it.</p>
+<p><a id="compile-the-loop-with-numba"></a></p>
+</section>
+<section id="compile-the-loop-with-numba">
+<h2>Compile the loop with Numba<a class="headerlink" href="#compile-the-loop-with-numba" title="Permalink to this heading">#</a></h2>
+<p><strong>Same arithmetic. Give the function an array and add <code class="docutils literal notranslate"><span class="pre">&#64;njit</span></code>.</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">numba</span><span class="w"> </span><span class="kn">import</span> <span class="n">njit</span>
+
+<span class="nd">@njit</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">count_numba</span><span class="p">(</span><span class="n">points</span><span class="p">):</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">points</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="o">*</span><span class="n">y</span> <span class="o">&lt;</span> <span class="mf">1.0</span><span class="p">:</span>
+            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">count</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="what-belongs-inside-the-compiled-function">
+<h3>What belongs inside the compiled function?<a class="headerlink" href="#what-belongs-inside-the-compiled-function" title="Permalink to this heading">#</a></h3>
+<p>Numba works well with supported numerical loops and arrays. Keep plotting, file handling, and setup outside this function. It cannot compile an arbitrary notebook. Pass changing parameters as arguments rather than relying on edited global variables.</p>
+</section>
+</section>
+<section id="the-first-call-includes-compilation">
+<h2>The first call includes compilation<a class="headerlink" href="#the-first-call-includes-compilation" title="Permalink to this heading">#</a></h2>
+<p><strong>Predict:</strong> will this first call reflect the speed of later calls?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">start</span> <span class="o">=</span> <span class="n">perf_counter</span><span class="p">()</span>
+<span class="n">numba_count</span> <span class="o">=</span> <span class="n">count_numba</span><span class="p">(</span><span class="n">points</span><span class="p">)</span>
+<span class="n">first_call_seconds</span> <span class="o">=</span> <span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
+
+<span class="k">assert</span> <span class="n">numba_count</span> <span class="o">==</span> <span class="n">count</span>
+<span class="k">assert</span> <span class="n">count_numba</span><span class="p">(</span><span class="n">small</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"First call: </span><span class="si">{</span><span class="n">first_call_seconds</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> s"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Counts agree:"</span><span class="p">,</span> <span class="n">numba_count</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Rerunning this cell reuses the compiled function. A fresh-kernel run measures compilation again.</p>
+<p>Numba specializes on argument types. A different array dtype can trigger another compilation; changing only its length usually doesn’t.</p>
+<p>For later work, pass changing parameters as arguments. Don’t hide them in a global variable and assume compiled code will notice every edit. Start with ordinary <code class="docutils literal notranslate"><span class="pre">&#64;njit</span></code>; options such as <code class="docutils literal notranslate"><span class="pre">fastmath=True</span></code> can change floating-point behavior.</p>
+<p><a id="call-c-from-python"></a></p>
+</section>
+<section id="now-compile-the-same-loop-ourselves">
+<h2>Now compile the same loop ourselves<a class="headerlink" href="#now-compile-the-same-loop-ourselves" title="Permalink to this heading">#</a></h2>
+<p><strong>Numba compiled Python for us. For C++, we write and build the library.</strong></p>
+<p>Python will call it through <code class="docutils literal notranslate"><span class="pre">ctypes</span></code>. First, check <code class="docutils literal notranslate"><span class="pre">g++</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">ctypes</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+
+<span class="n">compiler</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s2">"g++"</span><span class="p">,</span> <span class="s2">"--version"</span><span class="p">],</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                          <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">compiler</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="write-the-c-counter">
+<h2>1. Write the C++ counter<a class="headerlink" href="#write-the-c-counter" title="Permalink to this heading">#</a></h2>
+<p><strong>Two numbers per row:</strong> <code class="docutils literal notranslate"><span class="pre">x</span></code> is at <code class="docutils literal notranslate"><span class="pre">2*i</span></code>; <code class="docutils literal notranslate"><span class="pre">y</span></code> is at <code class="docutils literal notranslate"><span class="pre">2*i</span> <span class="pre">+</span> <span class="pre">1</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%writefile</span> circle.cpp
+<span class="c1">#include &lt;cstddef&gt;</span>
+<span class="n">extern</span> <span class="s2">"C"</span> <span class="n">std</span><span class="p">::</span><span class="n">size_t</span> <span class="n">count_inside</span><span class="p">(</span>
+    <span class="n">const</span> <span class="n">double</span><span class="o">*</span> <span class="n">points</span><span class="p">,</span> <span class="n">std</span><span class="p">::</span><span class="n">size_t</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">std</span><span class="p">::</span><span class="n">size_t</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">std</span><span class="p">::</span><span class="n">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">double</span> <span class="n">x</span> <span class="o">=</span> <span class="n">points</span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span><span class="p">];</span>
+        <span class="n">double</span> <span class="n">y</span> <span class="o">=</span> <span class="n">points</span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="o">*</span><span class="n">y</span> <span class="o">&lt;</span> <span class="mf">1.0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="o">++</span><span class="n">count</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">count</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="writing-the-library-source">
+<h3>Writing the library source<a class="headerlink" href="#writing-the-library-source" title="Permalink to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">%%writefile</span></code> writes this cell to <code class="docutils literal notranslate"><span class="pre">circle.cpp</span></code> in the current working directory. <code class="docutils literal notranslate"><span class="pre">extern</span> <span class="pre">&quot;C&quot;</span></code> gives the function a name that <code class="docutils literal notranslate"><span class="pre">ctypes</span></code> can look up. <code class="docutils literal notranslate"><span class="pre">std::size_t</span></code> is used for both the number of points and the count.</p>
+</section>
+</section>
+<section id="compile-then-load">
+<h2>2. Compile, then load<a class="headerlink" href="#compile-then-load" title="Permalink to this heading">#</a></h2>
+<p><strong><code class="docutils literal notranslate"><span class="pre">-O3</span></code>: optimize. <code class="docutils literal notranslate"><span class="pre">-shared</span> <span class="pre">-fPIC</span></code>: build a loadable library.</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span>
+    <span class="s2">"g++"</span><span class="p">,</span> <span class="s2">"-O3"</span><span class="p">,</span> <span class="s2">"-std=c++17"</span><span class="p">,</span> <span class="s2">"-shared"</span><span class="p">,</span> <span class="s2">"-fPIC"</span><span class="p">,</span>
+    <span class="s2">"circle.cpp"</span><span class="p">,</span> <span class="s2">"-o"</span><span class="p">,</span> <span class="s2">"libcircle.so"</span>
+<span class="p">],</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">library</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">CDLL</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">"libcircle.so"</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="declare-the-interface">
+<h2>3. Declare the interface<a class="headerlink" href="#declare-the-interface" title="Permalink to this heading">#</a></h2>
+<p><strong>Check dtype, layout, shape, and the return type.</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">point_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ctypeslib</span><span class="o">.</span><span class="n">ndpointer</span><span class="p">(</span>
+    <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span> <span class="n">ndim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="p">(</span><span class="s2">"C_CONTIGUOUS"</span><span class="p">,</span> <span class="s2">"ALIGNED"</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">library</span><span class="o">.</span><span class="n">count_inside</span><span class="o">.</span><span class="n">argtypes</span> <span class="o">=</span> <span class="p">[</span><span class="n">point_array</span><span class="p">,</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_size_t</span><span class="p">]</span>
+<span class="n">library</span><span class="o">.</span><span class="n">count_inside</span><span class="o">.</span><span class="n">restype</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_size_t</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">count_cpp</span><span class="p">(</span><span class="n">points</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">points</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">points</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Expected an array with shape (N, 2)."</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">library</span><span class="o">.</span><span class="n">count_inside</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="why-these-checks-matter">
+<h3>Why these checks matter<a class="headerlink" href="#why-these-checks-matter" title="Permalink to this heading">#</a></h3>
+<p>The function expects an aligned, C-contiguous <code class="docutils literal notranslate"><span class="pre">float64</span></code> array with shape <code class="docutils literal notranslate"><span class="pre">(N,</span> <span class="pre">2)</span></code>. <code class="docutils literal notranslate"><span class="pre">ndpointer</span></code> checks dtype and memory layout; the wrapper checks the shape. A pointer alone does not carry the array dimensions. The call passes the existing NumPy storage to C++, without copying the whole array. Our C++ function only reads it.</p>
+</section>
+</section>
+<section id="check-the-c-answer">
+<h2>4. Check the C++ answer<a class="headerlink" href="#check-the-c-answer" title="Permalink to this heading">#</a></h2>
+<p><strong>Known small answer → same large count. Then compare all four timings.</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">assert</span> <span class="n">count_cpp</span><span class="p">(</span><span class="n">small</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+<span class="k">assert</span> <span class="n">count_cpp</span><span class="p">(</span><span class="n">points</span><span class="p">)</span> <span class="o">==</span> <span class="n">count</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"All four counts agree:"</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The call passes the existing NumPy storage to C++; it doesn’t copy the whole array. That’s why the layout checks matter. Our function only reads the input.</p>
+<p>If you change the C++ source after loading it, <strong>restart the kernel and rerun</strong> before checking the rebuilt library. Loading the same filename again can reuse the library already in memory.</p>
+<p>For your own work, this extra setup is worthwhile when you need an existing C/C++ library or a substantial compiled calculation. For a small numerical Python loop, Numba is often less work to try first.</p>
+<p><a id="time-the-same-work"></a></p>
+</section>
+<section id="compare-all-four-implementations">
+<h2>Compare all four implementations<a class="headerlink" href="#compare-all-four-implementations" title="Permalink to this heading">#</a></h2>
+<p><strong>Predict the order.</strong> Numba is warmed up; C++ is already compiled.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">median_seconds</span><span class="p">(</span><span class="n">function</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">median</span><span class="p">(</span><span class="n">repeat</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">function</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">repeat</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">number</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span> <span class="o">/</span> <span class="mi">3</span>
+<span class="n">timings</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"Python"</span><span class="p">:</span> <span class="n">median_seconds</span><span class="p">(</span><span class="n">count_python</span><span class="p">,</span> <span class="n">points_python</span><span class="p">),</span>
+    <span class="s2">"NumPy"</span><span class="p">:</span> <span class="n">median_seconds</span><span class="p">(</span><span class="n">count_numpy</span><span class="p">,</span> <span class="n">points</span><span class="p">),</span>
+    <span class="s2">"Numba"</span><span class="p">:</span> <span class="n">median_seconds</span><span class="p">(</span><span class="n">count_numba</span><span class="p">,</span> <span class="n">points</span><span class="p">),</span>
+    <span class="s2">"C++"</span><span class="p">:</span> <span class="n">median_seconds</span><span class="p">(</span><span class="n">count_cpp</span><span class="p">,</span> <span class="n">points</span><span class="p">),</span>
+<span class="p">}</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">seconds</span> <span class="ow">in</span> <span class="n">timings</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">speedup</span> <span class="o">=</span> <span class="n">timings</span><span class="p">[</span><span class="s2">"Python"</span><span class="p">]</span> <span class="o">/</span> <span class="n">seconds</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">:</span><span class="s2">8s</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">seconds</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1000</span><span class="si">:</span><span class="s2">9.3f</span><span class="si">}</span><span class="s2"> ms  </span><span class="si">{</span><span class="n">speedup</span><span class="si">:</span><span class="s2">7.1f</span><span class="si">}</span><span class="s2">x"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="what-did-we-actually-measure">
+<h2>What did we actually measure?<a class="headerlink" href="#what-did-we-actually-measure" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Included:</strong> counting the same stored points, including function-call overhead.</p></li>
+<li><p><strong>Excluded:</strong> imports, sampling, conversion, compilation, and plotting.</p></li>
+<li><p><strong>Different storage:</strong> Python uses the list; NumPy, Numba, and C++ use the array.</p></li>
+</ul>
+<p><strong>Does a faster counter make this fixed sample more accurate?</strong></p>
+<p>No. It may let us afford more samples. Time the full workflow before claiming the whole program is faster.</p>
+</section>
+<section id="before-changing-your-homework-code">
+<h2>Before changing your homework code<a class="headerlink" href="#before-changing-your-homework-code" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Find the slow part.</strong> Separate numerical work from plotting.</p></li>
+<li><p><strong>Keep the calculation fixed.</strong> Same grid, dtype, algorithm, and sample size.</p></li>
+<li><p><strong>Use existing compiled routines.</strong> NumPy products and SciPy solvers already do this.</p></li>
+</ul>
+<p><strong>Keep repeated numerical work inside the function when practical.</strong></p>
+<section id="checking-an-optimization">
+<h3>Checking an optimization<a class="headerlink" href="#checking-an-optimization" title="Permalink to this heading">#</a></h3>
+<p>Matching implementations catches translation mistakes. Keep an independent physics check and a convergence check too. A slow animation does not imply a slow simulation. Calling across the Python/compiled boundary for every scalar operation can eat up the gain. For correlated simulations, more updates do not automatically give more independent measurements.</p>
+</section>
+</section>
+<section id="which-tool-is-worth-the-setup">
+<h2>Which tool is worth the setup?<a class="headerlink" href="#which-tool-is-worth-the-setup" title="Permalink to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Situation</p></th>
+<th class="head text-left"><p>A useful starting point</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Standard array operation or solver</p></td>
+<td class="text-left"><p>NumPy / SciPy</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>A custom numerical Python loop</p></td>
+<td class="text-left"><p>Numba</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>An existing C/C++ library</p></td>
+<td class="text-left"><p>A checked Python interface</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Check the answer and measure your own workload.</strong></p>
+<p><a id="where-julia-fits"></a></p>
+</section>
+<section id="the-same-loop-in-julia">
+<h2>The same loop in Julia<a class="headerlink" href="#the-same-loop-in-julia" title="Permalink to this heading">#</a></h2>
+<p><strong>Read this one. It is not Python syntax.</strong></p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">count_julia</span><span class="p">(</span><span class="n">points</span><span class="p">)</span>
+<span class="w">    </span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">axes</span><span class="p">(</span><span class="n">points</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+<span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">points</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span>
+<span class="w">        </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">points</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">x</span><span class="o">*</span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">y</span><span class="o">*</span><span class="n">y</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">1.0</span>
+<span class="w">            </span><span class="n">count</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">        </span><span class="k">end</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">count</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</section>
+<section id="where-julia-fits">
+<h2>Where Julia fits<a class="headerlink" href="#where-julia-fits" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Compiled numerical functions</strong>, with a first-call cost.</p></li>
+<li><p><strong>Ordinary arrays start at 1.</strong> Here the columns are 1 and 2.</p></li>
+<li><p><strong>Same checks still apply.</strong> Known answer, same inputs, then timing.</p></li>
+</ul>
+<p>Python can call Julia through JuliaCall. That is an optional setup step for later.</p>
+<section id="julia-reference-a-known-answer">
+<h3>Julia reference: a known answer<a class="headerlink" href="#julia-reference-a-known-answer" title="Permalink to this heading">#</a></h3>
+<p>Run this in Julia after defining <code class="docutils literal notranslate"><span class="pre">count_julia</span></code>:</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">small</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span><span class="w"> </span><span class="mf">0.3</span><span class="w"> </span><span class="mf">0.4</span><span class="p">;</span><span class="w"> </span><span class="mf">1.0</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span><span class="w"> </span><span class="mf">1.0</span><span class="w"> </span><span class="mf">1.0</span><span class="p">]</span>
+<span class="nd">@assert</span><span class="w"> </span><span class="n">count_julia</span><span class="p">(</span><span class="n">small</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">axes(points,</span> <span class="pre">1)</span></code> gives the row indices. Julia specializes methods for argument types; warm up the function before timing repeated calls. See the <a class="reference internal" href="../reference/julia_intro/julia_intro.html"><span class="doc std std-doc">earlier Julia notebook</span></a> for arrays, matrix operations, and compiler output.</p>
+</section>
+<section id="optional-reference-juliacall">
+<h3>Optional reference: JuliaCall<a class="headerlink" href="#optional-reference-juliacall" title="Permalink to this heading">#</a></h3>
+<p><strong>This optional route has not been verified on our DataHub setup.</strong> The attempted install/import did not work during preparation. It is not part of today’s runnable walkthrough.</p>
+<p><a class="reference external" href="https://juliapy.github.io/PythonCall.jl/stable/juliacall/">JuliaCall</a> can call Julia from Python. Installation and the first import can download Julia and set up packages. Prepare and test this in advance if you want to explore it.</p>
+<p>Installation command, shown as reference only:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="n">juliacall</span>
+</pre></div>
+</div>
+<p>After installation, the Python example is:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">juliacall</span><span class="w"> </span><span class="kn">import</span> <span class="n">Main</span> <span class="k">as</span> <span class="n">jl</span>
+
+<span class="n">jl</span><span class="o">.</span><span class="n">seval</span><span class="p">(</span><span class="s2">"sumsq(values) = sum(abs2, values)"</span><span class="p">)</span>
+<span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">])</span>
+<span class="n">answer</span> <span class="o">=</span> <span class="n">jl</span><span class="o">.</span><span class="n">sumsq</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">answer</span> <span class="o">==</span> <span class="mf">25.0</span>
+</pre></div>
+</div>
+<p>Check returned values and types, and include conversions in timings when your real workflow needs them. Pass a whole array when practical, rather than crossing the language boundary once per element.</p>
+<p><a id="your-turn"></a></p>
+</section>
+</section>
+<section id="your-turn-change-the-region">
+<h2>Your turn: change the region<a class="headerlink" href="#your-turn-change-the-region" title="Permalink to this heading">#</a></h2>
+<p><strong>Give the Python and Numba counters a <code class="docutils literal notranslate"><span class="pre">radius</span></code> argument.</strong></p>
+<ol class="arabic simple">
+<li><p>Predict a count for points inside, outside, and on the boundary.</p></li>
+<li><p>Replace the condition with <code class="docutils literal notranslate"><span class="pre">x*x</span> <span class="pre">+</span> <span class="pre">y*y</span> <span class="pre">&lt;</span> <span class="pre">radius*radius</span></code>.</p></li>
+<li><p>Check both implementations on exactly the same inputs.</p></li>
+</ol>
+<p><strong>Does changing the argument after compilation change the result?</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Keep the original functions above for comparison.</span>
+<span class="c1"># Define count_python_radius(points, radius) and</span>
+<span class="c1"># count_numba_radius(points, radius), then test them.</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="another-experiment-to-try">
+<h2>Another experiment to try<a class="headerlink" href="#another-experiment-to-try" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Change the workload:</strong> compare three sample sizes. Report first-call cost separately.</p></li>
+<li><p><strong>Choose a target in your code:</strong> what would you time, and what small check would catch a mistake?</p></li>
+</ul>
+<p><strong>Be ready to show the check that supports your result.</strong></p>
+<p>You don’t need to rewrite an assignment during lab.</p>
+</section>
+<section id="before-you-keep-an-optimization">
+<h2>Before you keep an optimization<a class="headerlink" href="#before-you-keep-an-optimization" title="Permalink to this heading">#</a></h2>
+<p><strong>What got faster?</strong></p>
+<p><strong>What stayed the same?</strong></p>
+<p><strong>What check would catch a changed answer?</strong></p>
+<p><a id="quick-reference"></a></p>
+</section>
+<section id="quick-reference">
+<h2>Quick reference<a class="headerlink" href="#quick-reference" title="Permalink to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>If you need to…</p></th>
+<th class="head"><p>Start here</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Speed up a custom numerical loop</p></td>
+<td><p>Put it in a function with explicit inputs; try <code class="docutils literal notranslate"><span class="pre">&#64;njit</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Multiply matrices or solve a standard numerical problem</p></td>
+<td><p>Check NumPy/SciPy’s existing routines first.</p></td>
+</tr>
+<tr class="row-even"><td><p>Compare implementations</p></td>
+<td><p>Use the same inputs; check a tiny known answer before a larger case.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Time compiled code</p></td>
+<td><p>Separate setup, first call, repeated calls, and total runtime.</p></td>
+</tr>
+<tr class="row-even"><td><p>Preserve complex values</p></td>
+<td><p>Check input, output, and preallocated array dtypes.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Call C/C++</p></td>
+<td><p>Declare argument/return types and check array shape/layout.</p></td>
+</tr>
+<tr class="row-even"><td><p>Reproduce a stochastic check</p></td>
+<td><p>Record the seed and reuse the generated inputs when comparing code.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The same seed in different languages doesn’t promise the same random stream. For a direct comparison, pass the same samples. For a larger simulation, compare observables and uncertainties too.</p>
+<p><strong>Before you keep an optimization:</strong> What got faster? What stayed the same? What check would catch it if you changed the answer?</p>
+<section id="more-detail-when-you-need-it">
+<h3>More detail when you need it<a class="headerlink" href="#more-detail-when-you-need-it" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://numba.readthedocs.io/en/stable/user/5minguide.html">Numba’s short guide</a> and <a class="reference external" href="https://numba.readthedocs.io/en/stable/user/performance-tips.html">performance notes</a>: supported numerical code, compilation, and timing.</p></li>
+<li><p><a class="reference external" href="https://numpy.org/doc/stable/reference/routines.ctypeslib.html">NumPy’s <code class="docutils literal notranslate"><span class="pre">ctypes</span></code> interface</a> and <a class="reference external" href="https://docs.python.org/3/library/ctypes.html">Python’s <code class="docutils literal notranslate"><span class="pre">ctypes</span></code> documentation</a>: array checks and function signatures.</p></li>
+<li><p><a class="reference external" href="https://docs.julialang.org/en/v1/manual/performance-tips/">Julia performance tips</a> and <a class="reference external" href="https://juliapy.github.io/PythonCall.jl/stable/juliacall/">JuliaCall</a>: compiled functions and calling Julia from Python.</p></li>
+<li><p>Earlier course references: <a class="reference internal" href="../reference/numba_ffmpeg/numba.html"><span class="doc std std-doc">Numba</span></a> and <a class="reference internal" href="../reference/julia_intro/julia_intro.html"><span class="doc std std-doc">Julia</span></a>. This lab adapts their timing comparisons and circle-sampling idea. Their old lab labels are historical.</p></li>
+</ul>
+</section>
+</section>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./labs/lab08"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../../lectures/11_EigenvalueProblemDemo.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Lecture 11: Eigenvalue Problem Demo</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../reference/julia_intro/julia_intro.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Lab 08: Introduction to Julia</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Which points count?</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-behind-the-opening-picture">Code behind the opening picture</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#make-the-slow-part-faster">Make the slow part faster</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compiled-code-and-python-interop">Compiled code and Python interop</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#presenting-this-notebook">Presenting this notebook</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-we-ll-do">What we’ll do</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#start-here">Start here</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setup-note">Setup note</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#where-does-the-numerical-work-happen">Where does the numerical work happen?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#one-small-calculation">One small calculation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#predict-the-count">Predict the count</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lists-and-tuples">Lists and tuples</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#count-with-python">Count with Python</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-the-sample-once">Generate the sample once</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-note-list-comprehensions">Reading note: list comprehensions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estimate">Estimate π</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#two-different-checks">Two different checks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#put-the-same-points-in-an-array">Put the same points in an array</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#choose-storage-that-matches-the-physics">Choose storage that matches the physics</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-check-dtype-here">Why check dtype here?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#count-with-numpy">Count with NumPy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compile-the-loop-with-numba">Compile the loop with Numba</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-belongs-inside-the-compiled-function">What belongs inside the compiled function?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-first-call-includes-compilation">The first call includes compilation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#now-compile-the-same-loop-ourselves">Now compile the same loop ourselves</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#write-the-c-counter">1. Write the C++ counter</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#writing-the-library-source">Writing the library source</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compile-then-load">2. Compile, then load</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#declare-the-interface">3. Declare the interface</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-these-checks-matter">Why these checks matter</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#check-the-c-answer">4. Check the C++ answer</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compare-all-four-implementations">Compare all four implementations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-did-we-actually-measure">What did we actually measure?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#before-changing-your-homework-code">Before changing your homework code</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#checking-an-optimization">Checking an optimization</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#which-tool-is-worth-the-setup">Which tool is worth the setup?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-same-loop-in-julia">The same loop in Julia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#where-julia-fits">Where Julia fits</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#julia-reference-a-known-answer">Julia reference: a known answer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-reference-juliacall">Optional reference: JuliaCall</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#your-turn-change-the-region">Your turn: change the region</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#another-experiment-to-try">Another experiment to try</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#before-you-keep-an-optimization">Before you keep an optimization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-reference">Quick reference</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#more-detail-when-you-need-it">More detail when you need it</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Javier Duarte
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

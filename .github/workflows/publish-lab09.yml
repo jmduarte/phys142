@@ -1,0 +1,191 @@
+name: Publish Lab 09 incrementally
+
+on:
+  workflow_dispatch:
+    inputs:
+      base_run_id:
+        description: Successful run containing the complete course-site and reusable state
+        required: true
+        type: string
+      initialize_existing_release:
+        description: First-use migration from the pinned October 22 release only
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  actions: read
+  contents: write
+
+concurrency:
+  group: deploy-book-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CACHE_EPOCH: '1'
+  TEXLIVE_IMAGE: xucheng/texlive-full@sha256:a48669080fa2e34d73eed56442f5b96fe4810d75439b2476fc2f2569c492e7eb
+
+jobs:
+  publish:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Test publication contracts
+        run: python3 -m unittest discover -s ci -p 'test_*.py' -v
+
+      - name: Require and verify the retained successful release
+        id: base
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BASE_RUN: ${{ inputs.base_run_id }}
+          INITIALIZE_RELEASE: ${{ inputs.initialize_existing_release }}
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, os, pathlib, re, stat, subprocess, zipfile
+          repo = 'repos/jmduarte/phys142/'
+          run_id = os.environ['BASE_RUN']
+          if not re.fullmatch(r'[0-9]+', run_id):
+              raise SystemExit('A numeric successful base run is required')
+          def api(path):
+              return subprocess.check_output(['gh', 'api', repo + path])
+          run = json.loads(api('actions/runs/' + run_id))
+          if run['conclusion'] != 'success' or run['head_branch'] != 'main':
+              raise SystemExit('The retained release must be a successful main run')
+          initialize = os.environ['INITIALIZE_RELEASE'] == 'true'
+          if initialize and (run_id != '39826958218' or run['head_sha'] != '0e4a5c981db44cfd948e7253992086c7ff0f9ea9'):
+              raise SystemExit('Initialization is restricted to the pinned existing release')
+          if not initialize and (run['path'] != '.github/workflows/publish-lab09.yml'
+                  or run['event'] != 'workflow_dispatch'
+                  or (run.get('head_repository') or {}).get('full_name') != 'jmduarte/phys142'):
+              raise SystemExit('Updates require a successful dispatch of this repository scoped publisher')
+          artifacts = json.loads(api('actions/runs/' + run_id + '/artifacts'))['artifacts']
+          def artifact(name):
+              matches = [a for a in artifacts if a['name'] == name and not a['expired']]
+              if len(matches) != 1:
+                  raise SystemExit('Required retained artifact missing: ' + name)
+              item = matches[0]
+              data = api('actions/artifacts/' + str(item['id']) + '/zip')
+              digest = 'sha256:' + hashlib.sha256(data).hexdigest()
+              if digest != item['digest']:
+                  raise SystemExit('Retained artifact digest mismatch: ' + name)
+              path = pathlib.Path(os.environ['RUNNER_TEMP']) / (name + '.zip')
+              path.write_bytes(data)
+              return item, path
+          item, archive = artifact('course-site')
+          if initialize and item['digest'] != 'sha256:1852294478728c9b5bcb08aff39a7db35317711398d219731c44f4c10806efac':
+              raise SystemExit('Initial release archive does not match the pinned release')
+          site = pathlib.Path('_build/html')
+          site.mkdir(parents=True)
+          with zipfile.ZipFile(archive) as z:
+              for entry in z.infolist():
+                  path = pathlib.PurePosixPath(entry.filename)
+                  if (path.is_absolute() or '..' in path.parts or '\\' in entry.filename
+                          or stat.S_ISLNK(entry.external_attr >> 16)):
+                      raise SystemExit('Unsafe retained archive entry')
+              z.extractall(site)
+          state = pathlib.Path(os.environ['RUNNER_TEMP']) / 'lab09-state.json'
+          if initialize:
+              if any(a['name'] == 'lab09-incremental-state' for a in artifacts):
+                  raise SystemExit('Existing incremental state cannot be reinitialized')
+          else:
+              _, archive = artifact('lab09-incremental-state')
+              with zipfile.ZipFile(archive) as z:
+                  if z.namelist() != ['lab09-state.json']:
+                      raise SystemExit('Unexpected incremental-state archive schema')
+                  state.write_bytes(z.read('lab09-state.json'))
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+              f.write('commit=' + run['head_sha'] + '\n')
+          PY
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install the locked single-member renderer
+        run: python -m pip install --retries 0 -r ci/lab09-publish-requirements.txt
+
+      - name: Initialize state from the pinned existing release
+        if: inputs.initialize_existing_release
+        env:
+          BASE_COMMIT: ${{ steps.base.outputs.commit }}
+        run: >-
+          python ci/publish_lab09.py initialize --site _build/html
+          --state "$RUNNER_TEMP/lab09-state.json" --base-commit "$BASE_COMMIT"
+
+      - name: Update only the affected Lab 09 member
+        env:
+          BASE_COMMIT: ${{ steps.base.outputs.commit }}
+        run: |
+          python ci/publish_lab09.py update --site _build/html \
+            --state "$RUNNER_TEMP/lab09-state.json" --base-commit "$BASE_COMMIT" \
+            --report "$RUNNER_TEMP/lab09-publication-report.json"
+          python ci/check_lab_links.py
+
+      - name: Fingerprint the resulting course inputs
+        id: keys
+        run: python ci/build_cache.py --texlive-image "$TEXLIVE_IMAGE"
+
+      - name: Set aside PDFs before saving the HTML cache
+        run: |
+          mkdir "$RUNNER_TEMP/release-pdfs"
+          for document in syllabus assignment1 assignment2 assignment3 final_projects; do
+            if [ -f "_build/html/$document.pdf" ]; then
+              mv "_build/html/$document.pdf" "$RUNNER_TEMP/release-pdfs/"
+            fi
+          done
+
+      - uses: actions/cache/save@v4
+        with:
+          path: _build/html
+          key: site-${{ runner.os }}-${{ runner.arch }}-${{ env.CACHE_EPOCH }}-${{ steps.keys.outputs.site }}
+
+      - name: Restore unchanged PDFs to the complete release
+        run: |
+          for document in syllabus assignment1 assignment2 assignment3 final_projects; do
+            if [ -f "$RUNNER_TEMP/release-pdfs/$document.pdf" ]; then
+              mv "$RUNNER_TEMP/release-pdfs/$document.pdf" _build/html/
+            fi
+          done
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: course-site
+          path: _build/html
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lab09-incremental-state
+          path: ${{ runner.temp }}/lab09-state.json
+          if-no-files-found: error
+
+      - name: Publish GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3.9.3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: _build/html
+          force_orphan: true
+          user_name: github-actions[bot]
+          user_email: github-actions[bot]@users.noreply.github.com
+
+      - name: Deploy to users.physics.ucsd.edu
+        env:
+          SSH_KEY: ${{ secrets.PHYSICS_SSH_KEY }}
+          KNOWN_HOSTS: ${{ secrets.PHYSICS_KNOWN_HOSTS }}
+          DEST: ${{ secrets.PHYSICS_DEST }}
+        run: |
+          set -euo pipefail
+          test -n "$SSH_KEY"
+          test -n "$KNOWN_HOSTS"
+          test -n "$DEST"
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/id_deploy && chmod 600 ~/.ssh/id_deploy
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts && chmod 644 ~/.ssh/known_hosts
+          LC_ALL=C LANG=C rsync -rlvzc --chmod=D755,F644 \
+            -e "ssh -i ~/.ssh/id_deploy -o IdentitiesOnly=yes" _build/html/ "$DEST"
+
+      - name: Record incremental publication
+        run: cat "$RUNNER_TEMP/lab09-publication-report.json" >> "$GITHUB_STEP_SUMMARY"

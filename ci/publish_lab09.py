@@ -19,6 +19,9 @@ MEMBER = 'labs/lab09/lab09.ipynb'
 SCHEMA = 'phys142-lab09-publication-v1'
 BASE_MANIFEST = '99f5b33ecfb768e50eb6839d3d898bd3fe7bce5d326b468e30ae767224b8c7bc'
 BASE_COMMIT = '0e4a5c981db44cfd948e7253992086c7ff0f9ea9'
+NUMBA_BASE_COMMIT = '06a14639016ae80ea529a6caa3bb17ff2f937aae'
+NUMBA_BASE_DEPENDENCY = 'b273cff9458e291b65e6fc710073f7c5e05a80fd9fecccbb87ac0f2d70c2bc03'
+NUMBA_ADDITIONS = {'numba==0.68.0', 'llvmlite==0.50.0'}
 PUBLICATION_FILES = {
     MEMBER, '.github/workflows/publish-lab09.yml',
     'ci/publish_lab09.py', 'ci/patch_lab09_release.py',
@@ -66,29 +69,60 @@ def initialize_state(site, state_path, expected_manifest, source_hash, dependenc
     })
 
 
-def update_member(site, state_path, source, dependency_hash, renderer, assembler):
-    """Reuse unchanged content; render exactly one member when its input changes."""
+def _read_state(site, state_path):
     state = json.loads(state_path.read_text())
     if (not isinstance(state, dict) or state.get('schema') != SCHEMA
             or state.get('member') != MEMBER):
         raise ValueError('Missing or incompatible incremental publication state')
     for field in ('site_manifest', 'source_sha256', 'dependency_sha256'):
         _digest(state.get(field))
-    if state['dependency_sha256'] != _digest(dependency_hash):
-        raise ValueError('Rendering dependencies changed; a separately scoped migration is required')
     if site_manifest(site) != state['site_manifest']:
         raise ValueError('Retained release does not match its reusable state')
+    return state
+
+
+def _render_member(site, state_path, state, source, dependency_hash, renderer, assembler):
     source_hash = sha256(source.read_bytes())
-    if source_hash == state['source_sha256']:
-        return {'rendered_members': 0, 'changed_files': [],
-                'input_manifest': state['site_manifest'], 'output_manifest': state['site_manifest']}
     rendered = renderer(source)
     report = assembler(site, rendered, source, state['site_manifest'])
     if report['output_manifest'] != site_manifest(site):
         raise ValueError('Assembled output does not match its reported manifest')
-    state.update(source_sha256=source_hash, site_manifest=report['output_manifest'])
+    state.update(source_sha256=source_hash,
+                 dependency_sha256=dependency_hash, site_manifest=report['output_manifest'])
     _write_state(state_path, state)
     return dict(report, rendered_members=1)
+
+
+def update_member(site, state_path, source, dependency_hash, renderer, assembler):
+    """Reuse unchanged content; render exactly one member when its input changes."""
+    state = _read_state(site, state_path)
+    if state['dependency_sha256'] != _digest(dependency_hash):
+        raise ValueError('Rendering dependencies changed; a separately scoped migration is required')
+    source_hash = sha256(source.read_bytes())
+    if source_hash == state['source_sha256']:
+        return {'rendered_members': 0, 'changed_files': [],
+                'input_manifest': state['site_manifest'], 'output_manifest': state['site_manifest']}
+    return _render_member(site, state_path, state, source, dependency_hash, renderer, assembler)
+
+
+def migrate_numba_member(site, state_path, source, dependency_hash, renderer, assembler):
+    """Migrate the retained pre-Numba member once, without resetting its state."""
+    state = _read_state(site, state_path)
+    if (state['dependency_sha256'] != NUMBA_BASE_DEPENDENCY
+            or _digest(dependency_hash) == NUMBA_BASE_DEPENDENCY):
+        raise ValueError('Numba migration requires the pinned pre-Numba dependency state')
+    report = _render_member(site, state_path, state, source, dependency_hash, renderer, assembler)
+    return dict(report, dependency_migration='numba-0.68.0',
+                previous_dependency_sha256=NUMBA_BASE_DEPENDENCY,
+                dependency_sha256=dependency_hash)
+
+
+def verify_numba_lock(previous, current):
+    """Only the two pinned compiler packages may be added during this migration."""
+    lines = current.splitlines()
+    if (len(lines) != len(set(lines))
+            or set(lines) != set(previous.splitlines()) | NUMBA_ADDITIONS):
+        raise ValueError('Numba migration may add only the pinned numba and llvmlite packages')
 
 
 def dependencies(root):
@@ -143,7 +177,7 @@ def render_one(source, work):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('operation', choices=['initialize', 'update'])
+    parser.add_argument('operation', choices=['initialize', 'update', 'migrate-numba'])
     parser.add_argument('--site', type=Path, required=True)
     parser.add_argument('--state', type=Path, required=True)
     parser.add_argument('--root', type=Path, default=Path(__file__).resolve().parents[1])
@@ -159,10 +193,24 @@ def main():
         initialize_state(args.site, args.state, BASE_MANIFEST, sha256(baseline), dependency_hash)
         print('Initialized reusable Lab 09 state from the pinned existing release')
         return
+    operation = update_member
+    if args.operation == 'migrate-numba':
+        if args.base_commit != NUMBA_BASE_COMMIT:
+            raise ValueError('Numba migration requires the pinned pre-Numba release commit')
+        baseline = subprocess.check_output(['git', 'show', NUMBA_BASE_COMMIT + ':' + MEMBER],
+                                           cwd=args.root)
+        state = _read_state(args.site, args.state)
+        if state['source_sha256'] != sha256(baseline):
+            raise ValueError('Numba migration source state does not match the pinned release')
+        lock_path = 'ci/lab09-publish-requirements.txt'
+        old_lock = subprocess.check_output(['git', 'show', NUMBA_BASE_COMMIT + ':' + lock_path],
+                                           cwd=args.root, text=True)
+        verify_numba_lock(old_lock, (args.root / lock_path).read_text())
+        operation = migrate_numba_member
     from patch_lab09_release import patch_release
     with tempfile.TemporaryDirectory(prefix='phys142-lab09-member-') as temporary:
-        report = update_member(args.site, args.state, args.root / MEMBER, dependency_hash,
-                               lambda source: render_one(source, Path(temporary)), patch_release)
+        report = operation(args.site, args.state, args.root / MEMBER, dependency_hash,
+                           lambda source: render_one(source, Path(temporary)), patch_release)
     if args.report:
         args.report.write_text(json.dumps(report, sort_keys=True, indent=2) + '\n')
     print(json.dumps(report, sort_keys=True))

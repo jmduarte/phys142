@@ -12,6 +12,11 @@ on:
         required: true
         default: false
         type: boolean
+      migrate_numba_dependencies:
+        description: One-time Numba migration from retained run 40448562994 only
+        required: true
+        default: false
+        type: boolean
 
 permissions:
   actions: read
@@ -43,6 +48,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           BASE_RUN: ${{ inputs.base_run_id }}
           INITIALIZE_RELEASE: ${{ inputs.initialize_existing_release }}
+          MIGRATE_NUMBA: ${{ inputs.migrate_numba_dependencies }}
         run: |
           python3 - <<'PY'
           import hashlib, json, os, pathlib, re, stat, subprocess, zipfile
@@ -56,6 +62,11 @@ jobs:
           if run['conclusion'] != 'success' or run['head_branch'] != 'main':
               raise SystemExit('The retained release must be a successful main run')
           initialize = os.environ['INITIALIZE_RELEASE'] == 'true'
+          migrate_numba = os.environ['MIGRATE_NUMBA'] == 'true'
+          if initialize and migrate_numba:
+              raise SystemExit('Numba migration requires existing state and cannot initialize it')
+          if migrate_numba and (run_id != '40448562994' or run['head_sha'] != '06a14639016ae80ea529a6caa3bb17ff2f937aae'):
+              raise SystemExit('Numba migration is restricted to the pinned pre-Numba release')
           if initialize and (run_id != '39826958218' or run['head_sha'] != '0e4a5c981db44cfd948e7253992086c7ff0f9ea9'):
               raise SystemExit('Initialization is restricted to the pinned existing release')
           if not initialize and (run['path'] != '.github/workflows/publish-lab09.yml'
@@ -99,6 +110,7 @@ jobs:
                   state.write_bytes(z.read('lab09-state.json'))
           with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
               f.write('commit=' + run['head_sha'] + '\n')
+              f.write('operation=' + ('migrate-numba' if migrate_numba else 'update') + '\n')
           PY
 
       - uses: actions/setup-python@v5
@@ -119,8 +131,9 @@ jobs:
       - name: Update only the affected Lab 09 member
         env:
           BASE_COMMIT: ${{ steps.base.outputs.commit }}
+          OPERATION: ${{ steps.base.outputs.operation }}
         run: |
-          python ci/publish_lab09.py update --site _build/html \
+          python ci/publish_lab09.py "$OPERATION" --site _build/html \
             --state "$RUNNER_TEMP/lab09-state.json" --base-commit "$BASE_COMMIT" \
             --report "$RUNNER_TEMP/lab09-publication-report.json"
           python ci/check_lab_links.py

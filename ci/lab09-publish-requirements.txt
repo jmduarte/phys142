@@ -32,6 +32,7 @@ jupyter_core==5.9.1
 kiwisolver==1.5.1
 latexcodec==3.0.1
 linkify-it-py==2.0.3
+llvmlite==0.50.0
 markdown-it-py==2.2.0
 MarkupSafe==3.0.4
 matplotlib==3.11.2
@@ -43,6 +44,7 @@ myst-parser==0.18.1
 nbclient==0.7.4
 nbformat==5.11.1
 nest-asyncio2==1.7.4
+numba==0.68.0
 numpy==2.5.4
 packaging==26.3
 parso==0.8.7

@@ -72,7 +72,8 @@ parts:
       title: "Assignment 02 (Due Wed 11/4)"
     - file: labs/lab09/lab09.ipynb
       title: "Lab 09: Assignment 2 Tutorial"
-    # TODO Thu 10/29 Lab 10: Auditing AI-Generated Numerical Code (no materials yet)
+    - file: labs/lab10/lab10.ipynb
+      title: "Lab 10: Auditing AI-Generated Numerical Code"
   - caption: Week 6
     chapters:
     - file: labs/lab11/lab11.ipynb

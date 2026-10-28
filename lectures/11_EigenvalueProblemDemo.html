@@ -1,0 +1,971 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Lecture 11: Eigenvalue Problem Demo &#8212; UCSD PHYS 142/242</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'lectures/11_EigenvalueProblemDemo';</script>
+    <link rel="canonical" href="https://jduarte.physics.ucsd.edu/phys142/lectures/11_EigenvalueProblemDemo.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Which points count?" href="../labs/lab08/lab08.html" />
+    <link rel="prev" title="Lab 05: Assignment 1 tutorial" href="../labs/lab05/lab05.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/pathintegral_logo.png" class="logo__image only-light" alt="UCSD PHYS 142/242 - Home"/>
+    <script>document.write(`<img src="../_static/pathintegral_logo.png" class="logo__image only-dark" alt="UCSD PHYS 142/242 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../README.html">
+                    UCSD PHYS 142/242: Computational Physics — Stochastic Methods and Path Integrals (Fall 2026)
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 0</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/syllabus.pdf">Syllabus</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/01_Introduction.pdf">Lecture 01: Course overview, the double-slit experiment, and how this course handles AI</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/02_QuantumMechRecap.pdf">Lecture 02: Quantum mechanics refresher: states, operators, and the propagator</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/labs/lab1/01_DataHub.pdf">Lab 01: Python, Jupyter, and DataHub (Slides)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../labs/reference/python_intro/python_intro.html">Python Introduction (Reference Notebook)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/03_FeynmanPathIntegral.pdf">Lecture 03: Feynman path integral</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/04_FeynmanPathIntegralContinued.pdf">Lecture 04: Feynman path integral (continued)</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../labs/reference/numba_ffmpeg/index.html">Numba and ffmpeg (Reference Materials)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../labs/reference/numba_ffmpeg/numba.html">Lab 02: Numba</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../labs/reference/numba_ffmpeg/ffmpeg.html">Lab 02: ffmpeg</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../labs/lab01/lab01.html">Lab 01: Python, Jupyter, and DataHub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../labs/lab02/lab02.html">Lab 02: NumPy, SciPy, and Matplotlib</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/05_FreeParticle.pdf">Lecture 05: Free particle</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/06_HarmonicOscillator.pdf">Lecture 06: Harmonic oscillator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../labs/lab03/lab03.html">Lab 03: Random Numbers, Seeding, and Reproducible Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../labs/lab04/lab04.html">Lab 04: Git and GitHub</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/07_SchrodingerEquation.pdf">Lecture 07: Schrödinger equation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 3</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/assignment1.pdf">Assignment 01 (Due Mon 10/19)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/08_UnitarityPropagatorTrace.pdf">Lecture 08: Unitarity and the propagator trace</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../labs/lab05/lab05.html">Lab 05: Assignment 1 Tutorial</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/10_DoubleWellTunneling.pdf">Lecture 10: Double well potential</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 4</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/lectures/11_EigenvalueProblem.pdf">Lecture 11: The eigenvalue problem as a validation tool (with demo)</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Lecture 11: Eigenvalue Problem Demo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../labs/lab08/lab08.html">Which points count?</a></li>
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 5</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://jduarte.physics.ucsd.edu/phys142/assignment2.pdf">Assignment 02 (Due Wed 11/4)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../labs/lab09/lab09.html">Lab 09: Assignment 2 Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../labs/lab10/lab10.html">Lab 10: Auditing AI-Generated Numerical Code</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 6</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../labs/lab11/lab11.html">Lab 11: MCMC and the 2D Ising Model</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 7</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../labs/lab14/lab14.html">Lab 14: Path-Integral MCMC Tutorial</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 8</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../labs/lab16/lab16.html">Lab 16: VEGAS Tutorial</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/jmduarte/phys142/main?urlpath=tree/lectures/11_EigenvalueProblemDemo.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://datahub.ucsd.edu/hub/user-redirect/git-pull?repo=https%3A//github.com/jmduarte/phys142&urlpath=lab/tree/phys142/lectures/11_EigenvalueProblemDemo.ipynb&branch=main" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onJupyterHub"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="btn__text-container">JupyterHub</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/jmduarte/phys142/blob/main/lectures/11_EigenvalueProblemDemo.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jmduarte/phys142" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jmduarte/phys142/issues/new?title=Issue%20on%20page%20%2Flectures/11_EigenvalueProblemDemo.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/lectures/11_EigenvalueProblemDemo.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Lecture 11: Eigenvalue Problem Demo</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-hamiltonian-matrix">1. The Hamiltonian matrix</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#three-ways-to-find-the-lowest-eigenvalues">2. Three ways to find the lowest eigenvalues</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#from-eigenvectors-to-wave-functions">3. From eigenvectors to wave functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#validation-compare-with-the-exact-energies">4. Validation: compare with the exact energies</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#error-1-the-grid-spacing-delta-x">Error 1: the grid spacing <span class="math notranslate nohighlight">\(\Delta x\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#error-2-the-box-size-l">Error 2: the box size <span class="math notranslate nohighlight">\(L\)</span></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#your-turn-assignment-2">5. Your turn: Assignment 2</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="lecture-11-eigenvalue-problem-demo">
+<h1>Lecture 11: Eigenvalue Problem Demo<a class="headerlink" href="#lecture-11-eigenvalue-problem-demo" title="Permalink to this heading">#</a></h1>
+<p>We solve the time-independent Schrödinger equation</p>
+<div class="math notranslate nohighlight">
+\[
+\hat H\phi_n(x) = -\frac{1}{2}\frac{d^2\phi_n(x)}{dx^2} + V(x)\,\phi_n(x) = E_n\,\phi_n(x)
+\]</div>
+<p>on a grid, in units with <span class="math notranslate nohighlight">\(\hbar = m = \omega = 1\)</span>, for the harmonic oscillator <span class="math notranslate nohighlight">\(V(x) = \frac{1}{2}x^2\)</span>.
+We know the exact answer, <span class="math notranslate nohighlight">\(E_n = n + \frac{1}{2}\)</span>, so this is where we test the method before trusting it on a problem we cannot solve by hand.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">factorial</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy.linalg</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy.sparse</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy.sparse.linalg</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy.special</span>
+
+<span class="n">COLORS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"#2a78d6"</span><span class="p">,</span> <span class="s2">"#eb6834"</span><span class="p">,</span> <span class="s2">"#1baf7a"</span><span class="p">,</span> <span class="s2">"#eda100"</span><span class="p">]</span>  <span class="c1"># one color per state n = 0, 1, 2, 3</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="the-hamiltonian-matrix">
+<h2>1. The Hamiltonian matrix<a class="headerlink" href="#the-hamiltonian-matrix" title="Permalink to this heading">#</a></h2>
+<p>On the grid <span class="math notranslate nohighlight">\(x_i = -L/2 + i\,\Delta x\)</span>, <span class="math notranslate nohighlight">\(i = 0, \dots, N_D\)</span>, with <span class="math notranslate nohighlight">\(\Delta x = L/N_D\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[
+H_{ij} = -\frac{1}{2\Delta x^2}\left(\delta_{i+1,j} - 2\delta_{ij} + \delta_{i-1,j}\right) + V(x_i)\,\delta_{ij}.
+\]</div>
+<p>Only three diagonals are nonzero, so we store <span class="math notranslate nohighlight">\(H\)</span> as a sparse matrix: about <span class="math notranslate nohighlight">\(3(N_D + 1)\)</span> numbers instead of <span class="math notranslate nohighlight">\((N_D + 1)^2\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">V</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">make_grid</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">ND</span><span class="p">):</span>
+    <span class="c1"># ND + 1 points from -L/2 to L/2, and the spacing</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">L</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">L</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">ND</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">hamiltonian</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">V</span><span class="p">):</span>
+    <span class="c1"># sparse tridiagonal finite-difference Hamiltonian</span>
+    <span class="n">off</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span> <span class="o">/</span> <span class="n">dx</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">diag</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">dx</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">V</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">scipy</span><span class="o">.</span><span class="n">sparse</span><span class="o">.</span><span class="n">diags</span><span class="p">([</span><span class="n">off</span><span class="p">,</span> <span class="n">diag</span><span class="p">,</span> <span class="n">off</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"csc"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Check against the slides: <span class="math notranslate nohighlight">\(L = 8\)</span> and <span class="math notranslate nohighlight">\(N_D = 4\)</span> (so <span class="math notranslate nohighlight">\(\Delta x = 2\)</span>) should give <span class="math notranslate nohighlight">\(H_{00} = 8.25\)</span> and off-diagonal entries <span class="math notranslate nohighlight">\(-0.125\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">,</span> <span class="n">dx</span> <span class="o">=</span> <span class="n">make_grid</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">hamiltonian</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">V</span><span class="p">)</span><span class="o">.</span><span class="n">toarray</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 8.25  -0.125  0.     0.     0.   ]
+ [-0.125  2.25  -0.125  0.     0.   ]
+ [ 0.    -0.125  0.25  -0.125  0.   ]
+ [ 0.     0.    -0.125  2.25  -0.125]
+ [ 0.     0.     0.    -0.125  8.25 ]]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="three-ways-to-find-the-lowest-eigenvalues">
+<h2>2. Three ways to find the lowest eigenvalues<a class="headerlink" href="#three-ways-to-find-the-lowest-eigenvalues" title="Permalink to this heading">#</a></h2>
+<p><strong>Predict first:</strong> for <span class="math notranslate nohighlight">\(N_D = 3000\)</span>, which of these is fastest, and which is slowest?</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">scipy.linalg.eigh(H)</span></code>: dense matrix, computes <strong>all</strong> <span class="math notranslate nohighlight">\(N_D + 1\)</span> eigenpairs.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">scipy.sparse.linalg.eigsh(H,</span> <span class="pre">k=2,</span> <span class="pre">which='SM')</span></code>: ARPACK, asks directly for the 2 eigenvalues of smallest magnitude.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">scipy.sparse.linalg.eigsh(H,</span> <span class="pre">k=2,</span> <span class="pre">sigma=0,</span> <span class="pre">which='LM')</span></code>: ARPACK in shift-invert mode, which finds the largest eigenvalues of <span class="math notranslate nohighlight">\((H - \sigma)^{-1}\)</span>, i.e. the <span class="math notranslate nohighlight">\(E_n\)</span> closest to <span class="math notranslate nohighlight">\(\sigma\)</span>.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">best_time</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">repeat</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+    <span class="c1"># best wall-clock time over a few runs (like %timeit, but bounded)</span>
+    <span class="n">times</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">repeat</span><span class="p">):</span>
+        <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+        <span class="n">f</span><span class="p">()</span>
+        <span class="n">times</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="n">times</span><span class="p">)</span>
+
+
+<span class="n">L</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="k">for</span> <span class="n">ND</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">600</span><span class="p">,</span> <span class="mi">3000</span><span class="p">]:</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">dx</span> <span class="o">=</span> <span class="n">make_grid</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">ND</span><span class="p">)</span>
+    <span class="n">H</span> <span class="o">=</span> <span class="n">hamiltonian</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">V</span><span class="p">)</span>
+    <span class="n">H_dense</span> <span class="o">=</span> <span class="n">H</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
+    <span class="n">t_dense</span> <span class="o">=</span> <span class="n">best_time</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">scipy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">H_dense</span><span class="p">))</span>
+    <span class="n">t_sm</span> <span class="o">=</span> <span class="n">best_time</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">scipy</span><span class="o">.</span><span class="n">sparse</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigsh</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">"SM"</span><span class="p">),</span> <span class="n">repeat</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">t_si</span> <span class="o">=</span> <span class="n">best_time</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">scipy</span><span class="o">.</span><span class="n">sparse</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigsh</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">"LM"</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"N_D = </span><span class="si">{</span><span class="n">ND</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  1. dense eigh (all eigenpairs)   </span><span class="si">{</span><span class="n">t_dense</span><span class="si">:</span><span class="s2">9.4f</span><span class="si">}</span><span class="s2"> s"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  2. eigsh, which='SM'             </span><span class="si">{</span><span class="n">t_sm</span><span class="si">:</span><span class="s2">9.4f</span><span class="si">}</span><span class="s2"> s"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  3. eigsh, shift-invert sigma=0   </span><span class="si">{</span><span class="n">t_si</span><span class="si">:</span><span class="s2">9.4f</span><span class="si">}</span><span class="s2"> s"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>N_D = 600
+  1. dense eigh (all eigenpairs)      0.0270 s
+  2. eigsh, which='SM'                0.1053 s
+  3. eigsh, shift-invert sigma=0      0.0006 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>N_D = 3000
+  1. dense eigh (all eigenpairs)      1.2791 s
+  2. eigsh, which='SM'                4.6909 s
+  3. eigsh, shift-invert sigma=0      0.0022 s
+</pre></div>
+</div>
+</div>
+</div>
+<p>Why is <code class="docutils literal notranslate"><span class="pre">which='SM'</span></code> so slow? ARPACK converges quickly to eigenvalues that stand out in magnitude from the rest of the spectrum.
+The largest eigenvalue of <span class="math notranslate nohighlight">\(H\)</span> is about <span class="math notranslate nohighlight">\(2/\Delta x^2\)</span> (about <span class="math notranslate nohighlight">\(3 \times 10^5\)</span> at <span class="math notranslate nohighlight">\(N_D = 3000\)</span>), so on that scale <span class="math notranslate nohighlight">\(E_0 = 0.5\)</span> and <span class="math notranslate nohighlight">\(E_1 = 1.5\)</span> are bunched together near zero.
+Shift-invert maps <span class="math notranslate nohighlight">\(E_n \to 1/(E_n - \sigma)\)</span>. With <span class="math notranslate nohighlight">\(\sigma = 0\)</span> the ground state becomes the largest eigenvalue, 3 times larger than the next one, and ARPACK converges in a few iterations.
+Each iteration solves a tridiagonal linear system, which costs only <span class="math notranslate nohighlight">\(O(N_D)\)</span>.</p>
+</section>
+<section id="from-eigenvectors-to-wave-functions">
+<h2>3. From eigenvectors to wave functions<a class="headerlink" href="#from-eigenvectors-to-wave-functions" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">eigsh</span></code> returns unit vectors, <span class="math notranslate nohighlight">\(\sum_i |v_i|^2 = 1\)</span>. A wave function needs</p>
+<div class="math notranslate nohighlight">
+\[
+\int |\phi(x)|^2\, dx \approx \sum_i |\phi_i|^2\, \Delta x = 1
+\qquad\Rightarrow\qquad \phi_i = \frac{v_i}{\sqrt{\Delta x}}.
+\]</div>
+<p>The overall sign of an eigenvector is arbitrary (ARPACK starts from a random vector), so a plot can flip from one run to the next.
+We fix it to match the exact Hermite functions, which are positive at large <span class="math notranslate nohighlight">\(x\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">lowest_states</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="c1"># k eigenvalues closest to sigma (ascending) and normalized wave functions (columns of psi)</span>
+    <span class="n">E</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">sparse</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigsh</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">"LM"</span><span class="p">)</span>
+    <span class="n">order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">E</span><span class="p">)</span>
+    <span class="n">E</span><span class="p">,</span> <span class="n">psi</span> <span class="o">=</span> <span class="n">E</span><span class="p">[</span><span class="n">order</span><span class="p">],</span> <span class="n">v</span><span class="p">[:,</span> <span class="n">order</span><span class="p">]</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dx</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+        <span class="c1"># sign convention: the outermost lobe on the right is positive</span>
+        <span class="n">lobe</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">psi</span><span class="p">[:,</span> <span class="n">n</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mf">0.01</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">psi</span><span class="p">[:,</span> <span class="n">n</span><span class="p">])</span><span class="o">.</span><span class="n">max</span><span class="p">())[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">psi</span><span class="p">[:,</span> <span class="n">n</span><span class="p">]</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">psi</span><span class="p">[</span><span class="n">lobe</span><span class="p">,</span> <span class="n">n</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">E</span><span class="p">,</span> <span class="n">psi</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">phi_exact</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">scipy</span><span class="o">.</span><span class="n">special</span><span class="o">.</span><span class="n">eval_hermite</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">n</span> <span class="o">*</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span>
+
+
+<span class="n">L</span><span class="p">,</span> <span class="n">ND</span> <span class="o">=</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">600</span>
+<span class="n">x</span><span class="p">,</span> <span class="n">dx</span> <span class="o">=</span> <span class="n">make_grid</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">ND</span><span class="p">)</span>
+<span class="n">E</span><span class="p">,</span> <span class="n">psi</span> <span class="o">=</span> <span class="n">lowest_states</span><span class="p">(</span><span class="n">hamiltonian</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">V</span><span class="p">),</span> <span class="n">dx</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+
+<span class="c1"># overlaps sum_i phi_m(x_i) phi_n(x_i) dx should be the identity matrix</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">psi</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">psi</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">4</span><span class="p">]</span> <span class="o">*</span> <span class="n">dx</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.0</span><span class="p">)</span>  <span class="c1"># + 0.0 turns -0.0 into 0.0</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[1. 0. 0. 0.]
+ [0. 1. 0. 0.]
+ [0. 0. 1. 0.]
+ [0. 0. 0. 1.]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">V</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.25"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"$V(x)$"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">E</span><span class="p">[</span><span class="n">n</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="n">n</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">"--"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">phi_exact</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">E</span><span class="p">[</span><span class="n">n</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.8"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>  <span class="c1"># exact, drawn underneath</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">psi</span><span class="p">[:,</span> <span class="n">n</span><span class="p">]</span> <span class="o">+</span> <span class="n">E</span><span class="p">[</span><span class="n">n</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="n">n</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">rf</span><span class="s2">"$\phi_</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">(x) + E_</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">$"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([],</span> <span class="p">[],</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.8"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"exact"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"$x$"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">"$V(x)$ or $\phi_n(x) + E_n$"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="n">L</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">L</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper left"</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.02</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/581d97bc8ecb7d5ea211f8edb4b07cbeb71f43d7198e365f681d20aefb37fd89.png" src="../_images/581d97bc8ecb7d5ea211f8edb4b07cbeb71f43d7198e365f681d20aefb37fd89.png" />
+</div>
+</div>
+</section>
+<section id="validation-compare-with-the-exact-energies">
+<h2>4. Validation: compare with the exact energies<a class="headerlink" href="#validation-compare-with-the-exact-energies" title="Permalink to this heading">#</a></h2>
+<p>How close are we to <span class="math notranslate nohighlight">\(E_n = n + \frac{1}{2}\)</span>?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">" n   numerical        exact   error"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">n</span><span class="si">:</span><span class="s2">2d</span><span class="si">}</span><span class="s2">  </span><span class="si">{</span><span class="n">E</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2">  </span><span class="si">{</span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">0.5</span><span class="si">:</span><span class="s2">11.1f</span><span class="si">}</span><span class="s2">  </span><span class="si">{</span><span class="n">E</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">0.5</span><span class="p">)</span><span class="si">:</span><span class="s2">+.1e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> n   numerical        exact   error
+ 0  0.49999489          0.5  -5.1e-06
+ 1  1.49998549          1.5  -1.5e-05
+ 2  2.50011200          2.5  +1.1e-04
+ 3  3.50142327          3.5  +1.4e-03
+ 4  4.50875960          4.5  +8.8e-03
+ 5  5.53677477          5.5  +3.7e-02
+</pre></div>
+</div>
+</div>
+</div>
+<p>The low states come out slightly <strong>too low</strong>, while the higher states come out <strong>too high</strong> by much more.
+Two different errors are at work. The next two cells separate them.</p>
+<section id="error-1-the-grid-spacing-delta-x">
+<h3>Error 1: the grid spacing <span class="math notranslate nohighlight">\(\Delta x\)</span><a class="headerlink" href="#error-1-the-grid-spacing-delta-x" title="Permalink to this heading">#</a></h3>
+<p>Taylor expanding the finite difference,</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\phi_{i+1} - 2\phi_i + \phi_{i-1}}{\Delta x^2} = \phi''(x_i) + \frac{\Delta x^2}{12}\,\phi''''(x_i) + O(\Delta x^4),
+\]</div>
+<p>so the discrete kinetic energy is off by <span class="math notranslate nohighlight">\(-\frac{\Delta x^2}{24}\phi''''\)</span>.
+First-order perturbation theory then predicts <span class="math notranslate nohighlight">\(\Delta E_n \approx -\frac{\Delta x^2}{24}\langle p^4\rangle_n = -\frac{\Delta x^2}{32}\left(2n^2 + 2n + 1\right)\)</span> for the harmonic oscillator.
+To see this error on its own, we use a large box (<span class="math notranslate nohighlight">\(L = 10\)</span>) and shrink <span class="math notranslate nohighlight">\(\Delta x\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">L</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">NDs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="mi">800</span><span class="p">,</span> <span class="mi">1600</span><span class="p">])</span>
+<span class="n">dxs</span> <span class="o">=</span> <span class="n">L</span> <span class="o">/</span> <span class="n">NDs</span>
+<span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">ND</span> <span class="ow">in</span> <span class="n">NDs</span><span class="p">:</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">dx</span> <span class="o">=</span> <span class="n">make_grid</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">ND</span><span class="p">)</span>
+    <span class="n">E_ND</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">lowest_states</span><span class="p">(</span><span class="n">hamiltonian</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">V</span><span class="p">),</span> <span class="n">dx</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">E_ND</span> <span class="o">-</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">))</span>
+<span class="n">errors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+    <span class="n">predicted</span> <span class="o">=</span> <span class="n">dxs</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">32</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">n</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">dxs</span><span class="p">,</span> <span class="n">predicted</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="n">n</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">"--"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">dxs</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">errors</span><span class="p">[:,</span> <span class="n">n</span><span class="p">]),</span> <span class="s2">"o"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="n">n</span><span class="p">],</span> <span class="n">ms</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">"$n = </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">$"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([],</span> <span class="p">[],</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.4"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">"predicted $\Delta x^2 (2n^2 + 2n + 1)/32$"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">"$\Delta x$"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">"$|E_n - (n + \frac</span><span class="si">{1}{2}</span><span class="s2">)|$"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"ratio of errors when dx is halved:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">errors</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">errors</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/720fa52cc2071e9b5f1fe4a6412001d0a3f43e559e4bc87d804ab79752a40bb4.png" src="../_images/720fa52cc2071e9b5f1fe4a6412001d0a3f43e559e4bc87d804ab79752a40bb4.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ratio of errors when dx is halved:
+[[4.01 4.01 4.02 4.03]
+ [4.   4.   4.01 4.01]
+ [4.   4.   4.   4.01]
+ [4.   4.   4.   4.03]
+ [4.   4.   4.02 4.12]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Slope 2 on the log-log plot, and halving <span class="math notranslate nohighlight">\(\Delta x\)</span> cuts the error by a factor of 4: the method is second order, and the points sit on the prediction.</p>
+</section>
+<section id="error-2-the-box-size-l">
+<h3>Error 2: the box size <span class="math notranslate nohighlight">\(L\)</span><a class="headerlink" href="#error-2-the-box-size-l" title="Permalink to this heading">#</a></h3>
+<p>The matrix is equivalent to hard walls just outside <span class="math notranslate nohighlight">\(x = \pm L/2\)</span>, where <span class="math notranslate nohighlight">\(\phi = 0\)</span>.
+The exact <span class="math notranslate nohighlight">\(\phi_n\)</span> leaks past the classical turning point <span class="math notranslate nohighlight">\(x_n = \sqrt{2n + 1}\)</span> and decays like <span class="math notranslate nohighlight">\(e^{-x^2/2}\)</span>.
+If a wall cuts into that tail, the state is squeezed and its energy goes <strong>up</strong>.
+Fix <span class="math notranslate nohighlight">\(\Delta x = 0.02\)</span> and vary <span class="math notranslate nohighlight">\(L\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"turning points x_n:"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"   L   E_n - (n + 1/2) for n = 0, ..., 5"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">L</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">]:</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">dx</span> <span class="o">=</span> <span class="n">make_grid</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">L</span> <span class="o">/</span> <span class="mf">0.02</span><span class="p">))</span>
+    <span class="n">E_L</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">lowest_states</span><span class="p">(</span><span class="n">hamiltonian</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">V</span><span class="p">),</span> <span class="n">dx</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">L</span><span class="si">:</span><span class="s2">4d</span><span class="si">}</span><span class="s2">  "</span> <span class="o">+</span> <span class="s2">"  "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">err</span><span class="si">:</span><span class="s2">+.1e</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">err</span> <span class="ow">in</span> <span class="n">E_L</span> <span class="o">-</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>turning points x_n: [1.   1.73 2.24 2.65 3.   3.32]
+   L   E_n - (n + 1/2) for n = 0, ..., 5
+   6  +3.4e-04  +5.5e-03  +3.8e-02  +1.5e-01  +4.3e-01  +9.3e-01
+   8  -1.2e-05  -5.0e-05  +1.4e-05  +1.2e-03  +8.2e-03  +3.5e-02
+  10  -1.3e-05  -6.2e-05  -1.6e-04  -3.1e-04  -5.0e-04  -6.8e-04
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  12  -1.3e-05  -6.3e-05  -1.6e-04  -3.1e-04  -5.1e-04  -7.6e-04
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <span class="math notranslate nohighlight">\(L = 10\)</span> and <span class="math notranslate nohighlight">\(L = 12\)</span> rows agree to within <span class="math notranslate nohighlight">\(10^{-4}\)</span>: once the walls are far enough away, only the small, negative grid error from Error 1 is left.
+With <span class="math notranslate nohighlight">\(L = 8\)</span> (walls at <span class="math notranslate nohighlight">\(\pm 4\)</span>), <span class="math notranslate nohighlight">\(E_0\)</span> and <span class="math notranslate nohighlight">\(E_1\)</span> are fine, but the walls push <span class="math notranslate nohighlight">\(E_3\)</span> up by about <span class="math notranslate nohighlight">\(10^{-3}\)</span> and <span class="math notranslate nohighlight">\(E_5\)</span> (turning point <span class="math notranslate nohighlight">\(x_5 \approx 3.3\)</span>) by about <span class="math notranslate nohighlight">\(4 \times 10^{-2}\)</span>.</p>
+</section>
+</section>
+<section id="your-turn-assignment-2">
+<h2>5. Your turn: Assignment 2<a class="headerlink" href="#your-turn-assignment-2" title="Permalink to this heading">#</a></h2>
+<p>Nothing above is specific to the harmonic oscillator except <code class="docutils literal notranslate"><span class="pre">V(x)</span></code> and the exact answers.
+For a potential without exact answers, check the results yourself before trusting them:</p>
+<ul class="simple">
+<li><p><strong>Grid:</strong> halve <span class="math notranslate nohighlight">\(\Delta x\)</span>. The change in <span class="math notranslate nohighlight">\(E_n\)</span> should shrink by about 4 each time.</p></li>
+<li><p><strong>Box:</strong> make <span class="math notranslate nohighlight">\(L\)</span> larger. The energies you report should not move.</p></li>
+<li><p><strong>Normalization:</strong> divide by <span class="math notranslate nohighlight">\(\sqrt{\Delta x}\)</span> and check <span class="math notranslate nohighlight">\(\sum_i |\phi_i|^2\,\Delta x = 1\)</span> before plotting.</p></li>
+<li><p><strong>Shift:</strong> <code class="docutils literal notranslate"><span class="pre">sigma</span></code> should sit at or below the lowest energy you expect. Shift-invert finds the <span class="math notranslate nohighlight">\(E_n\)</span> closest to <span class="math notranslate nohighlight">\(\sigma\)</span>, so <span class="math notranslate nohighlight">\(\sigma = 0\)</span> works here only because every <span class="math notranslate nohighlight">\(E_n &gt; 0\)</span>.</p></li>
+</ul>
+<p><strong>Looking ahead:</strong> the eigenpairs give the propagator, <span class="math notranslate nohighlight">\(K(x, t; x', 0) = \sum_n \phi_n(x)\,\phi_n^*(x')\,e^{-iE_n t/\hbar}\)</span>, and the partition function, <span class="math notranslate nohighlight">\(Z(\beta) = \sum_n e^{-\beta E_n}\)</span>.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./lectures"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../labs/lab05/lab05.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Lab 05: Assignment 1 tutorial</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../labs/lab08/lab08.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Which points count?</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-hamiltonian-matrix">1. The Hamiltonian matrix</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#three-ways-to-find-the-lowest-eigenvalues">2. Three ways to find the lowest eigenvalues</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#from-eigenvectors-to-wave-functions">3. From eigenvectors to wave functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#validation-compare-with-the-exact-energies">4. Validation: compare with the exact energies</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#error-1-the-grid-spacing-delta-x">Error 1: the grid spacing <span class="math notranslate nohighlight">\(\Delta x\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#error-2-the-box-size-l">Error 2: the box size <span class="math notranslate nohighlight">\(L\)</span></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#your-turn-assignment-2">5. Your turn: Assignment 2</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Javier Duarte
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

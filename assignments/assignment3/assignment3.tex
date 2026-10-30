@@ -83,7 +83,7 @@ If not, what could be going wrong?
 
 \newpage
 \section{Path-Integral Monte Carlo at Finite Temperature [20 Points]}
-\materials{Lectures 13 and 16--19, Labs 13--14}
+\materials{Lectures 13 and 16--19, Labs 12 and 14}
 
 In Lab 14 you sampled imaginary-time paths at large $\beta$, where only the ground state contributes.
 Here you will work at moderate $\beta$, where excited states contribute too, and check the result against an exact answer and against the eigenvalue method of Lecture 11 and Assignment 2.
@@ -107,7 +107,7 @@ For the harmonic oscillator, $V(x) = \frac{1}{2}x^2$, the exact result as $\delt
     \item Run at least 50{,}000 sweeps.
           Choose $h$ so that 40--60\% of updates are accepted, and justify your burn-in.
           Plot the time series of $\frac{1}{N}\sum_i x_i^2$ and its autocorrelation function, and estimate the integrated autocorrelation time $\tau_\mathrm{int}$ (in sweeps).
-          Report $\langle x^2\rangle_\beta$ with an error bar from blocking (Lab 13), and compare it with the naive error bar that treats every sweep as independent.
+          Report $\langle x^2\rangle_\beta$ with an error bar from blocking (Lab 12), and compare it with the naive error bar that treats every sweep as independent.
     \item Explain why single-slice updates decorrelate slowly.
           (Hint: how far can one update move the center of the path, $\bar x = \frac{1}{N}\sum_i x_i$, when $\delta\tau$ is small?)
           Then add a second move after every sweep that shifts the whole path, $x_i \to x_i + d$ for all $i$, with $d$ uniform in $[-h', h']$.

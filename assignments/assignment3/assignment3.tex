@@ -45,9 +45,9 @@ The energy of the system for a given spin configuration $\sigma = \{\sigma_i\}_{
 \end{equation}
 where $\langle i j \rangle$ denotes two adjacent sites (with no double counting), $J$ is the spin-spin interaction, and $\sigma_i \in \{ -1, +1\}$ is the spin at site $i$.
 
-The net magnetization of the system is
+The total magnetization of the system and the magnetization per spin are
 \begin{equation}
-  M(\sigma) = \frac{1}{|\Lambda|}\sum_{i\in \Lambda} \sigma_i.
+  M(\sigma) = \sum_{i\in \Lambda} \sigma_i, \qquad m(\sigma) = \frac{M(\sigma)}{|\Lambda|} = \frac{1}{|\Lambda|}\sum_{i\in \Lambda} \sigma_i.
 \end{equation}
 
 The probability of a given configuration $\sigma$ is given by the Boltzmann distribution
@@ -58,9 +58,9 @@ where $Z = \sum_{\sigma} \exp \left(-\frac{E(\sigma)}{k_\mathrm{B}T}\right)$ is 
 For this problem, you may set $J=k_\mathrm{B}=1$.
 
 \begin{problem}[10]
-Use MCMC to simulate the 2D Ising model at temperature $T=2$ and calculate the net magnetization at each time step.
+Use MCMC to simulate the 2D Ising model at temperature $T=2$ and calculate the magnetization per spin $m$ at each time step.
 Try two initial configurations: one with all spins up and one with spins randomly up or down with equal probability.
-Plot the net magnetization as a function of MCMC time steps.
+Plot $m$ as a function of MCMC time steps.
 What's a good number of ``burn-in'' steps for the two initial configurations?
 What's a good number of total steps to get a good estimate of the magnetization?
 \end{problem}
@@ -72,7 +72,7 @@ What's a good number of total steps to get a good estimate of the magnetization?
 Re-run the MCMC simulation for the 2D Ising model at temperatures $T=1$ to $4$ in steps of 0.2.
 Describe your strategy for determining the initial configuration, burn-in steps, number of steps per chain, number of chains, and thinning (if any).
 
-Plot the net magnetization and its standard deviation (as an error bar or band) as a function of temperature.
+Plot the magnetization per spin $m$ and its standard deviation (as an error bar or band) as a function of temperature.
 Compare to the theoretical prediction for the critical temperature $T_\mathrm{c}=\frac{2}{\ln(1+\sqrt{2})}\approx 2.269$ in units where $J=k_\mathrm{B}=1$.
 Do you observe a sharp phase transition at the critical temperature?
 If not, what could be going wrong?

@@ -93,14 +93,16 @@ class StatisticsChecks(unittest.TestCase):
             np.testing.assert_allclose(samples, scale**2 * reference_samples, atol=1e-12)
 
     def test_ising_sampler_is_reproducible_and_ordered(self):
-        history = self.f["magnetization_history"](2.7, 8, 50, 3)
-        np.testing.assert_array_equal(history, self.f["magnetization_history"](2.7, 8, 50, 3))
+        lattice, history = self.f["run_ising"](2.7, 8, 50, 3)
+        np.testing.assert_array_equal(history, self.f["run_ising"](2.7, 8, 50, 3)[1])
         self.assertEqual(len(history), 51)
         self.assertEqual(history[0], 1.0)
+        self.assertEqual(history[-1], lattice.mean())
         self.assertTrue(np.all(np.abs(history) <= 1.0))
         # Far below the transition, flipping an aligned spin costs 8J and is never accepted.
-        cold = self.f["magnetization_history"](0.1, 8, 20, 3)
+        cold_lattice, cold = self.f["run_ising"](0.1, 8, 20, 3)
         np.testing.assert_array_equal(cold, np.ones(21))
+        np.testing.assert_array_equal(cold_lattice, np.ones((8, 8), dtype=np.int64))
 
 
 if __name__ == "__main__":

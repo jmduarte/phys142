@@ -78,12 +78,13 @@ parts:
     chapters:
     - file: labs/lab11/lab11.ipynb
       title: "Lab 11: MCMC and the 2D Ising Model"
+    - file: labs/lab12/lab12.ipynb
+      title: "Lab 12: Statistical Error Estimation"
   - caption: Week 7
     chapters:
     # UNRELEASED: uncomment the next two lines to publish Assignment 3.
     # - url: https://jduarte.physics.ucsd.edu/phys142/assignment3.pdf
     #   title: "Assignment 03 (Due Mon 11/16)"
-    # TODO Tue 11/10 Lab 13: Statistical Error Estimation (no materials yet)
     - file: labs/lab14/lab14.ipynb
       title: "Lab 14: Path-Integral MCMC Tutorial"
   - caption: Week 8

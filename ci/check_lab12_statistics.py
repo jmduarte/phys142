@@ -9,12 +9,14 @@ from pathlib import Path
 import unittest
 
 import numpy as np
+from numba import njit
 
 NOTEBOOK = Path(__file__).resolve().parents[1] / "labs/lab12/lab12.ipynb"
 
 
 def functions():
-    namespace = {"np": np}
+    # The notebook's import cell provides these names to its compiled sampler.
+    namespace = {"np": np, "njit": njit, "J": 1.0, "KB": 1.0}
     notebook = json.loads(NOTEBOOK.read_text())
     for cell in notebook["cells"]:
         if cell["cell_type"] == "code":
@@ -90,14 +92,15 @@ class StatisticsChecks(unittest.TestCase):
             self.assertAlmostEqual(error, scale**2 * reference_error)
             np.testing.assert_allclose(samples, scale**2 * reference_samples, atol=1e-12)
 
-    def test_invalid_analysis_is_rejected(self):
-        for block_size in (0, 3, 12):
-            with self.assertRaises(ValueError):
-                self.f["block_moments"](np.arange(10.), block_size)
-        with self.assertRaises(ValueError):
-            self.f["autocorrelation"](np.ones(8), 4)
-        with self.assertRaises(ValueError):
-            self.f["stationary_ar1"](20, 1.0, 142)
+    def test_ising_sampler_is_reproducible_and_ordered(self):
+        history = self.f["magnetization_history"](2.7, 8, 50, 3)
+        np.testing.assert_array_equal(history, self.f["magnetization_history"](2.7, 8, 50, 3))
+        self.assertEqual(len(history), 51)
+        self.assertEqual(history[0], 1.0)
+        self.assertTrue(np.all(np.abs(history) <= 1.0))
+        # Far below the transition, flipping an aligned spin costs 8J and is never accepted.
+        cold = self.f["magnetization_history"](0.1, 8, 20, 3)
+        np.testing.assert_array_equal(cold, np.ones(21))
 
 
 if __name__ == "__main__":

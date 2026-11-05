@@ -86,7 +86,7 @@ If not, what could be going wrong?
 \materials{Lectures 13 and 16--19, Labs 12 and 14}
 
 In Lab 14 you sampled imaginary-time paths at large $\beta$, where only the ground state contributes.
-Here you will work at moderate $\beta$, where excited states contribute too, and check the result against an exact answer and against the eigenvalue method of Lecture 11 and Assignment 2.
+Here you will work at moderate $\beta$, where excited states contribute too, and check the result against an exact answer.
 
 Divide the imaginary time $\beta$ into $N$ slices of width $\delta\tau = \beta/N$ (with $m = \hbar = 1$).
 A closed path $x = (x_0, x_1, \ldots, x_{N-1})$, with $x_N \equiv x_0$, has probability
@@ -100,7 +100,7 @@ For the harmonic oscillator, $V(x) = \frac{1}{2}x^2$, the exact result as $\delt
   \langle x^2\rangle_\beta = \frac{1}{2}\coth\left(\frac{\beta}{2}\right).
 \end{equation}
 
-\begin{problem}[10]
+\begin{problem}[15]
   Take $\beta = 1$ and $\delta\tau = 0.1$ ($N = 10$).
   Sample paths with Metropolis updates of one slice at a time, $x_i \to x_i + u$ with $u$ uniform in $[-h, h]$; one \emph{sweep} is $N$ attempted updates.
   \begin{enumerate}[(i)]
@@ -119,21 +119,11 @@ For the harmonic oscillator, $V(x) = \frac{1}{2}x^2$, the exact result as $\delt
 \begin{solution}
 \end{solution}
 
-\begin{problem}[10]
+\begin{problem}[5]
   Using both moves and $\delta\tau = 0.1$, compute $\langle x^2\rangle_\beta$ with error bars for $\beta = 0.5$, 1, 2, and 4.
-  Plot the results against $\beta$ together with
-  \begin{enumerate}[(i)]
-    \item the exact result $\frac{1}{2}\coth(\beta/2)$, and
-    \item the thermal average built from the eigenstates of the discrete Hamiltonian (your code from Assignment 2, or the Lecture 11 demo),
-          \begin{equation}
-            \langle x^2\rangle_\beta = \frac{\sum_n e^{-\beta E_n}\, \langle\phi_n|x^2|\phi_n\rangle}{\sum_n e^{-\beta E_n}}.
-          \end{equation}
-          How many eigenstates, and how large a box, do you need for 0.1\% accuracy at $\beta = 0.5$?
-          Explain why the box $-4 \leq x \leq 4$ used in Lecture 11 is not enough here.
-  \end{enumerate}
-  Finally, at $\beta = 1$ the time discretization lowers $\langle x^2\rangle_\beta$ by about 2.1\%, 0.55\%, and 0.09\% for $\delta\tau = 0.5$, 0.25, and 0.1.
-  Using your $\tau_\mathrm{int}$ and the variance of your measurements, estimate how many sweeps you would need to detect the $\delta\tau = 0.25$ shift at the $3\sigma$ level.
-  Is your $\delta\tau = 0.1$ result limited by statistics or by discretization?
+  Plot the results against $\beta$ together with the exact result $\frac{1}{2}\coth(\beta/2)$.
+  At $\beta = 1$, the time discretization with $\delta\tau = 0.1$ lowers $\langle x^2\rangle_\beta$ by about 0.09\%.
+  Compare this with your error bar: is your result limited by statistics or by discretization?
 \end{problem}
 
 \begin{solution}

@@ -60,71 +60,121 @@ biblabel=brackets,
 \newpage
 \section{Double Well Potential with MCMC}
 
-Consider the double well potential,
+Consider the double well potential from Assignment 2,
 \begin{equation}
-  V(x) =  \alpha x^4  - 2x^2 + \frac{1}{\alpha}
+  V(x) = \alpha x^4 - 2x^2 + \frac{1}{\alpha} = \alpha\left(x^2 - \frac{1}{\alpha}\right)^2,
 \end{equation}
-where $x$ is the position of the particle, and we set $m=\hbar=1$ and $\alpha = 0.4$.
-See Refs.~\cite{Mittal:2020,Rodgers:2014} for discussions of similar problems.
+with $m=\hbar=1$ and $\alpha = 0.4$.
+In Assignment 2 you watched a particle tunnel between the wells in real time and found the energy gap $\Delta E = E_1 - E_0$ from the eigenstates of the discretized Hamiltonian; Problem B(i) there already gives $E_0$ and $E_1$ at $\alpha = 0.4$~\cite{Banerjee:1978}.
+In this project you will recover $E_0$, $\Delta E$, and the position distribution from imaginary-time paths alone, with your Assignment 2 eigenstates as the benchmark throughout.
+See Refs.~\cite{Mittal:2020,Rodgers:2014} for discussions of similar problems, and Ref.~\cite{Creutz:1981} for an early MCMC study of this system.
 
-Use the path integral formulation with imaginary time $\tau$,
-\begin{align}
-  Z & = \int \mathcal D x(\tau) \exp\left [-\frac{1}{\hbar}\oint^{\tau_b}_{0} L_E(x(\tau)) d\tau \right]]                                                                                                                                                                                        \\
-    & =\lim_{\delta\tau\to 0}   \int \cdots \int dx_0\cdots dx_{N-1}  \left (\frac{2\pi \hbar \delta\tau}{m} \right)^{-\frac{N}{2}} \exp\left [-\frac{1}{\hbar} \left(\sum_{i=1}^{N}\frac{m(x_{i} - x_{i-1})^2}{2\delta\tau} + \delta\tau V \left(\frac{x_{i-1}+x_{i}}{2}\right )\right)\right ]
-\end{align}
-where $L_E(x(\tau)) = \textstyle\frac{m}{2} \left(\frac{dx}{d\tau}\right)^2 + V(x(\tau))$ is the Euclidean Lagrangian, imaginary time is discretized with $N$ increments, $\tau_a = 0$, and $\tau_b = N\delta\tau = \hbar\beta$.
-So the probability of a given path $(x_0, x_1, \dots, x_{N-1})$ is
-\begin{align}
-  p(x_0,\dots, x_{N-1}) & \propto \exp\left [-\frac{1}{\hbar} \left(\sum_{i=1}^{N}\frac{m(x_{i} - x_{i-1})^2}{2\delta\tau} + \delta\tau V \left(\frac{x_{i-1}+x_{i}}{2}\right )\right)\right ]
-\end{align}
+As in Assignment 3, divide the imaginary time $\beta$ into $N$ slices of width $\delta\tau = \beta/N$.
+A closed path $x = (x_0, x_1, \ldots, x_{N-1})$, with $x_N \equiv x_0$, has probability
+\begin{equation}
+  p(x) \propto e^{-S_E(x)}, \qquad
+  S_E(x) = \sum_{i=0}^{N-1}\left[\frac{(x_{i+1}-x_i)^2}{2\,\delta\tau} + \delta\tau\, V(x_i)\right],
+\end{equation}
+which is the discretized path integral for $Z = \mathrm{Tr}\, e^{-\beta\hat H}$ (Lecture 13).
+By the virial theorem, the energy can be estimated from the positions alone,
+\begin{equation}
+  \langle\hat H\rangle_\beta = \left\langle V(x) + \frac{1}{2}\,x\,V'(x)\right\rangle_\beta,
+\end{equation}
+averaged over slices and sampled paths.
 
 \begin{problem}
-  Evaluate the ground state energy and probability distribution of the particle using Markov chain Monte Carlo with the Metropolis-Hastings algorithm in the large-$\tau_b$ (imaginary time) limit.
-  Describe your strategy for determining $\tau_b$, the initial configuration, burn-in steps, hit size, number of sweeps, and thinning (if any).
+  \emph{Ground state.}
+  At large $\beta$, compute $E_0$ with the virial estimator and histogram the $x_i$ to obtain $|\phi_0(x)|^2$.
+  Compare both with your Assignment 2 results, using error bars that account for autocorrelation (Lab 12).
+  How large must $\beta$ be? (Hint: compare $\beta$ with $1/\Delta E$, not only with $1/(E_2 - E_0)$.)
+  How do your results change with $\delta\tau$?
+  Describe your strategy for $\beta$, $\delta\tau$, the initial configuration, burn-in, hit size (and resulting acceptance rate), number of sweeps, and thinning (if any).
 \end{problem}
 
 \begin{problem}
-  Plot the ground state probability distribution and compare it with the expected form.
+  \emph{Tunneling in imaginary time.}
+  Measure the correlation function $C(\tau) = \langle x(0)\,x(\tau)\rangle_\beta$, averaged over all pairs of slices separated by $\tau$.
+  Insert eigenstates to show that, once $\tau$ and $\beta-\tau$ are long enough that states above $\phi_1$ no longer contribute,
+  \begin{equation}
+    C(\tau) \approx |\langle\phi_0|x|\phi_1\rangle|^2\,\frac{\cosh\left[\Delta E\,(\tau-\beta/2)\right]}{\cosh(\beta\,\Delta E/2)}.
+  \end{equation}
+  Fit your $C(\tau)$ to extract $\Delta E$ and $|\langle\phi_0|x|\phi_1\rangle|$ with uncertainties, and compare with Assignment 2.
+  Plot the time series of the path center $\bar x = \frac{1}{N}\sum_i x_i$ and a few sampled paths.
+  How often does your chain move between the wells, and what does that imply for $\tau_\mathrm{int}$ and the number of sweeps you need?
+  Does a move that shifts the whole path, $x_i \to x_i + d$ for all $i$ (the bonus problem of Assignment 3), help? Why or why not?
 \end{problem}
 
 \begin{problem}
-  Calculate the energy and probability distribution of the particle from the same simulation code for a smaller value of $\tau_b$.
-  What is the expected probability distribution in this case?
-  What does this correspond to in terms of a statistical mechanics interpretation?
+  \emph{Finite temperature.}
+  Repeat Problem A for several smaller values of $\beta$, from about $1/\Delta E$ down to $\beta < 1$.
+  Compare your histograms with the thermal distribution built from the eigenstates,
+  \begin{equation}
+    \rho_\beta(x) = \frac{\sum_n e^{-\beta E_n}\,|\phi_n(x)|^2}{\sum_n e^{-\beta E_n}},
+  \end{equation}
+  and plot your energies against $\beta$ together with $\langle\hat H\rangle_\beta = \sum_n E_n e^{-\beta E_n}/\sum_n e^{-\beta E_n}$.
+  How many eigenstates, and how large a box, do you need at your smallest $\beta$?
+  What does $\rho_\beta(x)$ correspond to in statistical mechanics, and what should it approach as $\beta\to 0$?
 \end{problem}
+
+\noindent\textbf{Possible extensions:}
+\begin{itemize}
+  \item A move that reflects a segment of the path, $x_i \to -x_i$ for $i_1 \leq i < i_2$.
+        Which terms of $S_E$ change, and why is the proposal symmetric?
+        Compare how often the chain tunnels, and the resulting $\tau_\mathrm{int}$, with and without it.
+  \item The midpoint potential $\delta\tau\,V\!\left(\frac{x_i+x_{i+1}}{2}\right)$ used in the Assignment 2 propagator: does it converge faster or slower in $\delta\tau$?
+  \item Repeat Problem B for several $\alpha$ and compare how $\Delta E$ falls with the barrier height $V(0) = 1/\alpha$ against the instanton (WKB) estimate.
+\end{itemize}
 
 
 \newpage
 \section{2D Ising Model with MCMC}
 
-Consider the 2D Ising model in a square lattice $\Lambda$ with $100\times 100$ sites and periodic boundary conditions in the presence of an external magnetic field $B$.
+Consider the 2D Ising model of Assignment 3 on an $L\times L$ square lattice $\Lambda$ with periodic boundary conditions, now in the presence of an external magnetic field $B$.
 The energy of the system for a given spin configuration $\sigma = \{\sigma_i\}_{i\in \Lambda}$ is
 \begin{equation}
   E(\sigma) = -J\sum_{\langle ij\rangle} \sigma_i\sigma_j - B\sum_{i\in \Lambda} \sigma_i,
 \end{equation}
 where $\langle i j \rangle$ denotes two adjacent sites (with no double counting), $J$ is the spin-spin interaction, and $\sigma_i \in \{ -1, +1\}$ is the spin at site $i$.
-
-The magnetization of the system is
+As in Assignment 3, set $J = k_\mathrm{B} = 1$; the total magnetization and the magnetization per spin are
 \begin{equation}
-  M(\sigma) = \frac{1}{|\Lambda|}\sum_{i\in \Lambda} \sigma_i.
+  M(\sigma) = \sum_{i\in \Lambda} \sigma_i, \qquad m(\sigma) = \frac{M(\sigma)}{|\Lambda|}.
 \end{equation}
+In Assignment 3, a $20\times 20$ lattice at $B=0$ did not show a sharp transition at $T_\mathrm{c}=\frac{2}{\ln(1+\sqrt{2})}\approx 2.269$.
+Here you will map out the phase diagram on larger lattices and see how the transition sharpens as $L$ grows.
+All results should have error bars that account for autocorrelation (Lab 12).
 
 \begin{problem}
-  Use Markov chain Monte Carlo and the Metropolis-Hastings algorithm to simulate the 2D Ising model at different temperatures $T$ and magnetic field strengths $B$.
+  Use Markov chain Monte Carlo and the Metropolis algorithm to simulate the model on a $100\times 100$ lattice at different temperatures $T$ and magnetic field strengths $B$.
   Discuss your strategy for determining the initial configuration, burn-in steps, total number of steps, and thinning (if any).
-\end{problem}
-
-
-\begin{problem}
-  Plot 1D scans of the magnetization $M$ versus $T$ for fixed $B$ at three different values: $B<0$, $B=0$, and $B>0$.
-  Plot 1D scans of the magnetization $M$ versus $B$ for fixed $T$ at three different values: $T<T_C$, $T=T_C$, and $T>T_C$, where $T_C=\frac{2}{\ln(1+\sqrt{2})}\approx 2.269$.
+  At $B=0$, plot the integrated autocorrelation time of $m$ versus $T$ and discuss what it implies for runs near $T_\mathrm{c}$.
 \end{problem}
 
 \begin{problem}
-  Putting this all together, draw/describe the phase diagram in $B$ versus $T$ of the 2D Ising model, where the magnetization $M$ is the order parameter.
-  Consider discussing first-order phase transitions and critical exponents, hysteresis and metastable states, and/or specific heat and susceptibility.
+  Plot 1D scans of $m$ versus $T$ for fixed $B$ at three different values: $B<0$, $B=0$, and $B>0$.
+  Plot 1D scans of $m$ versus $B$ for fixed $T$ at three different values: $T<T_\mathrm{c}$, $T=T_\mathrm{c}$, and $T>T_\mathrm{c}$.
+\end{problem}
+
+\begin{problem}
+  \emph{Finite-size effects.}
+  At $B=0$, scan $T$ across the transition for at least three lattice sizes up to $L=100$, including $L=20$ from Assignment 3.
+  Plot $\langle|m|\rangle$, the susceptibility per spin $\chi = \frac{|\Lambda|}{T}\left(\langle m^2\rangle - \langle|m|\rangle^2\right)$, and the heat capacity per spin $C = \frac{1}{|\Lambda|\,T^2}\left(\langle E^2\rangle - \langle E\rangle^2\right)$ versus $T$, with jackknife or bootstrap error bars for $\chi$ and $C$.
+  (Lab 12 used $m$ in place of $|m|$; explain why $|m|$ is needed at $B=0$.)
+  How do the positions and heights of the peaks change with $L$?
+  Use these results to explain what you saw in Assignment 3.
+\end{problem}
+
+\begin{problem}
+  Putting this all together, draw/describe the phase diagram in $B$ versus $T$ of the 2D Ising model, where the magnetization $m$ is the order parameter.
+  Consider discussing first-order phase transitions and critical exponents, and hysteresis and metastable states.
   See Refs.~\cite{Eastman:2014,Krauss:2018} for relevant discussions.
 \end{problem}
+
+\noindent\textbf{Possible extensions:}
+\begin{itemize}
+  \item Cluster updates (e.g., the Wolff algorithm~\cite{Wolff:1989}) near $T_\mathrm{c}$: compare autocorrelation times with single-spin flips as $L$ grows.
+  \item Locate $T_\mathrm{c}$ from the crossing of the Binder cumulant $U_L = 1 - \langle m^4\rangle / (3\langle m^2\rangle^2)$ for different $L$.
+  \item Estimate the critical exponent $\gamma/\nu$ (exactly $7/4$) from how the peak of $\chi$ grows with $L$.
+\end{itemize}
 
 \newpage
 \section{Drell--Yan Event Generator with VEGAS}
@@ -180,6 +230,7 @@ Useful constants are given in the tables below.
 \begin{problem}
   Use standard acceptance-rejection Monte Carlo to generate events $(E_\text{CM}, \cos\theta)$ for the Drell--Yan process in a range $E_\text{CM} \in [10, 200]\,\text{GeV}$ and $\cos\theta \in [-1, 1]$.
   Note, usually $E_\text{CM}$ is fixed in an electron-positron collider, but we will consider a range of energies, which is similar to the situation at a hadron collider where the partonic center-of-mass energy is not known exactly.
+  Take the event density to be $f(E_\text{CM}, \cos\theta) = 2\pi\,\frac{d\sigma}{d\Omega}(E_\text{CM}^2, \cos\theta)$, with no extra weight in $E_\text{CM}$, as if every energy in the range were delivered with the same luminosity.
 \end{problem}
 
 \begin{problem}
@@ -187,6 +238,25 @@ Useful constants are given in the tables below.
   Compare how many function evaluations are needed to arrive at the same number of samples, e.g. 10,000.
   Discuss the settings you use for the VEGAS algorithm, i.e. how many iterations, what kind of damping factor, and how many bins, etc.
 \end{problem}
+
+\begin{problem}
+  \emph{Validation.}
+  Integrate Eq.~\eqref{eq:partonicxs} over the solid angle to show that
+  \begin{equation}
+    \sigma(\hat s) = \frac{4\pi\alpha^2}{3\hat s}\,A_0(\hat s), \qquad
+    A_\mathrm{FB}(\hat s) \equiv \frac{\sigma_\mathrm{F} - \sigma_\mathrm{B}}{\sigma_\mathrm{F} + \sigma_\mathrm{B}} = \frac{3A_1(\hat s)}{8A_0(\hat s)},
+  \end{equation}
+  where $\sigma_\mathrm{F}$ ($\sigma_\mathrm{B}$) is the cross section with $\cos\theta > 0$ ($\cos\theta < 0$).
+  For the events from both methods, compare the $E_\text{CM}$ distribution with $\sigma(\hat s)$, and the measured $A_\mathrm{FB}$ in bins of $E_\text{CM}$, with statistical uncertainties, with the prediction.
+  Where does $A_\mathrm{FB}$ change sign, and why?
+  Both methods also estimate the integral of $f$ over the full range: compare these estimates, with uncertainties, with a numerical quadrature of $\int \sigma(E_\text{CM}^2)\, dE_\text{CM}$.
+\end{problem}
+
+\noindent\textbf{Possible extensions:}
+\begin{itemize}
+  \item Generate the same process with a general-purpose event generator such as MadGraph5\_aMC@NLO and compare distributions at a fixed $E_\text{CM}$.
+  \item Make the hadron-collider analogy real: generate $q\bar q \to Z/\gamma \to \mu^+\mu^-$ in proton-proton collisions by sampling the parton momentum fractions with parton distribution functions, as in Ref.~\cite{Papaefstathiou:2014mya}.
+\end{itemize}
 
 \newpage
 \section{Polymer Collapse with MCMC: A Toy Model of Protein Folding}

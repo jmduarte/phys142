@@ -79,6 +79,15 @@ class BuildCacheTests(unittest.TestCase):
         self.write("README.md", "Course introduction")
         self.assertEqual(self.keys(), self.before)
 
+    def test_datahub_setup_changes_keep_all_course_build_caches(self):
+        for name in ("ci/datahub/phys142_rise.py", "ci/datahub/setup_rise.py",
+                     "ci/datahub/README.md", ".github/workflows/test-datahub-rise.yml"):
+            self.write(name, "initial setup content\n")
+            self.git("add", "--", name)
+        self.assertEqual(self.keys(), self.before)
+        self.write("ci/datahub/phys142_rise.py", "updated server setup\n")
+        self.assertEqual(self.keys(), self.before)
+
     def test_assignment_edit_only_rebuilds_its_pdf(self):
         self.write("assignments/assignment2/assignment2.tex", "new question")
         self.assert_changed({"assignment2"})

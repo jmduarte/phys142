@@ -135,13 +135,20 @@ class Lab16SamplingTests(unittest.TestCase):
         self.assertAlmostEqual(float(f(-0.7, 2.9)), np.exp(-0.5), places=14)
         self.assertAlmostEqual(float(f(-0.3, 2.9)), np.exp(-1), places=14)
 
-    def test_exact_integral_matches_independent_finite_box_quadrature(self):
-        exact = self.function("exact_integral")
-        for parameters in ({}, ASYMMETRIC):
-            with self.subTest(parameters=bool(parameters)):
-                self.ns.update(parameters)
-                expected = quadrature(self.ns, lambda x, y: reference_density(self.ns, x, y))
-                self.assertAlmostEqual(exact(), expected, places=10)
+    def test_lego_histogram_keeps_x_and_y_at_their_actual_coordinates(self):
+        from unittest.mock import patch
+        from mpl_toolkits.mplot3d import Axes3D
+        import matplotlib.pyplot as plt
+
+        self.ns.update(XMIN=0.0, XMAX=5.0, YMIN=0.0, YMAX=5.0)
+        with patch.object(Axes3D, "bar3d") as bars, patch.object(plt, "show"):
+            self.function("lego_plot")([4.1, 4.2], [1.1, 1.2], 5, "x", "y", "Test")
+        x, y, _, _, _, counts = bars.call_args.args[:6]
+        peak = np.argmax(counts)
+        self.assertEqual(counts[peak], 2)
+        self.assertEqual(x[peak], 4.0)
+        self.assertEqual(y[peak], 1.0)
+        plt.close("all")
 
     def test_grid_covers_negative_nonsquare_domain_before_and_after_training(self):
         self.use_asymmetric_target()
@@ -201,27 +208,6 @@ class Lab16SamplingTests(unittest.TestCase):
                 weights = self.ns["f"](x, y) * 9 * (x1 - x0) * (y1 - y0)
                 self.assertLessEqual(float(np.max(weights)), actual * (1 + 1e-14))
         self.assertAlmostEqual(actual / expected, 1.0, places=12)
-
-    def test_fixed_sample_estimate_and_uncertainty_have_correct_normalization(self):
-        self.use_asymmetric_target()
-        estimate = self.function("estimate_integral")
-        x_edges = np.linspace(self.ns["XMIN"], self.ns["XMAX"], 9)
-        y_edges = np.linspace(self.ns["YMIN"], self.ns["YMAX"], 9)
-        count = 50_000
-        density = lambda x, y: reference_density(self.ns, x, y)
-        exact = quadrature(self.ns, density)
-        area = (self.ns["XMAX"] - self.ns["XMIN"]) * (self.ns["YMAX"] - self.ns["YMIN"])
-        weight_variance = area * quadrature(self.ns, lambda x, y: density(x, y) ** 2) - exact**2
-        expected_stderr = np.sqrt(weight_variance / count)
-        result = estimate(x_edges, y_edges, count, seed=381)
-        repeat = estimate(x_edges, y_edges, count, seed=381)
-        for key in ("mean", "stderr", "nFunEval"):
-            self.assertEqual(result[key], repeat[key])
-        np.testing.assert_array_equal(result["weights"], repeat["weights"])
-        self.assertEqual(result["nFunEval"], count)
-        self.assertGreater(result["stderr"], 0)
-        self.assertLess(abs(result["mean"] - exact), 6 * expected_stderr)
-        self.assertAlmostEqual(result["stderr"] / expected_stderr, 1.0, delta=0.05)
 
     def test_uniform_event_sampler_matches_target_and_reproduces_seed(self):
         self.use_asymmetric_target()

@@ -4,17 +4,21 @@
 Run from the course-site checkout with NumPy and Matplotlib installed:
     python3 ci/check_lab16_sampling.py [labs/lab16/lab16.ipynb]
 
-Only imports, function definitions, and uppercase constants are executed; the
-notebook's plotting demonstration and large event-generation call are omitted.
+Numerical unit checks extract definitions independently. Presentation checks
+execute the visible notebook cells in order, including plots and event generation,
+from an empty namespace without executing RISE skip or notes cells.
 """
 
 import ast
+from contextlib import redirect_stdout
 import inspect
+import io
 import json
 import math
 from pathlib import Path
 import sys
 import unittest
+from unittest.mock import patch
 
 import numpy as np
 
@@ -54,6 +58,85 @@ def load_functions():
         module = ast.Module(body=statements, type_ignores=[])
         exec(compile(module, f"{NOTEBOOK}:cell{index}", "exec"), namespace)
     return namespace
+
+
+def run_visible_notebook(stop_after=None):
+    """Follow a fresh RISE presentation without preloading hidden definitions."""
+    import matplotlib.pyplot as plt
+
+    namespace = {}
+    notebook = json.loads(NOTEBOOK.read_text())
+    # Execute plotting bodies, but release each figure at its normal show call.
+    # No notebook code or numerical workload is replaced by the test harness.
+    with redirect_stdout(io.StringIO()), patch.object(
+        plt, "show", side_effect=lambda *args, **kwargs: plt.close("all")
+    ):
+        try:
+            for index, cell in enumerate(notebook["cells"]):
+                if cell["cell_type"] != "code":
+                    continue
+                slide_type = cell.get("metadata", {}).get("slideshow", {}).get("slide_type")
+                if slide_type in {"skip", "notes"}:
+                    continue
+                source = "".join(cell["source"])
+                exec(compile(source, f"{NOTEBOOK}:cell{index}", "exec"), namespace)
+                if stop_after is not None and stop_after in namespace:
+                    break
+        finally:
+            plt.close("all")
+    return namespace
+
+
+class Lab16PresentationTests(unittest.TestCase):
+    def test_first_toy_runs_from_visible_setup_in_a_fresh_namespace(self):
+        # This follows the short path to the reported missing-helper failure:
+        # visible setup, toy definition, and the first show_toy_samples call.
+        namespace = run_visible_notebook(stop_after="x_uniform")
+        self.assertEqual(namespace["x_uniform"].shape, (100,))
+        self.assertTrue(np.all(np.isfinite(namespace["values"])))
+        self.assertTrue(np.isfinite(namespace["estimate"]))
+        self.assertTrue(np.isfinite(namespace["error"]))
+
+    def test_visible_walkthrough_runs_through_integrals_events_and_final_demos(self):
+        source_before = NOTEBOOK.read_bytes()
+        namespace = run_visible_notebook()
+        self.assertEqual(NOTEBOOK.read_bytes(), source_before)
+
+        # The real demonstration results must exist: preloading definitions
+        # alone or executing only an early prefix cannot satisfy these checks.
+        self.assertEqual(namespace["x_uniform"].shape, (100,))
+        for name, expected_size in (
+            ("production", 2000), ("uniform_2d", 5000), ("adaptive_2d", 5000),
+        ):
+            with self.subTest(result=name):
+                result = namespace[name]
+                self.assertEqual(result["nFunEval"], expected_size)
+                self.assertEqual(result["weights"].shape, (expected_size,))
+                for key in ("estimate", "error", "weights"):
+                    self.assertTrue(np.all(np.isfinite(result[key])), f"{name}.{key}")
+                self.assertGreaterEqual(result["error"], 0)
+
+        for name, coordinates in (("bf", ("yy1", "yy2")), ("vg", ("yy1vegas", "yy2vegas"))):
+            with self.subTest(result=name):
+                result = namespace[name]
+                self.assertEqual(result["events"].shape, (100_000, 2))
+                for key in coordinates:
+                    self.assertEqual(result[key].shape, (100_000,))
+                for key, value in result.items():
+                    self.assertTrue(np.all(np.isfinite(value)), f"{name}.{key}")
+                self.assertEqual(result["nFunEval"], len(result["proposals"]))
+                self.assertEqual(result["nTotalEval"], result["nTrainEval"] + result["nFunEval"])
+
+        self.assertTrue(callable(namespace["smooth_and_compress"]))
+        self.assertTrue(callable(namespace["show_offset_target"]))
+
+    def test_source_notebook_has_no_saved_outputs(self):
+        notebook = json.loads(NOTEBOOK.read_text())
+        for index, cell in enumerate(notebook["cells"]):
+            if cell["cell_type"] == "code":
+                with self.subTest(cell=index):
+                    self.assertIsNone(cell["execution_count"])
+                    self.assertEqual(cell["outputs"], [])
 
 
 # Unequal axes and separated peaks expose errors masked by the original

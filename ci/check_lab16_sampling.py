@@ -11,6 +11,7 @@ notebook's plotting demonstration and large event-generation call are omitted.
 import ast
 import inspect
 import json
+import math
 from pathlib import Path
 import sys
 import unittest
@@ -126,6 +127,114 @@ class Lab16SamplingTests(unittest.TestCase):
             second = quadrature(self.ns, lambda xx, yy: density(xx, yy) * moment(xx, yy) ** 2) / normalization
             uncertainty = np.sqrt(max(0.0, second - expected**2) / len(observed))
             self.assertLessEqual(abs(np.mean(observed) - expected), 6 * uncertainty, name)
+
+    def test_weight_summary_reports_uncertainty_on_the_mean(self):
+        summarize = self.function("summarize_weights")
+        estimate, uncertainty = summarize(np.array([1.0, 2.0, 4.0, 8.0]))
+        self.assertAlmostEqual(estimate, 15 / 4, places=14)
+        # The four squared deviations sum to 115/4. The variance of the
+        # sample mean therefore uses both the n-1 and n denominators.
+        self.assertAlmostEqual(uncertainty, np.sqrt(115 / 48), places=14)
+
+    def test_one_dimensional_proposal_has_equal_bin_mass_and_correct_density(self):
+        edges = np.array([-3.0, -2.9, -0.8, 4.0])
+        size = 60_000
+        x, q, indices = map(
+            np.asarray,
+            self.function("draw_1d")(edges, size, np.random.default_rng(934)),
+        )
+        for values in (x, q, indices):
+            self.assertEqual(values.shape, (size,))
+        self.assertTrue(np.issubdtype(indices.dtype, np.integer))
+        self.assertTrue(np.all((indices >= 0) & (indices < 3)))
+        self.assertTrue(np.all((x >= edges[indices]) & (x < edges[indices + 1])))
+        counts, _ = np.histogram(x, edges)
+        self.assertTrue(np.all(abs(counts - size / 3) < 6 * np.sqrt(size * 2 / 9)))
+        np.testing.assert_allclose(q, 1 / (3 * np.diff(edges)[indices]), rtol=2e-15, atol=0)
+
+    def test_constant_integral_has_zero_error_and_exact_evaluation_count(self):
+        estimate = self.function("estimate_1d")
+        calls = [0]
+
+        def constant(x):
+            calls[0] += np.asarray(x).size
+            return np.full_like(x, 2.5)
+
+        edges = np.array([-3.0, 4.0])
+        result = estimate(constant, edges, 577, seed=29)
+        self.assertEqual(calls[0], 577)
+        self.assertEqual(result["nFunEval"], 577)
+        self.assertAlmostEqual(result["estimate"], 17.5, places=13)
+        self.assertAlmostEqual(result["error"], 0.0, places=13)
+        np.testing.assert_allclose(result["weights"], 17.5, rtol=2e-15, atol=0)
+        np.testing.assert_allclose(result["q"], 1 / 7, rtol=2e-15, atol=0)
+        repeated = estimate(constant, edges, 577, seed=29)
+        np.testing.assert_array_equal(result["x"], repeated["x"])
+
+    def test_importance_integral_matches_independent_polynomial_quadrature(self):
+        # Unequal bins on a non-unit interval detect both missing f/q weights
+        # and an erroneous extra factor of the domain width.
+        edges = np.array([-2.0, -1.75, 0.5, 3.0])
+        saved_edges = edges.copy()
+        target = lambda x: x**2 + 2 * x + 4
+        result = self.function("estimate_1d")(target, edges, 60_000, seed=712)
+        # Integral of x^2 + 2x + 4 over [-2,3] is 110/3. Its squared
+        # integrand has this elementary antiderivative.
+        primitive = lambda x: x**5 / 5 + x**4 + 4 * x**3 + 8 * x**2 + 16 * x
+        exact = 110 / 3
+        second_moment = np.sum(3 * np.diff(edges) * np.diff(primitive(edges)))
+        exact_uncertainty = np.sqrt((second_moment - exact**2) / 60_000)
+        self.assertLess(abs(result["estimate"] - exact), 6 * exact_uncertainty)
+        self.assertGreater(result["error"], 0.9 * exact_uncertainty)
+        self.assertLess(result["error"], 1.1 * exact_uncertainty)
+        np.testing.assert_array_equal(edges, saved_edges)
+        for key in ("x", "q", "weights"):
+            self.assertEqual(np.asarray(result[key]).shape, (60_000,))
+        np.testing.assert_allclose(result["weights"], target(result["x"]) / result["q"], rtol=2e-15)
+
+    def test_one_dimensional_training_preserves_support_and_counts_every_evaluation(self):
+        train = self.function("train_1d")
+        calls = [0]
+
+        def target(x):
+            calls[0] += np.asarray(x).size
+            return 0.1 + 0.9 * np.exp(-0.5 * ((x - 0.63) / 0.003)**2) / (0.003 * np.sqrt(2 * np.pi))
+
+        result = train(target, bins=20, batch=1000, iterations=6, seed=142)
+        self.assertEqual(calls[0], 6000)
+        self.assertEqual(result["nTrainEval"], 6000)
+        self.assertIn("history", result)
+        edges = np.asarray(result["edges"])
+        self.assertEqual(edges.shape, (21,))
+        self.assertEqual(edges[0], 0.0)
+        self.assertEqual(edges[-1], 1.0)
+        self.assertTrue(np.all(np.isfinite(edges)))
+        self.assertTrue(np.all(np.diff(edges) > 0))
+        repeated = train(target, bins=20, batch=1000, iterations=6, seed=142)
+        np.testing.assert_array_equal(edges, repeated["edges"])
+
+        # Analytic Gaussian integrals evaluate the *true* production variance
+        # of the learned proposal, independently of its sampled error bar.
+        def true_weight_variance(grid):
+            width = np.diff(grid)
+            erf1 = np.array([math.erf((edge - 0.63) / (np.sqrt(2) * 0.003)) for edge in grid])
+            erf2 = np.array([math.erf((edge - 0.63) / 0.003) for edge in grid])
+            gaussian_area = np.diff(erf1) / 2
+            gaussian_square_area = np.diff(erf2) / (4 * np.sqrt(np.pi) * 0.003)
+            target_square_area = 0.01 * width + 0.18 * gaussian_area + 0.81 * gaussian_square_area
+            integral = 0.1 + 0.9 * gaussian_area.sum()
+            return np.sum(len(width) * width * target_square_area) - integral**2
+
+        uniform_variance = true_weight_variance(np.array([0.0, 1.0]))
+        self.assertLess(true_weight_variance(edges), uniform_variance / 4)
+
+    def test_zero_damping_freezes_the_grid(self):
+        target = lambda x: 0.1 + np.exp(-200 * (x - 0.63)**2)
+        result = self.function("train_1d")(
+            target, bins=20, batch=1000, iterations=3, alpha_damp=0.0, seed=41,
+        )
+        np.testing.assert_allclose(result["edges"], np.linspace(0, 1, 21), rtol=0, atol=2e-15)
+        self.assertEqual(result["nTrainEval"], 3000)
 
     def test_gaussian_sigma_matches_stated_equation(self):
         self.ns.update(A1=1.0, A2=0.0, MU1X=-0.7, MU1Y=1.2, SIGMA1X=0.4, SIGMA1Y=1.7)

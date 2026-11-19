@@ -16,6 +16,7 @@ import io
 import json
 import math
 from pathlib import Path
+import re
 import sys
 import unittest
 from unittest.mock import patch
@@ -87,7 +88,121 @@ def run_visible_notebook(stop_after=None):
     return namespace
 
 
+def presentation_function_usage():
+    """Trace first calls in slide order, including the exercises' Python fences.
+
+    Function bodies contribute dependencies when called, not when defined.
+    This checks the notebook's named helper calls; fresh execution above also
+    verifies Python's actual runtime behavior and numerical demonstrations.
+    """
+    notebook = json.loads(NOTEBOOK.read_text())
+    entries, definitions = [], {}
+    slide = -1
+    for index, cell in enumerate(notebook["cells"]):
+        slide_type = cell.get("metadata", {}).get("slideshow", {}).get("slide_type")
+        if slide_type in {"slide", "subslide"}:
+            slide += 1
+        source = "".join(cell["source"])
+        sources = [source] if cell["cell_type"] == "code" else re.findall(
+            r"```python[ \t]*\n(.*?)```", source, flags=re.DOTALL,
+        )
+        for source in sources:
+            tree = ast.parse(source)
+            for node in tree.body:
+                if isinstance(node, ast.FunctionDef):
+                    definitions.setdefault(node.name, []).append(node)
+            if slide_type not in {"skip", "notes"}:
+                entries.append((index, slide, tree))
+
+    def calls_in(node):
+        calls = []
+
+        class Calls(ast.NodeVisitor):
+            def visit_FunctionDef(self, node):
+                # Defining a function does not execute its body.
+                pass
+
+            def visit_Call(self, node):
+                self.generic_visit(node)
+                if isinstance(node.func, ast.Name) and node.func.id in definitions:
+                    calls.append(node.func.id)
+
+        Calls().visit(node)
+        return calls
+
+    def function_body(node):
+        return ast.Module(body=node.body, type_ignores=[])
+
+    # Plot wrappers such as plot_results count even though lego_plot creates
+    # their figures. Derive this from the implementations, not helper names.
+    plotters = {
+        name for name, nodes in definitions.items()
+        if any(
+            isinstance(call, ast.Call)
+            and isinstance(call.func, ast.Attribute)
+            and isinstance(call.func.value, ast.Name)
+            and call.func.value.id == "plt"
+            and call.func.attr in {"subplots", "figure"}
+            for node in nodes for call in ast.walk(node)
+        )
+    }
+    while True:
+        expanded = plotters | {
+            name for name, nodes in definitions.items()
+            if any(set(calls_in(function_body(node))) & plotters for node in nodes)
+        }
+        if expanded == plotters:
+            break
+        plotters = expanded
+
+    available, introduced, first_use, missing = {}, {}, {}, []
+
+    def invoke(name, index, slide, chain=()):
+        if name not in available:
+            missing.append(f"cell {index}, slide {slide}: {' -> '.join((*chain, name))}")
+            return
+        node = available[name]
+        definition_cell, definition_slide = introduced[name]
+        first_use.setdefault(name, (definition_cell, definition_slide, index, slide))
+        if name in chain:
+            return
+        for dependency in calls_in(function_body(node)):
+            invoke(dependency, index, slide, (*chain, name))
+
+    for index, slide, tree in entries:
+        for node in tree.body:
+            if isinstance(node, ast.FunctionDef):
+                # Defaults/decorators do run while defining a function.
+                for expression in [*node.decorator_list, *node.args.defaults,
+                                   *filter(None, node.args.kw_defaults)]:
+                    for name in calls_in(expression):
+                        invoke(name, index, slide)
+                available[node.name] = node
+                introduced.setdefault(node.name, (index, slide))
+            else:
+                for name in calls_in(node):
+                    invoke(name, index, slide)
+    return plotters, first_use, missing
+
+
 class Lab16PresentationTests(unittest.TestCase):
+    def test_plotting_functions_are_introduced_on_or_just_before_first_use(self):
+        plotters, first_use, _ = presentation_function_usage()
+        self.assertIn("plot_results", first_use, "Include the exercise's Python fence.")
+        for name in sorted(plotters):
+            with self.subTest(function=name):
+                self.assertIn(name, first_use, f"Plotting function {name} is never used.")
+                definition_cell, definition_slide, call_cell, call_slide = first_use[name]
+                self.assertIn(
+                    call_slide - definition_slide, (0, 1),
+                    f"{name}: definition cell {definition_cell} / slide {definition_slide}; "
+                    f"first call cell {call_cell} / slide {call_slide}",
+                )
+
+    def test_notebook_functions_are_defined_before_calls_and_transitive_uses(self):
+        _, _, missing = presentation_function_usage()
+        self.assertEqual(missing, [], "Calls before definition:\n" + "\n".join(missing))
+
     def test_first_toy_runs_from_visible_setup_in_a_fresh_namespace(self):
         # This follows the short path to the reported missing-helper failure:
         # visible setup, toy definition, and the first show_toy_samples call.
